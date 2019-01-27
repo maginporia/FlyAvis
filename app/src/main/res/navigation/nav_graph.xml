@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/myTripsFragment">
+
+    <fragment
+        android:id="@+id/myTripsFragment"
+        android:name="com.flyavis.android.ui.mytrips.MyTripsFragment"
+        tools:layout="@layout/my_trips_fragment">
+        <action
+            android:id="@+id/action_myTripsFragment_to_planningFragment"
+            app:destination="@id/planningFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_myTripsFragment_to_addNewTripFragment"
+            app:destination="@id/addNewTripFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/slide_down" />
+    </fragment>
+    <fragment
+        android:id="@+id/checklistFragment"
+        android:name="com.flyavis.android.ui.checklist.ChecklistFragment"
+        tools:layout="@layout/checklist_fragment" />
+    <fragment
+        android:id="@+id/spilt_Bills_Fragment"
+        android:name="com.flyavis.android.ui.spiltbills.SpiltBillsFragment"
+        tools:layout="@layout/spilt_bills_fragment" />
+    <fragment
+        android:id="@+id/planningFragment"
+        android:name="com.flyavis.android.ui.planning.PlanningFragment"
+        tools:layout="@layout/planning_fragment" />
+    <fragment
+        android:id="@+id/addNewTripFragment"
+        android:name="com.flyavis.android.ui.addnewtrip.AddNewTripFragment"
+        tools:layout="@layout/add_new_trip_fragment" />
+</navigation>

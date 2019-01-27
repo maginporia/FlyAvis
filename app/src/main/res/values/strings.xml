@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FlyAvis</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_checklist">Checklists</string>
+    <string name="title_my_trips">My trips</string>
+    <string name="title_spilt_bills">Spilt bills</string>
+</resources>

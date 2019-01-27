@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlyAvis</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_checklist">待辦清單</string>
+    <string name="title_my_trips">我的行程</string>
+    <string name="title_spilt_bills">分帳</string>
+</resources>
