@@ -1,6 +1,8 @@
 package com.flyavis.android.di;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.flyavis.android.Constants;
 import com.flyavis.android.FlyAvisApplication;
@@ -33,15 +35,10 @@ class AppModule {
         return database.myTripDao();
     }
 
-
-
-
-
-    //FakeData
-//    MyTrip provideFakeMyTrip() {
-//        MyTrip myTrip =
-//        return myTrip.setTripName("宿霧之旅");
-//    }
-
+    @Provides
+    @Singleton
+    SharedPreferences providesSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
+    }
 
 }
