@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">FlyAvis</string>
     <string name="title_activity_main">MainActivity</string>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">1181166512022119</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1181166512022119</string>
+
     <string name="title_checklist">Checklists</string>
     <string name="title_my_trips">My trips</string>
     <string name="title_spilt_bills">Spilt bills</string>
+    <string name="title_activity_firebase_ui">FirebaseUIActivity</string>
 </resources>

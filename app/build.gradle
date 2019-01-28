@@ -40,10 +40,13 @@ dependencies {
     def nav_version = "1.0.0-alpha11"
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
-    def room_version = "2.1.0-alpha03"
+    def room_version = "2.1.0-alpha04"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version" // use kapt for Kotlin
     implementation "androidx.room:room-rxjava2:$room_version"
+//    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:4.40.0'
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     // Dagger core
@@ -68,3 +71,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
 }
+apply plugin: 'com.google.gms.google-services'
