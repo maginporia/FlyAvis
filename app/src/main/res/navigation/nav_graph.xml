@@ -34,7 +34,11 @@
     <fragment
         android:id="@+id/planningFragment"
         android:name="com.flyavis.android.ui.planning.PlanningFragment"
-        tools:layout="@layout/planning_fragment" />
+        tools:layout="@layout/planning_fragment" >
+        <argument
+            android:name="myTripId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/addNewTripFragment"
         android:name="com.flyavis.android.ui.addnewtrip.AddNewTripFragment"

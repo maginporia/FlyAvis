@@ -12,6 +12,14 @@
         <variable
             name="date"
             type="String" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="longClickListener"
+            type="android.view.View.OnLongClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -21,7 +29,9 @@
         android:layout_marginEnd="@dimen/card_spacing"
         android:layout_marginBottom="@dimen/card_spacing"
         app:cardCornerRadius="@dimen/radius"
-        app:cardPreventCornerOverlap="true">
+        app:cardPreventCornerOverlap="true"
+        android:onClick="@{clickListener}"
+        android:onLongClick="@{longClickListener}">
 
         <ImageView
             android:id="@+id/imageView"

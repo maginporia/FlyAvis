@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.flyavis.android.BuildConfig;
 import com.flyavis.android.R;
+import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +32,7 @@ public class StartActivity extends AppCompatActivity {
     private void checkLoginStatus() {
         FirebaseApp.initializeApp(this);
         FirebaseAuth auth = FirebaseAuth.getInstance();
+
         if (auth.getCurrentUser() != null) {
             // already signed in
             launchMainActivity();
@@ -38,12 +42,13 @@ public class StartActivity extends AppCompatActivity {
                     new AuthUI.IdpConfig.GoogleBuilder().build(),
                     new AuthUI.IdpConfig.FacebookBuilder().build()
             );
+
             // Create and launchMainActivity sign-in intent
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
-                            .setIsSmartLockEnabled(false)
+                            .setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */)
                             .setTheme(R.style.AppTheme)
                             .build(),
                     RC_SIGN_IN);

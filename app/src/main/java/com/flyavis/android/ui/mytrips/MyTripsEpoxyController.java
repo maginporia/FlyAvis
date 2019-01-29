@@ -10,12 +10,23 @@ import java.util.List;
 
 public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {// TypedEpoxyController<List<Photo>>
 
+    public interface MyTripsCallbacks {
+        void onMyTripItemClick
+                (MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action);
+    }
+
     /*
      * xml檔模組化RecyclerView內容
      * 使用package-info.java產生Model
      * */
     @AutoModel//Auto create and assign a unique id
-    TitleItemBindingModel_ titleItemBindingModel;
+            TitleItemBindingModel_ titleItemBindingModel;
+
+    private final MyTripsCallbacks callbacks;
+
+    MyTripsEpoxyController(MyTripsCallbacks callbacks) {
+        this.callbacks = callbacks;
+    }
 
     @Override
     protected void buildModels(List<MyTrip> list) {// buildModels(List<Photo> photos)
@@ -31,6 +42,12 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         .id(myTrip.getMyTripId())
                         .title(myTrip.getTripName())
                         .date(String.valueOf(myTrip.getStartDate()) + "-" + myTrip.getEndDate())
+                        .clickListener((model, parentView, clickedView, position) -> {
+                            MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action
+                                    = MyTripsFragmentDirections
+                                    .actionMyTripsFragmentToPlanningFragment((int) model.id());
+                            callbacks.onMyTripItemClick(action);
+                        })
                         .addTo(this);
             }
         }

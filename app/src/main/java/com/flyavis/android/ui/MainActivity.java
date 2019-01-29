@@ -16,14 +16,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -66,18 +63,15 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
 
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
-                switch (destination.getId()) {
-                    case R.id.addNewTripFragment:
-                        setNavigationVisibility(false);
-                        setToolBarVisibility(true);
-                        break;
-                    default:
-                        setNavigationVisibility(true);
-                        setToolBarVisibility(false);
-                }
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            switch (destination.getId()) {
+                case R.id.addNewTripFragment:
+                    setNavigationVisibility(false);
+                    setToolBarVisibility(true);
+                    break;
+                default:
+                    setNavigationVisibility(true);
+                    setToolBarVisibility(false);
             }
         });
     }
