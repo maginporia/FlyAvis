@@ -1,25 +1,20 @@
 package com.flyavis.android.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.drawable.ClipDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.flyavis.android.BuildConfig;
 import com.flyavis.android.R;
-import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import static com.flyavis.android.Constants.RC_SIGN_IN;
 

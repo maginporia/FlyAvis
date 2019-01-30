@@ -13,34 +13,6 @@
         tools:context=".ui.mytrips.MyTripsFragment"
         tools:layout_editor_absoluteY="25dp">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/myTripsRecyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.ActionMenuView
-                android:id="@+id/actionMenuView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="0"/>
-            </androidx.appcompat.widget.ActionMenuView>
-        </androidx.appcompat.widget.Toolbar>
-
         <com.airbnb.epoxy.EpoxyRecyclerView
             android:id="@+id/myTripsRecyclerView"
             android:layout_width="match_parent"
@@ -48,7 +20,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/my_trips_item">
 
         </com.airbnb.epoxy.EpoxyRecyclerView>

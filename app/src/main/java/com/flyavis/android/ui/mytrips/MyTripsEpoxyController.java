@@ -8,16 +8,15 @@ import com.flyavis.android.MyTripsItemBindingModel_;
 import com.flyavis.android.TitleItemBindingModel_;
 import com.flyavis.android.data.database.MyTrip;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {// TypedEpoxyController<List<Photo>>
-
+public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     public interface MyTripsCallbacks {
         void onMyTripItemClick
                 (MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action);
 
         void onMyTripItemLongClick(int id, boolean deleteState, int clickedCount);
+
 
     }
 
@@ -37,8 +36,8 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     }
 
     @Override
-    protected void buildModels(List<MyTrip> list) {// buildModels(List<Photo> photos)
-
+    protected void buildModels(List<MyTrip> list) {
+        deleteState = false;
         //組合RecyclerView內容
         titleItemBindingModel
                 .addTo(this);
@@ -58,13 +57,13 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                                 callbacks.onMyTripItemClick(action);
                             } else {
                                 setClicked(clickedView);
-                                callbacks.onMyTripItemLongClick((int)(model.id()), deleteState
+                                callbacks.onMyTripItemLongClick((int) (model.id()), deleteState
                                         , clickedCount);
                             }
                         })
                         .longClickListener((model, parentView, clickedView, position) -> {
                             setClicked(clickedView);
-                            callbacks.onMyTripItemLongClick((int)(model.id()), deleteState
+                            callbacks.onMyTripItemLongClick((int) (model.id()), deleteState
                                     , clickedCount);
                             return true;
                         })
@@ -76,7 +75,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     private void setClicked(View clickedView) {
         if (clickedView.getElevation() != 10f) {
             clickedView.setHovered(true);
-            clickedView.setElevation(10f);
+            clickedView.setElevation(16f);
             deleteState = true;
             clickedCount++;
         } else {

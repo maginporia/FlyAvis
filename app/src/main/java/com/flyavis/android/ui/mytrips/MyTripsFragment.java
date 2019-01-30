@@ -1,27 +1,26 @@
 package com.flyavis.android.ui.mytrips;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.flyavis.android.R;
 import com.flyavis.android.databinding.MyTripsFragmentBinding;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.ActionMenuView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,8 +35,8 @@ public class MyTripsFragment extends DaggerFragment
     private MyTripsViewModel mViewModel;
     private MyTripsFragmentBinding binding;
     private MyTripsEpoxyController controller;
-    private Toolbar toolbar;
-    private ActionMenuView actionMenuView;
+    private ActionMode actionMode;
+    public Set<Integer> positionSet = new HashSet<>();
 
     public static MyTripsFragment newInstance() {
         return new MyTripsFragment();
@@ -53,9 +52,6 @@ public class MyTripsFragment extends DaggerFragment
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil//出錯的話重新命名此layout
                 .inflate(inflater, R.layout.my_trips_fragment, container, false);
-        toolbar = binding.toolbar;
-        toolbar.inflateMenu(R.menu.toolbar);
-        actionMenuView = binding.actionMenuView;
         return binding.getRoot();
     }
 
@@ -74,23 +70,7 @@ public class MyTripsFragment extends DaggerFragment
         binding.floatingActionButton.setOnClickListener
                 (Navigation.createNavigateOnClickListener
                         (R.id.action_myTripsFragment_to_addNewTripFragment, null));
-
-//        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Navigation.findNavController(view).navigate(R.id.add_new_trip_fragment);
-//
-////                showNewTripDialog();
-//            }
-//        });
-
     }
-
-    //
-//    private void showNewTripDialog() {
-//        DialogFragment dialogFragment = new AddNewTripFragment();
-//        dialogFragment.show(getFragmentManager(), "newTrip");
-//    }
 
     @Override
     public void onMyTripItemClick
@@ -100,12 +80,51 @@ public class MyTripsFragment extends DaggerFragment
 
     @Override
     public void onMyTripItemLongClick(int id, boolean deleteState, int clickedCount) {
-        if (deleteState) {
-            toolbar.setVisibility(View.VISIBLE);
-//            setToolbar(clickedCount);
+
+        if (actionMode == null) {
+            actionMode = ((AppCompatActivity) Objects.requireNonNull(getActivity()))
+                    .startSupportActionMode(mActionModeCallback);
+        }
+        if (positionSet.contains(id)) {
+            positionSet.remove(id);
         } else {
-            toolbar.setVisibility(View.GONE);
+            positionSet.add(id);
+        }
+        if (!deleteState) actionMode.finish();
+    }
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.toolbar, menu);
+            return true;
         }
 
-    }
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.delete:
+                    mViewModel.deleteMyTrip(positionSet);
+                    mode.finish();
+                    break;
+                default:
+                    return false;
+            }
+            return true;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            actionMode = null;
+
+        }
+    };
+
 }

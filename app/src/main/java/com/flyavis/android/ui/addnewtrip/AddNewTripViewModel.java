@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Completable;
-import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddNewTripViewModel extends ViewModel {
@@ -21,12 +20,8 @@ public class AddNewTripViewModel extends ViewModel {
 
     void insertNewTrip(final MyTrip myTrip) {
         //RxJava2
-        Completable.fromAction(new Action() {
-            @Override
-            public void run() throws Exception {
-                // UserDAO.insert(...)
-                repository.insetMyTrip(myTrip);
-            }
+        Completable.fromAction(() -> {
+            repository.insetMyTrip(myTrip);
         })
                 .subscribeOn(Schedulers.io())
                 .subscribe();

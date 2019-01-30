@@ -4,6 +4,7 @@ import com.flyavis.android.data.database.MyTrip;
 import com.flyavis.android.data.database.MyTripDao;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,5 +25,9 @@ public class FlyAvisRepository {
 
     public void insetMyTrip(MyTrip myTrip) {
        myTripDao.newTrip(myTrip);
+    }
+
+    public void deleteMyTrip(Set<Integer> set) {
+        myTripDao.deleteTrip(set);
     }
 }
