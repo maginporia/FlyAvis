@@ -3,8 +3,11 @@ package com.flyavis.android.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.firebase.ui.auth.AuthMethodPickerLayout;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
