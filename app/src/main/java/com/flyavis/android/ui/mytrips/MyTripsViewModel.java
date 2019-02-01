@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -17,8 +18,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MyTripsViewModel extends ViewModel {
-    private final LiveData<List<MyTrip>> mMyTripData;
     private FlyAvisRepository repository;
+    private final LiveData<List<MyTrip>> mMyTripData;
+    private MediatorLiveData liveDataMerger = new MediatorLiveData<>();
 
     @Inject
     MyTripsViewModel(FlyAvisRepository repository) {
@@ -28,10 +30,17 @@ public class MyTripsViewModel extends ViewModel {
         Flowable<List<MyTrip>> flowable = repository.getMyTripData()
                 .observeOn(AndroidSchedulers.mainThread());
         mMyTripData = LiveDataReactiveStreams.fromPublisher(flowable);
+        liveDataMerger.addSource(mMyTripData, value -> liveDataMerger.setValue(value));
+    }
+
+    void refresh() {
+        liveDataMerger.setValue(null);
+        liveDataMerger.removeSource(mMyTripData);
+        liveDataMerger.addSource(mMyTripData, value -> liveDataMerger.setValue(value));
     }
 
     LiveData<List<MyTrip>> getMyTripData() {
-        return mMyTripData;
+        return liveDataMerger;
     }
 
     void deleteMyTrip(final Set<Integer> set) {

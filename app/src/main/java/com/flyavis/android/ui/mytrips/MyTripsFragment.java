@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.flyavis.android.R;
 import com.flyavis.android.databinding.MyTripsFragmentBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -36,7 +37,8 @@ public class MyTripsFragment extends DaggerFragment
     private MyTripsFragmentBinding binding;
     private MyTripsEpoxyController controller;
     private ActionMode actionMode;
-    public Set<Integer> positionSet = new HashSet<>();
+    private Set<Integer> positionSet = new HashSet<>();
+    private FloatingActionButton floatingActionButton;
 
     public static MyTripsFragment newInstance() {
         return new MyTripsFragment();
@@ -67,7 +69,8 @@ public class MyTripsFragment extends DaggerFragment
         binding.myTripsRecyclerView.setController(controller);
         mViewModel.getMyTripData().observe
                 (this, myTrips -> controller.setData(mViewModel.getMyTripData().getValue()));
-        binding.floatingActionButton.setOnClickListener
+        floatingActionButton = binding.floatingActionButton;
+        floatingActionButton.setOnClickListener
                 (Navigation.createNavigateOnClickListener
                         (R.id.action_myTripsFragment_to_addNewTripFragment, null));
     }
@@ -84,6 +87,7 @@ public class MyTripsFragment extends DaggerFragment
         if (actionMode == null) {
             actionMode = ((AppCompatActivity) Objects.requireNonNull(getActivity()))
                     .startSupportActionMode(mActionModeCallback);
+            floatingActionButton.setVisibility(View.INVISIBLE);
         }
         if (positionSet.contains(id)) {
             positionSet.remove(id);
@@ -123,7 +127,8 @@ public class MyTripsFragment extends DaggerFragment
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
-
+            floatingActionButton.setVisibility(View.VISIBLE);
+            mViewModel.refresh();
         }
     };
 

@@ -37,7 +37,6 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
 
     @Override
     protected void buildModels(List<MyTrip> list) {
-        deleteState = false;
         //組合RecyclerView內容
         titleItemBindingModel
                 .addTo(this);
@@ -46,6 +45,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
             for (MyTrip myTrip : list) {
                 new MyTripsItemBindingModel_()
                         //All models must set a unique id.
+
                         .id(myTrip.getMyTripId())
                         .title(myTrip.getTripName())
                         .date(String.valueOf(myTrip.getStartDate()) + "-" + myTrip.getEndDate())
@@ -73,7 +73,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     }
 
     private void setClicked(View clickedView) {
-        if (clickedView.getElevation() != 10f) {
+        if (clickedView.getElevation() != 16f) {
             clickedView.setHovered(true);
             clickedView.setElevation(16f);
             deleteState = true;
