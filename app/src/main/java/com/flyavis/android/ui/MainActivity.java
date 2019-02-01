@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
             switch (destination.getId()) {
                 case R.id.addNewTripFragment:
                     setNavigationVisibility(false);
-                    setToolBarVisibility(true);
                     break;
                 default:
                     setNavigationVisibility(true);

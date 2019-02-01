@@ -10,7 +10,6 @@ import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddNewTripViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
     private FlyAvisRepository repository;
 
     @Inject
@@ -20,6 +19,7 @@ public class AddNewTripViewModel extends ViewModel {
 
     void insertNewTrip(final MyTrip myTrip) {
         //RxJava2
+
         Completable.fromAction(() -> {
             repository.insetMyTrip(myTrip);
         })

@@ -34,7 +34,6 @@ public class MyTripsViewModel extends ViewModel {
     }
 
     void refresh() {
-        liveDataMerger.setValue(null);
         liveDataMerger.removeSource(mMyTripData);
         liveDataMerger.addSource(mMyTripData, value -> liveDataMerger.setValue(value));
     }

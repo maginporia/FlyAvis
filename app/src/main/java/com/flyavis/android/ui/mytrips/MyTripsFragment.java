@@ -29,7 +29,7 @@ import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 
 public class MyTripsFragment extends DaggerFragment
-        implements MyTripsEpoxyController.MyTripsCallbacks {
+        implements MyTripsEpoxyController.MyTripsCallbacks, ActionMode.Callback {
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -86,7 +86,7 @@ public class MyTripsFragment extends DaggerFragment
 
         if (actionMode == null) {
             actionMode = ((AppCompatActivity) Objects.requireNonNull(getActivity()))
-                    .startSupportActionMode(mActionModeCallback);
+                    .startSupportActionMode(this);
             floatingActionButton.setVisibility(View.INVISIBLE);
         }
         if (positionSet.contains(id)) {
@@ -97,39 +97,42 @@ public class MyTripsFragment extends DaggerFragment
         if (!deleteState) actionMode.finish();
     }
 
-    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.toolbar, menu);
-            return true;
+    @Override
+    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.delete_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete:
+                mViewModel.deleteMyTrip(positionSet);
+                mode.finish();
+                break;
+            default:
+                return false;
         }
+        return true;
+    }
 
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        actionMode = null;
+        floatingActionButton.setVisibility(View.VISIBLE);
+        mViewModel.refresh();
+    }
 
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.delete:
-                    mViewModel.deleteMyTrip(positionSet);
-                    mode.finish();
-                    break;
-                default:
-                    return false;
-            }
-            return true;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            actionMode = null;
-            floatingActionButton.setVisibility(View.VISIBLE);
-            mViewModel.refresh();
-        }
-    };
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (actionMode != null) actionMode.finish();
+    }
 }
