@@ -7,6 +7,7 @@ import com.airbnb.epoxy.EpoxyModel;
 import com.airbnb.epoxy.EpoxyViewHolder;
 import com.airbnb.epoxy.TypedEpoxyController;
 import com.flyavis.android.MyTripsItemBindingModel_;
+import com.flyavis.android.R;
 import com.flyavis.android.TitleItemBindingModel_;
 import com.flyavis.android.data.database.MyTrip;
 
@@ -30,6 +31,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     private int clickedCount = 0;
     private List<View> needToResetList = new ArrayList<>();
     private Set<Integer> selectedPotion = new HashSet<>();
+
     MyTripsEpoxyController(MyTripsCallbacks callbacks) {
         this.callbacks = callbacks;
     }
@@ -39,6 +41,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
         resetViews();
         //組合RecyclerView內容
         titleItemBindingModel
+                .title(R.string.title_my_trips)
                 .addTo(this);
 
         if (list != null) {
@@ -53,7 +56,10 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                             if (!deleteState) {
                                 MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment
                                         action = MyTripsFragmentDirections
-                                        .actionMyTripsFragmentToPlanningFragment((int) model.id());
+                                        .actionMyTripsFragmentToPlanningFragment((int) model.id()
+                                                , (int) ((myTrip.getEndDate().getTime()
+                                                        - myTrip.getStartDate().getTime())
+                                                        / (24 * 60 * 60 * 1000)) + 1);
                                 callbacks.onMyTripItemClick(action);
                             } else {
                                 setClicked(clickedView);

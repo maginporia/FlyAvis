@@ -28,15 +28,17 @@
         android:name="com.flyavis.android.ui.checklist.ChecklistFragment"
         tools:layout="@layout/checklist_fragment" />
     <fragment
-        android:id="@+id/spilt_Bills_Fragment"
+        android:id="@+id/spiltBillsFragment"
         android:name="com.flyavis.android.ui.spiltbills.SpiltBillsFragment"
         tools:layout="@layout/spilt_bills_fragment" />
     <fragment
         android:id="@+id/planningFragment"
-        android:name="com.flyavis.android.ui.planning.PlanningFragment"
-        tools:layout="@layout/planning_fragment" >
+        android:name="com.flyavis.android.ui.planning.PlanningFragment">
         <argument
             android:name="myTripId"
+            app:argType="integer" />
+        <argument
+            android:name="totalDays"
             app:argType="integer" />
     </fragment>
     <fragment

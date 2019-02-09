@@ -24,19 +24,19 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:layout_marginStart="@dimen/card_spacing"
         android:layout_marginEnd="@dimen/card_spacing"
         android:layout_marginBottom="@dimen/card_spacing"
-        app:cardCornerRadius="@dimen/radius"
-        app:cardPreventCornerOverlap="true"
         android:onClick="@{clickListener}"
-        android:onLongClick="@{longClickListener}">
+        android:onLongClick="@{longClickListener}"
+        app:cardCornerRadius="@dimen/radius"
+        app:cardPreventCornerOverlap="true">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -78,6 +78,7 @@
                 android:id="@+id/imageView3"
                 android:layout_width="48dp"
                 android:layout_height="45dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_launcher_background"
                 app:civ_border_color="#FF000000"
@@ -85,7 +86,44 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <ImageButton
+                android:id="@+id/imageButton"
+                style="@android:style/Widget.Material.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_edit_24" />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                style="@android:style/Widget.Material.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="52dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton"
+                app:srcCompat="@drawable/baseline_person_add_24" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                style="@android:style/Widget.Material.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+                app:srcCompat="@drawable/baseline_share_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
 </layout>

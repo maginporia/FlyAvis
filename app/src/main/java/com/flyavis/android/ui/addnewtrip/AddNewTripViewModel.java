@@ -19,10 +19,7 @@ public class AddNewTripViewModel extends ViewModel {
 
     void insertNewTrip(final MyTrip myTrip) {
         //RxJava2
-
-        Completable.fromAction(() -> {
-            repository.insetMyTrip(myTrip);
-        })
+        Completable.fromAction(() -> repository.insetMyTrip(myTrip))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

@@ -44,9 +44,7 @@ public class MyTripsViewModel extends ViewModel {
 
     void deleteMyTrip(final Set<Integer> set) {
         //RxJava2
-        Completable.fromAction(() -> {
-            repository.deleteMyTrip(set);
-        })
+        Completable.fromAction(() -> repository.deleteMyTrip(set))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

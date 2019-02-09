@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.addNewTripFragment:
                     setNavigationVisibility(false);
                     break;
+                case R.id.planningFragment:
+                    setToolBarVisibility(true);
+                    setNavigationVisibility(false);
+                    break;
                 default:
                     setNavigationVisibility(true);
                     setToolBarVisibility(false);

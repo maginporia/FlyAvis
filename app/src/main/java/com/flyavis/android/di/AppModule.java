@@ -8,6 +8,7 @@ import com.flyavis.android.Constants;
 import com.flyavis.android.FlyAvisApplication;
 import com.flyavis.android.data.database.FlyAvisDb;
 import com.flyavis.android.data.database.MyTripDao;
+import com.flyavis.android.data.database.PlanDao;
 
 import javax.inject.Singleton;
 
@@ -22,6 +23,7 @@ class AppModule {
     Context provideContext(FlyAvisApplication application) {
         return application.getApplicationContext();
     }
+
     @Provides
     @Singleton
     FlyAvisDb provideDatabase(Context context) {
@@ -29,10 +31,17 @@ class AppModule {
                 FlyAvisDb.class, Constants.DB_NAME)
                 .build();
     }
+
     @Provides
     @Singleton
     MyTripDao provideMyTripDao(FlyAvisDb database) {
         return database.myTripDao();
+    }
+
+    @Provides
+    @Singleton
+    PlanDao providePlanningDao(FlyAvisDb database) {
+        return database.planningDao();
     }
 
     @Provides

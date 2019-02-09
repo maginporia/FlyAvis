@@ -68,7 +68,7 @@ public class MyTripsFragment extends DaggerFragment
         controller = new MyTripsEpoxyController(this);
         binding.myTripsRecyclerView.setController(controller);
         mViewModel.getMyTripData().observe
-                (this, myTrips -> controller.setData(mViewModel.getMyTripData().getValue()));
+                (this, myTrips -> controller.setData(myTrips));
         floatingActionButton = binding.floatingActionButton;
         floatingActionButton.setOnClickListener
                 (Navigation.createNavigateOnClickListener

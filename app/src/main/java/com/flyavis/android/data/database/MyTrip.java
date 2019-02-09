@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 
 
 @Entity(tableName = "my_trip")
-
 public class MyTrip {
 
     @PrimaryKey(autoGenerate = true)
