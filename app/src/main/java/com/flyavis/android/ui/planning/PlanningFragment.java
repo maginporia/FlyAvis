@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.airbnb.epoxy.EpoxyModel;
+import com.airbnb.epoxy.EpoxyTouchHelper;
 import com.flyavis.android.R;
+import com.flyavis.android.SpotItemBindingModel_;
 import com.flyavis.android.data.database.Plan;
 import com.flyavis.android.databinding.PlanningFragmentBinding;
 import com.google.android.gms.common.api.Status;
@@ -63,6 +66,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         return binding.getRoot();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -72,16 +76,29 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         int totalDays = PlanningFragmentArgs
                 .fromBundle(Objects.requireNonNull(getArguments())).getTotalDays();
         day = 1;
+        //init recyclerView
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
         mViewModel.getPlanningData(myTripId, day).observe
                 (this, plannings -> controller.setData(plannings));
 
+        EpoxyTouchHelper.initDragging(controller)
+                .withRecyclerView(binding.planningRecyclerView)
+                .forVerticalList()
+                .withTargets(PlanningModelGroup.class, SpotItemBindingModel_.class)
+                .andCallbacks(new EpoxyTouchHelper.DragCallbacks<EpoxyModel>() {
+                    @Override
+                    public void onModelMoved(int fromPosition, int toPosition,
+                                             EpoxyModel modelBeingMoved, View itemView) {
+                        //TODO add drag support
+                    }
+                });
+
+        //init tab
         tabLayout = binding.tabLayout;
         for (int i = 1; i <= totalDays; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.day) + i));
         }
-
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -120,6 +137,16 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     }
                 })
                 .show();
+    }
+
+    @Override
+    public void onSpotViewClick() {
+
+    }
+
+    @Override
+    public void onTrafficTimeClick() {
+
     }
 
     private void placeApiSearch() {

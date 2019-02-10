@@ -33,16 +33,14 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
                     add(new PlanningModelGroup(data.get(i), callbacks));
                 }
             }
-//            Last item without traffic time
 
+            // Last item without traffic time
             Plan lastSpot = data.get(data.size() - 1);
             new SpotItemBindingModel_()
                     .id(data.size())
                     .spotName(lastSpot.getPlaceName())
                     .addTo(this);
-//            new TrafficTimeBindingModel_()
-//                    .id(99)
-//                    .addTo(this);
+
         }
         addViewBindingModel
                 .clickListener(view -> callbacks.onAddNewSpotViewClick())
@@ -51,6 +49,10 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
 
     public interface PlanningCallbacks {
         void onAddNewSpotViewClick();
+
+        void onSpotViewClick();
+
+        void onTrafficTimeClick();
     }
 
 }

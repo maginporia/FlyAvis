@@ -8,14 +8,20 @@
         <variable
             name="trafficTime"
             type="String" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{clickListener}">
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/trafficImageView"
             android:layout_width="28dp"
             android:layout_height="30dp"
             android:layout_marginStart="41dp"
@@ -28,7 +34,7 @@
             app:srcCompat="@drawable/baseline_directions_subway_24" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/timeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -36,12 +42,12 @@
             android:layout_marginBottom="8dp"
             android:text="@{trafficTime}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintStart_toEndOf="@+id/trafficImageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="50分" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/arrowImageView"
             android:layout_width="30dp"
             android:layout_height="31dp"
             android:layout_marginTop="8dp"
