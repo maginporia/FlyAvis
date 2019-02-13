@@ -75,6 +75,12 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                                     , clickedCount);
                             return true;
                         })
+                        .editClickListener((model, parentView, clickedView, position) -> {
+                            MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment
+                                    action = MyTripsFragmentDirections
+                                    .actionMyTripsFragmentToAddNewTripFragment((int) model.id());
+                            callbacks.onEditTripClick(action);
+                        })
                         .addTo(this);
             }
         }
@@ -140,5 +146,8 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                 (MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action);
 
         void onMyTripItemLongClick(int id, boolean deleteState, int clickedCount);
+
+        void
+        onEditTripClick(MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment action);
     }
 }

@@ -28,8 +28,12 @@ public class FlyAvisRepository {
         return myTripDao.getMyTrips();
     }
 
+    public Flowable<MyTrip> getSpecificTrip(int myTripId) {
+        return myTripDao.getSpecificTrip(myTripId);
+    }
+
     public void insetMyTrip(MyTrip myTrip) {
-       myTripDao.newTrip(myTrip);
+       myTripDao.insertTrip(myTrip);
     }
 
     public void deleteMyTrip(Set<Integer> set) {

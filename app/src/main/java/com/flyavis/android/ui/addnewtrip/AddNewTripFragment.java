@@ -45,6 +45,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     private int year = calendar.get(Calendar.YEAR);
     private int month = calendar.get(Calendar.MONTH);
     private int day = calendar.get(Calendar.DAY_OF_MONTH);
+    private int myTripId = 0;
 
     public static AddNewTripFragment newInstance() {
         return new AddNewTripFragment();
@@ -62,17 +63,32 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, factory).get(AddNewTripViewModel.class);
+        startDate = binding.startDate;
+        endDate = binding.endDate;
+        //啟動toolbar框架
         if (actionMode == null) {
             actionMode = ((AppCompatActivity) Objects.requireNonNull(getActivity()))
                     .startSupportActionMode(this);
         }
-        String dateTime
-                = String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf(day);
-        startDate = binding.startDate;
-        startDate.setText(dateTime);
+        if (getArguments() != null) {
+            myTripId = AddNewTripFragmentArgs
+                    .fromBundle(getArguments()).getMyTripId();
+            //編輯Trip時
+            binding.titleTextView.setText(getString(R.string.edit));
+            mViewModel.getSpecificTrip(myTripId).observe(this, myTrip -> {
+                binding.tripName.setText(myTrip.getTripName());
+                startDate.setText(String.valueOf(myTrip.getStartDate()));
+                endDate.setText(String.valueOf(myTrip.getEndDate()));
+            });
+        } else {
+            //自動帶入今天日期
+            String dateTime
+                    = String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf(day);
+            startDate.setText(dateTime);
+            endDate.setText(dateTime);
+        }
+
         startDate.setOnClickListener(view -> showDatePicker(startDate));
-        endDate = binding.endDate;
-        endDate.setText(dateTime);
         endDate.setOnClickListener(view -> showDatePicker(endDate));
     }
 
@@ -98,12 +114,15 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         MyTrip myTrip = new MyTrip();
+        if (myTripId != 0) {
+            myTrip.setMyTripId(myTripId);
+        }
         myTrip.setTripName(String.valueOf(binding.tripName.getText()));
         myTrip.setStartDate(Date.valueOf(String.valueOf(startDate.getText())));
         myTrip.setEndDate(Date.valueOf(String.valueOf(endDate.getText())));
         switch (item.getItemId()) {
             case R.id.save:
-                mViewModel.insertNewTrip(myTrip);
+                mViewModel.insertTrip(myTrip);
                 mode.finish();
                 break;
             default:

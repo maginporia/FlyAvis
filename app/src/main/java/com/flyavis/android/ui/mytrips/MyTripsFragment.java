@@ -25,6 +25,7 @@ import androidx.appcompat.view.ActionMode;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 
@@ -78,7 +79,7 @@ public class MyTripsFragment extends DaggerFragment
     @Override
     public void onMyTripItemClick
             (MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action) {
-        Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
+        navigateView(action);
     }
 
     @Override
@@ -97,6 +98,16 @@ public class MyTripsFragment extends DaggerFragment
         if (!deleteState) actionMode.finish();
     }
 
+    @Override
+    public void
+    onEditTripClick(MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment action) {
+        navigateView(action);
+    }
+
+    private void
+    navigateView(NavDirections action) {
+        Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
+    }
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
