@@ -8,15 +8,18 @@ import com.flyavis.android.ui.planning.PlanningFragment;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
+//要注入的View
 @Module
 abstract class ViewBuilder {
     @ContributesAndroidInjector
     abstract MyTripsFragment bindMyTripsFragment();
+
     @ContributesAndroidInjector
     abstract AddNewTripFragment addNewTripFragment();
 
     @ContributesAndroidInjector
     abstract PlanningFragment planningFragment();
+
     @ContributesAndroidInjector
     abstract MainActivity bindMainActivity();
 }

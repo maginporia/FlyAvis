@@ -53,8 +53,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private PlanningEpoxyController controller;
     private TabLayout tabLayout;
     private String TAG = getClass().getName();
-    int day;
-    int myTripId;
+    private int day;
+    private int myTripId;
 
     public static PlanningFragment newInstance() {
         return new PlanningFragment();
@@ -73,6 +73,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, factory).get(PlanningViewModel.class);
+
+        //取得上一個畫面傳的參數
         myTripId = PlanningFragmentArgs
                 .fromBundle(Objects.requireNonNull(getArguments())).getMyTripId();
         int totalDays = PlanningFragmentArgs
@@ -84,6 +86,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         mViewModel.getPlanningData(myTripId, day).observe
                 (this, plannings -> controller.setData(plannings));
 
+        //Drag control
         EpoxyTouchHelper.initDragging(controller)
                 .withRecyclerView(binding.planningRecyclerView)
                 .forVerticalList()
@@ -192,7 +195,5 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 // The user canceled the operation.
             }
         }
-
     }
-
 }

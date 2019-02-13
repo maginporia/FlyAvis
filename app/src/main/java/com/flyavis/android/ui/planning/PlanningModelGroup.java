@@ -10,6 +10,7 @@ import com.flyavis.android.data.database.Plan;
 import java.util.ArrayList;
 import java.util.List;
 
+//把Model做群組
 public class PlanningModelGroup extends EpoxyModelGroup {
     public final Plan plan;
 

@@ -6,7 +6,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 
 /*
-*For Dagger2
+ *For Dagger2(di)
 *
 *set manifests   ↓
 */

@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Flowable;
 
+//處理本地與遠端資料
 @Singleton
 public class FlyAvisRepository {
     private final MyTripDao myTripDao;
@@ -33,7 +34,7 @@ public class FlyAvisRepository {
     }
 
     public void insetMyTrip(MyTrip myTrip) {
-       myTripDao.insertTrip(myTrip);
+        myTripDao.insertTrip(myTrip);
     }
 
     public void deleteMyTrip(Set<Integer> set) {

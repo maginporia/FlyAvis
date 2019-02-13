@@ -53,7 +53,8 @@ public class MyTripsFragment extends DaggerFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil//出錯的話重新命名此layout
+        //init dataBinding
+        binding = DataBindingUtil  //出錯的話重新命名此layout
                 .inflate(inflater, R.layout.my_trips_fragment, container, false);
         return binding.getRoot();
     }
@@ -64,11 +65,12 @@ public class MyTripsFragment extends DaggerFragment
 
         mViewModel = ViewModelProviders.of(this, factory)
                 .get(MyTripsViewModel.class);
-//        binding.setLifecycleOwner(this);
+        //init recyclerView
         controller = new MyTripsEpoxyController(this);
         binding.myTripsRecyclerView.setController(controller);
         mViewModel.getMyTripData().observe
                 (this, myTrips -> controller.setData(myTrips));
+        //init FAB
         floatingActionButton = binding.floatingActionButton;
         floatingActionButton.setOnClickListener
                 (Navigation.createNavigateOnClickListener

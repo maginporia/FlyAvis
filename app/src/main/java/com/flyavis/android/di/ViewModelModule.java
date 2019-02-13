@@ -11,6 +11,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
+//要注入factory的viewModel
 @Module
 abstract class ViewModelModule {
 

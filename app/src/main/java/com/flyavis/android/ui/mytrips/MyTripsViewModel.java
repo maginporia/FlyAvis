@@ -26,7 +26,7 @@ public class MyTripsViewModel extends ViewModel {
     MyTripsViewModel(FlyAvisRepository repository) {
         this.repository = repository;
 
-        //RxJava2 Flowable>LiveData
+        //RxJava2 Flowable轉換LiveData
         Flowable<List<MyTrip>> flowable = repository.getMyTripData()
                 .observeOn(AndroidSchedulers.mainThread());
         mMyTripData = LiveDataReactiveStreams.fromPublisher(flowable);

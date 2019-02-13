@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        //init dataBinding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         navigation = binding.navigation;
         toolbar = binding.toolbar;
@@ -42,18 +43,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*
-    * Navigation Architecture Component
-    *
-    *  res/navigation/nav_graph.xml
-    *  Android Studio 3.3
-    *  or 3.2 :Settings>experimental>Navigation Editor
-    * */
+     * Navigation Architecture Component
+     *
+     *  res/navigation/nav_graph.xml
+     *  Android Studio 3.3
+     *  or 3.2 :Settings>experimental>Navigation Editor
+     *
+     *  用來管理fragment
+     * */
     private void initNavigation() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         NavHostFragment navHostFragment =
                 (NavHostFragment) fragmentManager.findFragmentById(R.id.fragment);
         NavController navController = Objects.requireNonNull(navHostFragment).getNavController();
         NavigationUI.setupWithNavController(navigation, navController);
+        //設定最外層fragment
         Set<Integer> topLevelDestinations = new HashSet<>();
         topLevelDestinations.add(R.layout.checklist_fragment);
         topLevelDestinations.add(R.layout.my_trips_fragment);
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 .Builder(topLevelDestinations)
                 .build();
         NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
-
+        //設定不同頁面toolBar&bottomNavigation顯示與否
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.addNewTripFragment:

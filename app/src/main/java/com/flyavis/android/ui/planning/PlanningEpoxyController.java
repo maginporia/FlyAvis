@@ -23,7 +23,7 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
         new DateTitleBindingModel_()
                 .id(0)
                 //TODO change to real data
-                .title("2019.02.06 星期三")
+                .title("2019.02.14 星期四")
                 .subTitle("浮潛日")
                 .addTo(this);
 

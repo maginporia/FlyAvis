@@ -16,7 +16,7 @@ public interface PlanDao {
     @Insert
     void insetNewSpot(Plan plan);
 
-    @Query("")
-    void updateSpotOrder();
+//    @Query("")
+//    void updateSpotOrder();
 
 }

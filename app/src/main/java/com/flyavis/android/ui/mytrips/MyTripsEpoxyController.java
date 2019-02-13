@@ -54,6 +54,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         .date(String.valueOf(myTrip.getStartDate()) + " ~ " + myTrip.getEndDate())
                         .clickListener((model, parentView, clickedView, position) -> {
                             if (!deleteState) {
+                                //set args in nav_graph.xml first
                                 MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment
                                         action = MyTripsFragmentDirections
                                         .actionMyTripsFragmentToPlanningFragment((int) model.id()
@@ -138,7 +139,6 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
         } else {
             setUnClickedStyle(holder.itemView);
         }
-
     }
 
     public interface MyTripsCallbacks {
