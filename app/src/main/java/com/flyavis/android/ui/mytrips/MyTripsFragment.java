@@ -65,7 +65,6 @@ public class MyTripsFragment extends DaggerFragment
         mViewModel = ViewModelProviders.of(this, factory)
                 .get(MyTripsViewModel.class);
 //        binding.setLifecycleOwner(this);
-
         controller = new MyTripsEpoxyController(this);
         binding.myTripsRecyclerView.setController(controller);
         mViewModel.getMyTripData().observe

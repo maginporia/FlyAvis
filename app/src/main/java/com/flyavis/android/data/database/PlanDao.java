@@ -10,10 +10,13 @@ import io.reactivex.Flowable;
 @Dao
 public interface PlanDao {
 
-    @Query("SELECT * FROM `Plan` WHERE trip_id IN (:tripId) AND day IN(:day)")
+    @Query("SELECT * FROM `Plan` WHERE trip_id IN (:tripId) AND day IN(:day) ORDER BY `order`")
     Flowable<List<Plan>> getPlannings(int tripId, int day);
 
     @Insert
     void insetNewSpot(Plan plan);
+
+    @Query("")
+    void updateSpotOrder();
 
 }

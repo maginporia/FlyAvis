@@ -34,6 +34,8 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 
 import static android.app.Activity.RESULT_CANCELED;
@@ -147,6 +149,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     @Override
     public void onTrafficTimeClick() {
 
+    }
+
+    private void
+    navigateView(NavDirections action) {
+        Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
     }
 
     private void placeApiSearch() {

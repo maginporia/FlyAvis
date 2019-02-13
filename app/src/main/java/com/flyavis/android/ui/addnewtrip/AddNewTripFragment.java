@@ -70,10 +70,10 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
             actionMode = ((AppCompatActivity) Objects.requireNonNull(getActivity()))
                     .startSupportActionMode(this);
         }
+        //編輯Trip時
         if (getArguments() != null) {
             myTripId = AddNewTripFragmentArgs
                     .fromBundle(getArguments()).getMyTripId();
-            //編輯Trip時
             binding.titleTextView.setText(getString(R.string.edit));
             mViewModel.getSpecificTrip(myTripId).observe(this, myTrip -> {
                 binding.tripName.setText(myTrip.getTripName());
