@@ -196,4 +196,5 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
             }
         }
     }
+
 }

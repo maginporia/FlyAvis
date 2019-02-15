@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         navigation = binding.navigation;
         toolbar = binding.toolbar;
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
         initNavigation();
         initStyle();
     }
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration
                 .Builder(topLevelDestinations)
                 .build();
-        NavigationUI.setupWithNavController(binding.toolbar, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         //設定不同頁面toolBar&bottomNavigation顯示與否
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
@@ -75,10 +77,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.planningFragment:
                     setToolBarVisibility(true);
                     setNavigationVisibility(false);
+                    toolbar.getMenu().clear();
+                    toolbar.inflateMenu(R.menu.plan_menu);
                     break;
                 default:
+                    toolbar.getMenu().clear();
                     setNavigationVisibility(true);
                     setToolBarVisibility(false);
+
             }
         });
     }
