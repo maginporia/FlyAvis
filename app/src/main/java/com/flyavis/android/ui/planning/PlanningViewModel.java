@@ -41,4 +41,10 @@ public class PlanningViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
+
+    void updateSpotOrder(int order, int tripId, int day) {
+        Completable.fromAction(() -> repository.updateSpotOrder(order, tripId, day))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 }

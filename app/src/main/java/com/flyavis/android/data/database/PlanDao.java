@@ -16,7 +16,7 @@ public interface PlanDao {
     @Insert
     void insetNewSpot(Plan plan);
 
-//    @Query("")
-//    void updateSpotOrder();
+    @Query("UPDATE `Plan` SET `order` = (:order) WHERE trip_id IN (:tripId) AND day IN (:day)")
+    void updateSpotOrder(int order, int tripId, int day);
 
 }

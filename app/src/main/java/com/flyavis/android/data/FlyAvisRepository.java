@@ -48,4 +48,8 @@ public class FlyAvisRepository {
     public Flowable<List<Plan>> getPlannings(int tripId, int day) {
         return planDao.getPlannings(tripId, day);
     }
+
+    public void updateSpotOrder(int order, int tripId, int day) {
+        planDao.updateSpotOrder(order, tripId, day);
+    }
 }

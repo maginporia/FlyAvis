@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 .Builder(topLevelDestinations)
                 .build();
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
-        //設定不同頁面toolBar&bottomNavigation顯示與否
+        //toolBar & bottomNavigation控制
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             switch (destination.getId()) {
                 case R.id.addNewTripFragment:
