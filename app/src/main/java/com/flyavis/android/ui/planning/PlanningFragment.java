@@ -84,7 +84,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
         mViewModel.getPlanningData(myTripId, day).observe
-                (this, plannings -> controller.setData(plannings));
+                (getViewLifecycleOwner(), plannings -> controller.setData(plannings));
 
         //Drag control
         EpoxyTouchHelper.initDragging(controller)

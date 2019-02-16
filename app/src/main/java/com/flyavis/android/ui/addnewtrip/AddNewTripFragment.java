@@ -136,6 +136,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         actionMode = null;
         hideSoftKeyboard(Objects.requireNonNull(getActivity()));
         Objects.requireNonNull(getFragmentManager()).popBackStack();
+
     }
 
     private void hideSoftKeyboard(Activity activity) {

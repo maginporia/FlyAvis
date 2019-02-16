@@ -65,11 +65,13 @@ public class MyTripsFragment extends DaggerFragment
 
         mViewModel = ViewModelProviders.of(this, factory)
                 .get(MyTripsViewModel.class);
+        binding.setLifecycleOwner(this);
         //init recyclerView
         controller = new MyTripsEpoxyController(this);
         binding.myTripsRecyclerView.setController(controller);
+
         mViewModel.getMyTripData().observe
-                (this, myTrips -> controller.setData(myTrips));
+                (getViewLifecycleOwner(), myTrips -> controller.setData(myTrips));
         //init FAB
         floatingActionButton = binding.floatingActionButton;
         floatingActionButton.setOnClickListener
