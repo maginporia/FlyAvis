@@ -9,12 +9,18 @@ import com.flyavis.android.FlyAvisApplication;
 import com.flyavis.android.data.database.FlyAvisDb;
 import com.flyavis.android.data.database.MyTripDao;
 import com.flyavis.android.data.database.PlanDao;
+import com.flyavis.android.data.network.FlyAvisService;
 
 import javax.inject.Singleton;
 
 import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.flyavis.android.Constants.BASE_URL;
 
 @Module(includes = {ViewModelModule.class})
 class AppModule {
@@ -22,6 +28,12 @@ class AppModule {
     @Singleton
     Context provideContext(FlyAvisApplication application) {
         return application.getApplicationContext();
+    }
+
+    @Provides
+    @Singleton
+    SharedPreferences providesSharedPreferences(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     @Provides
@@ -44,10 +56,19 @@ class AppModule {
         return database.planningDao();
     }
 
-    @Provides
     @Singleton
-    SharedPreferences providesSharedPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
+    @Provides
+    Retrofit provideRetrofit() {
+        return new Retrofit.Builder().baseUrl(BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Singleton
+    @Provides
+    FlyAvisService provideFlyAvisService(Retrofit retrofit) {
+        return retrofit.create(FlyAvisService.class);
     }
 
 }
