@@ -71,7 +71,7 @@ public class MyTripsFragment extends DaggerFragment
         binding.myTripsRecyclerView.setController(controller);
 
         mViewModel.getMyTripData().observe
-                (getViewLifecycleOwner(), myTrips -> controller.setData(myTrips));
+                (getViewLifecycleOwner(), listResource -> controller.setData(listResource.data));
         //init FAB
         floatingActionButton = binding.floatingActionButton;
         floatingActionButton.setOnClickListener

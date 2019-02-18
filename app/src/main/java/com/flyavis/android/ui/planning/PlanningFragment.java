@@ -3,7 +3,6 @@ package com.flyavis.android.ui.planning;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
+import timber.log.Timber;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -52,7 +52,6 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private PlanningFragmentBinding binding;
     private PlanningEpoxyController controller;
     private TabLayout tabLayout;
-    private String TAG = getClass().getName();
     private int day;
     private int myTripId;
 
@@ -84,7 +83,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
         mViewModel.getPlanningData(myTripId, day).observe
-                (getViewLifecycleOwner(), plannings -> controller.setData(plannings));
+                (getViewLifecycleOwner(), listResource -> controller.setData(listResource.data));
 
         //Drag control
         EpoxyTouchHelper.initDragging(controller)
@@ -110,7 +109,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
             public void onTabSelected(TabLayout.Tab tab) {
                 day = tab.getPosition() + 1;
                 mViewModel.getPlanningData(myTripId, day).observe
-                        (PlanningFragment.this, plannings -> controller.setData(plannings));
+                        (PlanningFragment.this, listResource ->
+                                controller.setData(listResource.data));
             }
 
             @Override
@@ -178,7 +178,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+                Timber.i("Place: " + place.getName() + ", " + place.getId());
 
                 Plan plan = new Plan();
                 plan.setDay(day);
@@ -190,7 +190,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i(TAG, status.getStatusMessage());
+                Timber.i(status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }

@@ -1,9 +1,7 @@
 package com.flyavis.android.ui.addnewtrip;
 
-import com.flyavis.android.data.FlyAvisRepository;
+import com.flyavis.android.data.MyTripRepository;
 import com.flyavis.android.data.database.MyTrip;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,10 +14,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddNewTripViewModel extends ViewModel {
-    private FlyAvisRepository repository;
+    private MyTripRepository repository;
 
     @Inject
-    AddNewTripViewModel(FlyAvisRepository repository) {
+    AddNewTripViewModel(MyTripRepository repository) {
         this.repository = repository;
     }
 
