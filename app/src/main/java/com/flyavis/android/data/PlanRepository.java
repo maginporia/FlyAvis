@@ -47,14 +47,13 @@ public class PlanRepository {
                 return null;
             }
         }.getAsLiveData();
-//        return planDao.getPlannings(tripId, day);
     }
 
     public void insertSpot(Plan plan) {
         planDao.insetNewSpot(plan);
     }
 
-    public void updateSpotOrder(int order, int tripId, int day) {
-        planDao.updateSpotOrder(order, tripId, day);
+    public void updateSpotOrders(List<Plan> plan) {
+        planDao.deleteAndInsert(plan);
     }
 }

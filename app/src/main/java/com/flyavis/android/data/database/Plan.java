@@ -20,7 +20,7 @@ public class Plan {
 
     private int day;
 
-    private int order;
+    private int spotOrder;
 
     private String placeId;
 
@@ -30,11 +30,11 @@ public class Plan {
     public Plan() {
     }
 
-    public Plan(int id, int tripId, int day, int order, String placeId, String placeName) {
+    public Plan(int id, int tripId, int day, int spotOrder, String placeId, String placeName) {
         this.id = id;
         this.tripId = tripId;
         this.day = day;
-        this.order = order;
+        this.spotOrder = spotOrder;
         this.placeId = placeId;
         this.placeName = placeName;
     }
@@ -63,12 +63,12 @@ public class Plan {
         this.day = day;
     }
 
-    public int getOrder() {
-        return order;
+    public int getSpotOrder() {
+        return spotOrder;
     }
 
-    public void setOrder(int order) {
-        this.order = order;
+    public void setSpotOrder(int spotOrder) {
+        this.spotOrder = spotOrder;
     }
 
     public String getPlaceId() {

@@ -25,8 +25,16 @@ public class PlanningModelGroup extends EpoxyModelGroup {
         models.add(
                 new SpotItemBindingModel_()
                         .spotName(plan.getPlaceName())
+//                        .clickListener((model, parentView, clickedView, position) -> {
+//
+//                        })
         );
-        models.add(new TrafficTimeBindingModel_());
+        models.add(
+                new TrafficTimeBindingModel_()
+//                        .clickListener((model, parentView, clickedView, position) -> {
+//
+//                        })
+        );
         return models;
     }
 

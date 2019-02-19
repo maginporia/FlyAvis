@@ -41,6 +41,9 @@
         <argument
             android:name="totalDays"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_planningFragment_to_spotDetailsFragment"
+            app:destination="@id/spotDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewTripFragment"
@@ -50,4 +53,9 @@
             android:name="myTripId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/spotDetailsFragment"
+        android:name="com.flyavis.android.ui.spotdetails.SpotDetailsFragment"
+        android:label="spot_details_fragment"
+        tools:layout="@layout/spot_details_fragment" />
 </navigation>

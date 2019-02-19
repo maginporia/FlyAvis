@@ -1,16 +1,18 @@
 package com.flyavis.android.ui.planning;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.airbnb.epoxy.EpoxyModel;
 import com.airbnb.epoxy.EpoxyTouchHelper;
 import com.flyavis.android.R;
-import com.flyavis.android.SpotItemBindingModel_;
 import com.flyavis.android.data.database.Plan;
 import com.flyavis.android.databinding.PlanningFragmentBinding;
 import com.google.android.gms.common.api.Status;
@@ -28,6 +30,7 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -38,6 +41,7 @@ import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 import timber.log.Timber;
 
+import static android.animation.ValueAnimator.ofObject;
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static com.flyavis.android.Constants.AUTOCOMPLETE_REQUEST_CODE;
@@ -54,6 +58,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private TabLayout tabLayout;
     private int day;
     private int myTripId;
+    private List<Plan> planList;
 
     public static PlanningFragment newInstance() {
         return new PlanningFragment();
@@ -79,22 +84,84 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         int totalDays = PlanningFragmentArgs
                 .fromBundle(Objects.requireNonNull(getArguments())).getTotalDays();
         day = 1;
+
         //init recyclerView
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
         mViewModel.getPlanningData(myTripId, day).observe
-                (getViewLifecycleOwner(), listResource -> controller.setData(listResource.data));
+                (getViewLifecycleOwner(), listResource -> {
+                    planList = listResource.data;
+                    controller.setData(planList);
+                    Timber.d("plan observed");
+                });
 
-        //Drag control
+        //drag support
         EpoxyTouchHelper.initDragging(controller)
                 .withRecyclerView(binding.planningRecyclerView)
                 .forVerticalList()
-                .withTargets(PlanningModelGroup.class, SpotItemBindingModel_.class)
-                .andCallbacks(new EpoxyTouchHelper.DragCallbacks<EpoxyModel>() {
+                .withTarget(PlanningModelGroup.class)
+                .andCallbacks(new EpoxyTouchHelper.DragCallbacks<PlanningModelGroup>() {
+                    @ColorInt
+                    final int selectedBackgroundColor = Color.argb(200, 200, 200, 200);
+                    ValueAnimator backgroundAnimator = null;
+
                     @Override
                     public void onModelMoved(int fromPosition, int toPosition,
-                                             EpoxyModel modelBeingMoved, View itemView) {
-                        //TODO add drag support
+                                             PlanningModelGroup modelBeingMoved, View itemView) {
+                        Timber.d("position:" + fromPosition + ">" + toPosition);
+                        Timber.d(String.valueOf("plan size:" + planList.size()));
+                        planList.add(fromPosition - 1 + (toPosition - fromPosition)
+                                , planList.remove(fromPosition - 1));
+                        for (int i = 0; i < planList.size(); i++) {
+                            Plan plan = planList.get(i);
+                            plan.setSpotOrder(i);
+                            planList.set(i, plan);
+                        }
+                    }
+
+                    @Override
+                    public void onDragStarted(PlanningModelGroup model, View itemView, int adapterPosition) {
+                        backgroundAnimator = ofObject(new ArgbEvaluator(), Color.WHITE, selectedBackgroundColor);
+                        backgroundAnimator.addUpdateListener(
+                                animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
+                        );
+
+                        backgroundAnimator.start();
+
+                        itemView
+                                .animate()
+                                .scaleX(1.05f)
+                                .scaleY(1.05f);
+                    }
+
+
+                    @Override
+                    public void onDragReleased(PlanningModelGroup model, View itemView) {
+                        if (backgroundAnimator != null) {
+                            backgroundAnimator.cancel();
+                        }
+
+                        backgroundAnimator =
+                                ofObject(new ArgbEvaluator()
+                                        , ((ColorDrawable) itemView.getBackground()).getColor(),
+                                        Color.WHITE);
+                        backgroundAnimator.addUpdateListener(
+                                animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
+                        );
+
+                        backgroundAnimator.start();
+
+                        itemView
+                                .animate()
+                                .scaleX(1f)
+                                .scaleY(1f);
+
+                    }
+
+                    @Override
+                    public void clearView(PlanningModelGroup model, View itemView) {
+                        onDragReleased(model, itemView);
+                        mViewModel.updateOrders(planList);
                     }
                 });
 
@@ -185,6 +252,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 plan.setPlaceId(place.getId());
                 plan.setPlaceName(place.getName());
                 plan.setTripId(myTripId);
+                plan.setSpotOrder(999);
                 mViewModel.insetNewSpot(plan);
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
