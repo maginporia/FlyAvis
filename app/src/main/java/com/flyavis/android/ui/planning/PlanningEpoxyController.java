@@ -30,7 +30,9 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
 //        if (data.size() > 0) {
 //            if (data.size() > 1) {
         for (int i = 0; i < data.size(); i++) {
-                    add(new PlanningModelGroup(data.get(i), callbacks));
+            new PlanningModelGroup(data.get(i), callbacks)
+                    .id(data.get(i).getPlanId())
+                    .addTo(this);
 //                }
 //            }
 
@@ -54,6 +56,8 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
         void onAddNewSpotViewClick();
 
         void onSpotViewClick();
+
+        void onMoreButtonClick(int planId);
 
         void onTrafficTimeClick();
     }

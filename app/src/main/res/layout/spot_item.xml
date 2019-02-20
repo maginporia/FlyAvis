@@ -29,10 +29,14 @@
             name="spotNotice"
             type="String" />
 
-
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="moreButtonClickListener"
+            type="android.view.View.OnClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -146,13 +150,14 @@
             tools:text="5000" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/moreButton"
             style="@android:style/Widget.Material.ImageButton"
-            android:layout_width="25dp"
+            android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
+            android:onClick="@{moreButtonClickListener}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_more_vert_24" />

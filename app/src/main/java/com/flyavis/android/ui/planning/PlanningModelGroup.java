@@ -29,16 +29,19 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                         .leaveTime("10:00")
                         .spotNotice("備註")
                         .stayTime("2小時")
-//                        .clickListener((model, parentView, clickedView, position) -> {
-//
-//                        })
+                        .clickListener(view -> {
+
+                        })
+                        .moreButtonClickListener(view -> {
+                            callbacks.onMoreButtonClick(plan.getPlanId());
+                        })
         );
         models.add(
                 new TrafficTimeBindingModel_()
                         .trafficTime("1小時")
-//                        .clickListener((model, parentView, clickedView, position) -> {
-//
-//                        })
+                        .clickListener(view -> {
+
+                        })
         );
         return models;
     }

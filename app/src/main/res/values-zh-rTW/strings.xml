@@ -8,6 +8,6 @@
     <string name="title_activity_firebase_ui">登入</string>
     <string name="start_a_new_trip">開始一個新旅程</string>
     <string name="day">Day</string>
-    <string name="add_a_new_spot">Add a new spot</string>
-    <string name="edit">Edit</string>
+    <string name="add_a_new_spot">加入一個景點</string>
+    <string name="edit">編輯</string>
 </resources>

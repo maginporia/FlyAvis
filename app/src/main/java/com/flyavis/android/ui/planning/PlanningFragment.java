@@ -222,6 +222,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     }
 
     @Override
+    public void onMoreButtonClick(int planId) {
+
+    }
+
+    @Override
     public void onTrafficTimeClick() {
 
     }

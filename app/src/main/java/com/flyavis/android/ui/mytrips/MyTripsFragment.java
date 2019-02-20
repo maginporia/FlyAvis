@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.flyavis.android.R;
 import com.flyavis.android.databinding.MyTripsFragmentBinding;
+import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashSet;
@@ -80,8 +81,10 @@ public class MyTripsFragment extends DaggerFragment
     }
 
     @Override
-    public void onMyTripItemClick
-            (MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action) {
+    public void onMyTripItemClick(int id, String days) {
+        MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action
+                = MyTripsFragmentDirections.actionMyTripsFragmentToPlanningFragment(id
+                , FlyAvisUtils.calculateDays(days) + 1);
         navigateView(action);
     }
 
@@ -102,8 +105,9 @@ public class MyTripsFragment extends DaggerFragment
     }
 
     @Override
-    public void
-    onEditTripClick(MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment action) {
+    public void onEditTripClick(int id) {
+        MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment action
+                = MyTripsFragmentDirections.actionMyTripsFragmentToAddNewTripFragment(id);
         navigateView(action);
     }
 

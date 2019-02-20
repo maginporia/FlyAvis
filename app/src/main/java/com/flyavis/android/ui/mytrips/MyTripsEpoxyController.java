@@ -10,7 +10,6 @@ import com.flyavis.android.MyTripsItemBindingModel_;
 import com.flyavis.android.R;
 import com.flyavis.android.TitleItemBindingModel_;
 import com.flyavis.android.data.database.MyTrip;
-import com.flyavis.android.util.FlyAvisUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,11 +55,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         .clickListener((model, parentView, clickedView, position) -> {
                             if (!deleteState) {
                                 //set args in nav_graph.xml first
-                                MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment
-                                        action = MyTripsFragmentDirections
-                                        .actionMyTripsFragmentToPlanningFragment((int) model.id()
-                                                , FlyAvisUtils.calculateDays(model.date()) + 1);
-                                callbacks.onMyTripItemClick(action);
+                                callbacks.onMyTripItemClick((int) model.id(), model.date());
                             } else {
                                 setClicked(clickedView);
                                 addToList(position);
@@ -76,10 +71,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                             return true;
                         })
                         .editClickListener((model, parentView, clickedView, position) -> {
-                            MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment
-                                    action = MyTripsFragmentDirections
-                                    .actionMyTripsFragmentToAddNewTripFragment((int) model.id());
-                            callbacks.onEditTripClick(action);
+                            callbacks.onEditTripClick((int) model.id());
                         })
                         .addTo(this);
             }
@@ -141,12 +133,11 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     }
 
     public interface MyTripsCallbacks {
-        void onMyTripItemClick
-                (MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment action);
+        void onMyTripItemClick(int id, String days);
 
         void onMyTripItemLongClick(int id, boolean deleteState, int clickedCount);
 
         void
-        onEditTripClick(MyTripsFragmentDirections.ActionMyTripsFragmentToAddNewTripFragment action);
+        onEditTripClick(int id);
     }
 }
