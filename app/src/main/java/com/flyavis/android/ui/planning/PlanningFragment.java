@@ -110,8 +110,9 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                                              PlanningModelGroup modelBeingMoved, View itemView) {
                         Timber.d("position:" + fromPosition + ">" + toPosition);
                         Timber.d(String.valueOf("plan size:" + planList.size()));
-                        planList.add(fromPosition - 1 + (toPosition - fromPosition)
-                                , planList.remove(fromPosition - 1));
+                        int index = planList.indexOf(modelBeingMoved.plan);
+                        planList.add(index + (toPosition - fromPosition)
+                                , planList.remove(index));
                         for (int i = 0; i < planList.size(); i++) {
                             Plan plan = planList.get(i);
                             plan.setSpotOrder(i);
@@ -176,8 +177,12 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
             public void onTabSelected(TabLayout.Tab tab) {
                 day = tab.getPosition() + 1;
                 mViewModel.getPlanningData(myTripId, day).observe
-                        (PlanningFragment.this, listResource ->
-                                controller.setData(listResource.data));
+                        (PlanningFragment.this, listResource -> {
+                            planList = listResource.data;
+//                                    controller.setData(planList);
+                            Timber.d("plan observed");
+                        });
+
             }
 
             @Override
@@ -248,9 +253,9 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 Timber.i("Place: " + place.getName() + ", " + place.getId());
 
                 Plan plan = new Plan();
-                plan.setDay(day);
+                plan.setPlanDay(day);
                 plan.setPlaceId(place.getId());
-                plan.setPlaceName(place.getName());
+                plan.setSpotName(place.getName());
                 plan.setTripId(myTripId);
                 plan.setSpotOrder(999);
                 mViewModel.insetNewSpot(plan);

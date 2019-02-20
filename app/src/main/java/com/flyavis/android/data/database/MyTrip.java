@@ -8,28 +8,23 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "my_trip")
+@Entity
 public class MyTrip {
 
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "my_trip_id")
     private int myTripId;
 
-    @ColumnInfo(name = "trip_name")
     private String tripName;
 
-    @ColumnInfo(name = "start_date")
     private Date startDate;
 
-    @ColumnInfo(name = "end_date")
     private Date endDate;
 
-    @ColumnInfo(name = "cover_photo", typeAffinity = ColumnInfo.BLOB)
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] coverPhoto;
 
     private Boolean shared;
 
-    @ColumnInfo(name = "who_join")
     private String whoJoin;
 
     @Ignore

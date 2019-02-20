@@ -5,22 +5,24 @@ import java.util.Set;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 import io.reactivex.Flowable;
 
 @Dao
 public interface MyTripDao {
-    @Query("SELECT * FROM my_trip ORDER BY end_date DESC")
+    @Query("SELECT * FROM mytrip ORDER BY endDate DESC")
     Flowable<List<MyTrip>> getMyTrips();
 
-    @Query("SELECT * FROM my_trip WHERE my_trip_id IN (:id)")
+    @Query("SELECT * FROM mytrip WHERE myTripId IN (:id)")
     Flowable<MyTrip> getSpecificTrip(int id);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insertTrip(MyTrip myTrip);
 
-    @Query("DELETE FROM my_trip WHERE my_trip_id IN (:set)")
+    @Update
+    void updateTrip(MyTrip myTrip);
+
+    @Query("DELETE FROM mytrip WHERE myTripId IN (:set)")
     void deleteTrip(Set<Integer> set);
 }

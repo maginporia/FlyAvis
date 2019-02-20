@@ -29,7 +29,7 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
 
 //        if (data.size() > 0) {
 //            if (data.size() > 1) {
-        for (int i = 0; i <= data.size() - 1; i++) {
+        for (int i = 0; i < data.size(); i++) {
                     add(new PlanningModelGroup(data.get(i), callbacks));
 //                }
 //            }

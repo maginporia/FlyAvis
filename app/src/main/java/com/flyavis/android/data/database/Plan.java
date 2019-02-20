@@ -1,50 +1,70 @@
 package com.flyavis.android.data.database;
 
-import androidx.room.ColumnInfo;
+import java.sql.Time;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = MyTrip.class,
-        parentColumns = "my_trip_id",
-        childColumns = "trip_id",
+        parentColumns = "myTripId",
+        childColumns = "tripId",
         onDelete = ForeignKey.CASCADE))
 public class Plan {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int planId;
 
-    @ColumnInfo(name = "trip_id")
     private int tripId;
 
-    private int day;
+    private int planDay;
 
     private int spotOrder;
 
     private String placeId;
 
-    private String placeName;
+    private String spotName;
+
+    private Time spotStartTime;
+
+    private Time spotEndTime;
+
+    private Integer spotCost;
+
+    private String spotNotice;
+
+    private Integer spotTrafficFee;
+
+    private Boolean planB;
 
     @Ignore
     public Plan() {
     }
 
-    public Plan(int id, int tripId, int day, int spotOrder, String placeId, String placeName) {
-        this.id = id;
+    public Plan(int planId, int tripId, int planDay, int spotOrder, String placeId, String spotName
+            , Time spotStartTime, Time spotEndTime, Integer spotCost, String spotNotice
+            , Integer spotTrafficFee, Boolean planB) {
+        this.planId = planId;
         this.tripId = tripId;
-        this.day = day;
+        this.planDay = planDay;
         this.spotOrder = spotOrder;
         this.placeId = placeId;
-        this.placeName = placeName;
+        this.spotName = spotName;
+        this.spotStartTime = spotStartTime;
+        this.spotEndTime = spotEndTime;
+        this.spotCost = spotCost;
+        this.spotNotice = spotNotice;
+        this.spotTrafficFee = spotTrafficFee;
+        this.planB = planB;
     }
 
-    public int getId() {
-        return id;
+    public int getPlanId() {
+        return planId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPlanId(int planId) {
+        this.planId = planId;
     }
 
     public int getTripId() {
@@ -55,12 +75,12 @@ public class Plan {
         this.tripId = tripId;
     }
 
-    public int getDay() {
-        return day;
+    public int getPlanDay() {
+        return planDay;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setPlanDay(int planDay) {
+        this.planDay = planDay;
     }
 
     public int getSpotOrder() {
@@ -79,11 +99,59 @@ public class Plan {
         this.placeId = placeId;
     }
 
-    public String getPlaceName() {
-        return placeName;
+    public String getSpotName() {
+        return spotName;
     }
 
-    public void setPlaceName(String placeName) {
-        this.placeName = placeName;
+    public void setSpotName(String spotName) {
+        this.spotName = spotName;
+    }
+
+    public Time getSpotStartTime() {
+        return spotStartTime;
+    }
+
+    public void setSpotStartTime(Time spotStartTime) {
+        this.spotStartTime = spotStartTime;
+    }
+
+    public Time getSpotEndTime() {
+        return spotEndTime;
+    }
+
+    public void setSpotEndTime(Time spotEndTime) {
+        this.spotEndTime = spotEndTime;
+    }
+
+    public Integer getSpotCost() {
+        return spotCost;
+    }
+
+    public void setSpotCost(Integer spotCost) {
+        this.spotCost = spotCost;
+    }
+
+    public String getSpotNotice() {
+        return spotNotice;
+    }
+
+    public void setSpotNotice(String spotNotice) {
+        this.spotNotice = spotNotice;
+    }
+
+    public Integer getSpotTrafficFee() {
+        return spotTrafficFee;
+    }
+
+    public void setSpotTrafficFee(Integer spotTrafficFee) {
+        this.spotTrafficFee = spotTrafficFee;
+    }
+
+    public Boolean getPlanB() {
+        return planB;
+    }
+
+    public void setPlanB(Boolean planB) {
+        this.planB = planB;
     }
 }

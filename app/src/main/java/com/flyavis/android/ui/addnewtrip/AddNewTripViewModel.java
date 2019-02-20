@@ -28,6 +28,13 @@ public class AddNewTripViewModel extends ViewModel {
                 .subscribe();
     }
 
+    void updateTrip(final MyTrip myTrip) {
+        //RxJava2
+        Completable.fromAction(() -> repository.updateMyTrip(myTrip))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
     LiveData<MyTrip> getSpecificTrip(int myTripId) {
         Flowable<MyTrip> flowable = repository.getSpecificTrip(myTripId)
                 .observeOn(AndroidSchedulers.mainThread());

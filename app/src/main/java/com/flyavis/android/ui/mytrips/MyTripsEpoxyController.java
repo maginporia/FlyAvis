@@ -10,6 +10,7 @@ import com.flyavis.android.MyTripsItemBindingModel_;
 import com.flyavis.android.R;
 import com.flyavis.android.TitleItemBindingModel_;
 import com.flyavis.android.data.database.MyTrip;
+import com.flyavis.android.util.FlyAvisUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -58,9 +59,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                                 MyTripsFragmentDirections.ActionMyTripsFragmentToPlanningFragment
                                         action = MyTripsFragmentDirections
                                         .actionMyTripsFragmentToPlanningFragment((int) model.id()
-                                                , (int) ((myTrip.getEndDate().getTime()
-                                                        - myTrip.getStartDate().getTime())
-                                                        / (24 * 60 * 60 * 1000)) + 1);
+                                                , FlyAvisUtils.calculateDays(model.date()) + 1);
                                 callbacks.onMyTripItemClick(action);
                             } else {
                                 setClicked(clickedView);

@@ -24,13 +24,18 @@ public class PlanningModelGroup extends EpoxyModelGroup {
         ArrayList<EpoxyModel<?>> models = new ArrayList<>();
         models.add(
                 new SpotItemBindingModel_()
-                        .spotName(plan.getPlaceName())
+                        .spotName(plan.getSpotName())
+                        .arriveTime("08:00")
+                        .leaveTime("10:00")
+                        .spotNotice("備註")
+                        .stayTime("2小時")
 //                        .clickListener((model, parentView, clickedView, position) -> {
 //
 //                        })
         );
         models.add(
                 new TrafficTimeBindingModel_()
+                        .trafficTime("1小時")
 //                        .clickListener((model, parentView, clickedView, position) -> {
 //
 //                        })

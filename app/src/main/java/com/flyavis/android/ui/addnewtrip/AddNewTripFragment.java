@@ -122,7 +122,11 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         myTrip.setEndDate(Date.valueOf(String.valueOf(endDate.getText())));
         switch (item.getItemId()) {
             case R.id.save:
-                mViewModel.insertTrip(myTrip);
+                if (myTripId != 0) {
+                    mViewModel.updateTrip(myTrip);
+                } else {
+                    mViewModel.insertTrip(myTrip);
+                }
                 mode.finish();
                 break;
             default:

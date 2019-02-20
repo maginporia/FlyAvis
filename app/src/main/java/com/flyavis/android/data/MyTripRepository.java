@@ -61,6 +61,10 @@ public class MyTripRepository {
         myTripDao.insertTrip(myTrip);
     }
 
+    public void updateMyTrip(MyTrip myTrip) {
+        myTripDao.updateTrip(myTrip);
+    }
+
     public void deleteMyTrip(Set<Integer> set) {
         myTripDao.deleteTrip(set);
     }
