@@ -276,4 +276,9 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        controller.setData(null);
+    }
 }

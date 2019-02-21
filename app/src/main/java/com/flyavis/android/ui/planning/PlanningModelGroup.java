@@ -27,10 +27,10 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                 new SpotItemBindingModel_()
                         .id("spotItem")
                         .spotName(plan.getSpotName())
-                        .arriveTime("08:00")
-                        .leaveTime("10:00")
-                        .spotNotice("備註")
-                        .stayTime("2小時")
+                        .arriveTime("13:30")
+                        .leaveTime("14:30")
+                        .spotNotice("專題好難")
+                        .stayTime("1小時")
                         .clickListener(view -> {
 
                         })
@@ -41,7 +41,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
         models.add(
                 new TrafficTimeBindingModel_()
                         .id("trafficTime")
-                        .trafficTime("1小時")
+                        .trafficTime("∞小時")
                         .clickListener(view -> {
 
                         })

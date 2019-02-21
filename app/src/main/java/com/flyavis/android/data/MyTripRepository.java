@@ -17,7 +17,6 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
 
 //處理本地與遠端資料
 @Singleton
@@ -75,7 +74,6 @@ public class MyTripRepository {
     }
 
     public void insetMyTripRemote(MyTrip myTrip) {
-        Timber.d("debug");
         service.insertMyTrips(myTrip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

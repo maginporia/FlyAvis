@@ -2,10 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
     <item android:drawable="@color/colorPrimary" />
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@drawable/ic_launcher_foreground" />
-    </item>
+
+    <item
+        android:drawable="@drawable/ic_flyavis512"
+        android:gravity="center" />
     
 </layer-list>
