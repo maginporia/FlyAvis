@@ -53,7 +53,11 @@ public class PlanRepository {
         planDao.insetNewSpot(plan);
     }
 
-    public void updateSpotOrders(List<Plan> plan) {
+    public void reInsetSpots(List<Plan> plan) {
         planDao.deleteAndInsert(plan);
+    }
+
+    public void updateSpotOrder(List<Plan> plan) {
+        planDao.updateOrders(plan);
     }
 }

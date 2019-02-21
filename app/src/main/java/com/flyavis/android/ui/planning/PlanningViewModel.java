@@ -37,8 +37,14 @@ public class PlanningViewModel extends ViewModel {
                 .subscribe();
     }
 
-    void updateOrders(List<Plan> plan) {
-        Completable.fromAction(() -> repository.updateSpotOrders(plan))
+    void reInsertSpots(List<Plan> plan) {
+        Completable.fromAction(() -> repository.reInsetSpots(plan))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
+
+    void updateSpotOrder(List<Plan> plan) {
+        Completable.fromAction(() -> repository.updateSpotOrder(plan))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

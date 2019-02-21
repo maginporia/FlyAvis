@@ -17,6 +17,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
     PlanningModelGroup(Plan plan, PlanningEpoxyController.PlanningCallbacks callbacks) {
         super(R.layout.planning_item, buildModels(plan, callbacks));
         this.plan = plan;
+        id(plan.getPlanId());
     }
 
     private static List<EpoxyModel<?>> buildModels
@@ -24,6 +25,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
         ArrayList<EpoxyModel<?>> models = new ArrayList<>();
         models.add(
                 new SpotItemBindingModel_()
+                        .id("spotItem")
                         .spotName(plan.getSpotName())
                         .arriveTime("08:00")
                         .leaveTime("10:00")
@@ -38,6 +40,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
         );
         models.add(
                 new TrafficTimeBindingModel_()
+                        .id("trafficTime")
                         .trafficTime("1小時")
                         .clickListener(view -> {
 

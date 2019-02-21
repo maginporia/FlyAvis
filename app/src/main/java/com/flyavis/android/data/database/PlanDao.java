@@ -8,6 +8,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 import io.reactivex.Flowable;
 
 @Dao
@@ -18,6 +19,9 @@ public abstract class PlanDao {
 
     @Insert
     public abstract void insetNewSpot(Plan plan);
+
+    @Update
+    public abstract void updateOrders(List<Plan> plan);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertSpots(List<Plan> plan);
@@ -30,5 +34,4 @@ public abstract class PlanDao {
         deleteDaySpots(plan);
         insertSpots(plan);
     }
-
 }

@@ -111,6 +111,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                         Timber.d("position:" + fromPosition + ">" + toPosition);
                         Timber.d(String.valueOf("plan size:" + planList.size()));
                         int index = planList.indexOf(modelBeingMoved.plan);
+                        Timber.d("modelIndex:%s", index);
                         planList.add(index + (toPosition - fromPosition)
                                 , planList.remove(index));
                         for (int i = 0; i < planList.size(); i++) {
@@ -162,7 +163,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     @Override
                     public void clearView(PlanningModelGroup model, View itemView) {
                         onDragReleased(model, itemView);
-                        mViewModel.updateOrders(planList);
+                        mViewModel.updateSpotOrder(planList);
+                        controller.setData(null);
                     }
                 });
 
@@ -179,7 +181,6 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 mViewModel.getPlanningData(myTripId, day).observe
                         (PlanningFragment.this, listResource -> {
                             planList = listResource.data;
-//                                    controller.setData(planList);
                             Timber.d("plan observed");
                         });
 
