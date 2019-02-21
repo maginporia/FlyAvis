@@ -14,6 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 //處理本地與遠端資料
 @Singleton
@@ -59,6 +63,7 @@ public class MyTripRepository {
 
     public void insetMyTrip(MyTrip myTrip) {
         myTripDao.insertTrip(myTrip);
+
     }
 
     public void updateMyTrip(MyTrip myTrip) {
@@ -69,4 +74,21 @@ public class MyTripRepository {
         myTripDao.deleteTrip(set);
     }
 
+    public void insetMyTripRemote(MyTrip myTrip) {
+        Timber.d("debug");
+        service.insertMyTrips(myTrip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+    }
 }

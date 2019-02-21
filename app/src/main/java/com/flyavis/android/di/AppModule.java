@@ -16,6 +16,9 @@ import javax.inject.Singleton;
 import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -58,10 +61,11 @@ class AppModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit() {
+    Retrofit provideRetrofit(OkHttpClient client) {
         return new Retrofit.Builder().baseUrl(BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .build();
     }
 
@@ -71,4 +75,19 @@ class AppModule {
         return retrofit.create(FlyAvisService.class);
     }
 
+    @Provides
+    @Singleton
+    Interceptor provideInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return interceptor;
+    }
+
+    @Provides
+    @Singleton
+    OkHttpClient provideOkHttpClient(Interceptor interceptor) {
+        OkHttpClient.Builder client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor);
+        return client.build();
+    }
 }

@@ -126,6 +126,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
                     mViewModel.updateTrip(myTrip);
                 } else {
                     mViewModel.insertTrip(myTrip);
+                    mViewModel.insetMyTripRemote(myTrip);
                 }
                 mode.finish();
                 break;

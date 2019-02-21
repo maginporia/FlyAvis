@@ -41,4 +41,21 @@ public class AddNewTripViewModel extends ViewModel {
         return LiveDataReactiveStreams.fromPublisher(flowable);
     }
 
+    void insetMyTripRemote(MyTrip myTrip) {
+//        Completable.fromAction(() -> repository.insetMyTripRemote(myTrip))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DisposableCompletableObserver() {
+//                               @Override
+//                               public void onComplete() {
+//                                   Timber.d("ok");
+//                               }
+//
+//                               @Override
+//                               public void onError(Throwable e) {
+//                                   Timber.d("error");
+//                               }
+//                           });
+        repository.insetMyTripRemote(myTrip);
+    }
 }
