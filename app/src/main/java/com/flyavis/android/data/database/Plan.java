@@ -22,6 +22,10 @@ public class Plan {
 
     private int spotOrder;
 
+    private Double longitude;
+
+    private Double latitude;
+
     private String placeId;
 
     private String spotName;
