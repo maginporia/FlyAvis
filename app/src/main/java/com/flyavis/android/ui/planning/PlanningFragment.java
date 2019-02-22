@@ -21,6 +21,7 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
@@ -224,7 +225,10 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
 
     @Override
     public void onMoreButtonClick(int planId) {
-
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Objects.requireNonNull(getActivity()));
+        View sheetView = getActivity().getLayoutInflater().inflate(R.layout.plan_bottom_sheet, null);
+        bottomSheetDialog.setContentView(sheetView);
+        bottomSheetDialog.show();
     }
 
     @Override

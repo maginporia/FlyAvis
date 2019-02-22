@@ -10,9 +10,14 @@ import androidx.room.PrimaryKey;
         childColumns = "planId",
         onDelete = ForeignKey.CASCADE))
 public class ToDoList {
+
+    @PrimaryKey(autoGenerate = true)
     private Integer toDoId;
+
     private String toDoItem;
+
     private Boolean done;
+
     private Integer planId;
 
     public ToDoList(Integer toDoId, String toDoItem, Boolean done, Integer planId) {
@@ -26,7 +31,6 @@ public class ToDoList {
     public ToDoList() {
     }
 
-    @PrimaryKey(autoGenerate = true)
     public Integer getToDoId() {
         return toDoId;
     }

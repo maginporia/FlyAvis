@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Plan.class,
@@ -36,6 +37,7 @@ public class Bill {
         this.singleCost = singleCost;
     }
 
+    @Ignore
     public Bill() {
     }
 

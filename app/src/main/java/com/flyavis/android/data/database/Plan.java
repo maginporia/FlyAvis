@@ -46,13 +46,15 @@ public class Plan {
     public Plan() {
     }
 
-    public Plan(int planId, int tripId, int planDay, int spotOrder, String placeId, String spotName
-            , Time spotStartTime, Time spotEndTime, Integer spotCost, String spotNotice
-            , Integer spotTrafficFee, Boolean planB) {
+    public Plan(int planId, int tripId, int planDay, int spotOrder, Double longitude
+            , Double latitude, String placeId, String spotName, Time spotStartTime, Time spotEndTime
+            , Integer spotCost, String spotNotice, Integer spotTrafficFee, Boolean planB) {
         this.planId = planId;
         this.tripId = tripId;
         this.planDay = planDay;
         this.spotOrder = spotOrder;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.placeId = placeId;
         this.spotName = spotName;
         this.spotStartTime = spotStartTime;
@@ -93,6 +95,22 @@ public class Plan {
 
     public void setSpotOrder(int spotOrder) {
         this.spotOrder = spotOrder;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     public String getPlaceId() {

@@ -13,4 +13,5 @@
     <string name="day">Day</string>
     <string name="add_a_new_spot">Add a new spot</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

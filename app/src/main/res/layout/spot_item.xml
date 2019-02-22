@@ -42,9 +42,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{clickListener}"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5">
+        android:onClick="@{clickListener}">
 
         <TextView
             android:id="@+id/arriveTimeTextView"
@@ -80,16 +78,6 @@
             app:layout_constraintStart_toStartOf="@+id/arriveTimeTextView"
             app:srcCompat="@drawable/baseline_place_24" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="19dp"
-            android:layout_height="21dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toStartOf="@+id/stayTimeTextView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_timer_24" />
-
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
@@ -122,9 +110,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="52dp"
+            android:layout_marginEnd="8dp"
             android:text="@{stayTime}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:drawableStart="@drawable/baseline_timer_24"
+            style="@style/Smaller_Drawable"
+            app:layout_constraintEnd_toStartOf="@+id/moreButton"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1hr" />
 
@@ -156,7 +146,7 @@
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="@{moreButtonClickListener}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
