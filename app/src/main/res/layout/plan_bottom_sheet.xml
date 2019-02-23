@@ -1,50 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
-    android:id="@+id/plan_bottom_sheet"
-    android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/plan_bottom_sheet_edit"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal"
+    <data>
 
-        >
+        <variable
+            name="deleteClickListener"
+            type="android.view.View.OnClickListener" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/edit"
-            style="@style/Smaller_Drawable"
-            android:drawableStart="@drawable/baseline_edit_24"
-            android:drawablePadding="@dimen/card_spacing" />
-    </LinearLayout>
+        <variable
+            name="editStayTimeClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
 
     <LinearLayout
-        android:id="@+id/fragment_history_bottom_sheet_delete"
+        android:id="@+id/plan_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
+        android:layout_height="180dp"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="16dp"
-            android:text="@string/delete"
-            style="@style/Smaller_Drawable"
-            android:drawableStart="@drawable/baseline_delete_24"
-            android:drawablePadding="@dimen/card_spacing" />
+        <LinearLayout
+            android:id="@+id/plan_bottom_sheet_edit"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{editStayTimeClickListener}"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/baseline_timer_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:text="@string/edit_stay_time" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_history_bottom_sheet_delete"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{deleteClickListener}"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/baseline_delete_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:text="@string/delete" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

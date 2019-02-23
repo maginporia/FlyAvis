@@ -23,19 +23,21 @@ public class PlanningModelGroup extends EpoxyModelGroup {
     private static List<EpoxyModel<?>> buildModels
             (Plan plan, PlanningEpoxyController.PlanningCallbacks callbacks) {
         ArrayList<EpoxyModel<?>> models = new ArrayList<>();
+        long l = plan.getSpotEndTime().getTime() - plan.getSpotStartTime().getTime();
         models.add(
                 new SpotItemBindingModel_()
                         .id("spotItem")
                         .spotName(plan.getSpotName())
-                        .arriveTime("13:30")
-                        .leaveTime("14:30")
-                        .spotNotice("專題好難")
-                        .stayTime("1小時")
+                        .arriveTime(plan.getSpotStartTime().toString())
+                        .leaveTime(plan.getSpotEndTime().toString())
+
+                        .spotNotice("目前沒有備註")
+                        .stayTime(l / (60 * 60 * 1000) + "小時")
                         .clickListener(view -> {
 
                         })
                         .moreButtonClickListener(view -> {
-                            callbacks.onMoreButtonClick(plan.getPlanId());
+                            callbacks.onMoreButtonClick(plan);
                         })
         );
         models.add(

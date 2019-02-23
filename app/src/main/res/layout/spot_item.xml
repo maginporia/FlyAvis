@@ -52,6 +52,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="6dp"
             android:text="@{arriveTime}"
+            android:maxLength="5"
             app:layout_constraintBottom_toTopOf="@+id/imageView2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -64,6 +65,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
             android:text="@{leaveTime}"
+            android:maxLength="5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="21:00" />
@@ -107,13 +109,13 @@
 
         <TextView
             android:id="@+id/stayTimeTextView"
+            style="@style/Smaller_Drawable_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
-            android:text="@{stayTime}"
             android:drawableStart="@drawable/baseline_timer_24"
-            style="@style/Smaller_Drawable"
+            android:text="@{stayTime}"
             app:layout_constraintEnd_toStartOf="@+id/moreButton"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="1hr" />
@@ -124,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="12dp"
-            android:text="TextView"
+            android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView10"
             tools:text="5000" />
@@ -134,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="44dp"
-            android:text="TextView"
+            android:text=""
             app:layout_constraintBaseline_toBaselineOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="5000" />

@@ -22,4 +22,15 @@ public class FlyAvisUtils {
         return (int) ((StringToDate(split[1]).getTime() - StringToDate(split[0]).getTime())
                 / (24 * 60 * 60 * 1000));
     }
+
+    public static long StringToTimeLong(String string) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.US);
+        long ms = 0;
+        try {
+            ms = sdf.parse(string).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return ms;
+    }
 }

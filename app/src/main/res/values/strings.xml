@@ -14,4 +14,5 @@
     <string name="add_a_new_spot">Add a new spot</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="edit_stay_time">Edit stay time</string>
 </resources>

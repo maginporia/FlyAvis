@@ -4,7 +4,8 @@
 
     <item
         android:title="List"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:visible="false" />
     <item
         android:title="Map"
         app:showAsAction="always"

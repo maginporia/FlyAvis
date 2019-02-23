@@ -2,6 +2,7 @@ package com.flyavis.android.ui.planning;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import com.airbnb.epoxy.EpoxyTouchHelper;
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.Plan;
+import com.flyavis.android.databinding.PlanBottomSheetBinding;
 import com.flyavis.android.databinding.PlanningFragmentBinding;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
@@ -25,6 +27,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -58,6 +61,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private PlanningEpoxyController controller;
     private TabLayout tabLayout;
     private int day;
+    private Time nextSpotTime;
     private int myTripId;
     private List<Plan> planList;
 
@@ -84,7 +88,9 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 .fromBundle(Objects.requireNonNull(getArguments())).getMyTripId();
         int totalDays = PlanningFragmentArgs
                 .fromBundle(Objects.requireNonNull(getArguments())).getTotalDays();
+        //init some values
         day = 1;
+        nextSpotTime = Time.valueOf("08:00:00");
 
         //init recyclerView
         controller = new PlanningEpoxyController(this);
@@ -93,6 +99,9 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 (getViewLifecycleOwner(), listResource -> {
                     planList = listResource.data;
                     controller.setData(planList);
+                    if (planList != null) {
+                        nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
+                    }
                     Timber.d("plan observed");
                 });
 
@@ -164,7 +173,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     @Override
                     public void clearView(PlanningModelGroup model, View itemView) {
                         onDragReleased(model, itemView);
-                        mViewModel.updateSpotOrder(planList);
+                        mViewModel.updatePlanOrder(planList);
                         controller.setData(null);
                     }
                 });
@@ -182,6 +191,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 mViewModel.getPlanningData(myTripId, day).observe
                         (PlanningFragment.this, listResource -> {
                             planList = listResource.data;
+                            if (planList != null) {
+                                nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
+                            } else {
+                                nextSpotTime = Time.valueOf("08:00:00");
+                            }
                             Timber.d("plan observed");
                         });
 
@@ -224,11 +238,32 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     }
 
     @Override
-    public void onMoreButtonClick(int planId) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(Objects.requireNonNull(getActivity()));
-        View sheetView = getActivity().getLayoutInflater().inflate(R.layout.plan_bottom_sheet, null);
-        bottomSheetDialog.setContentView(sheetView);
+    public void onMoreButtonClick(Plan plan) {
+        //show bottomSheet
+        BottomSheetDialog bottomSheetDialog
+                = new BottomSheetDialog(Objects.requireNonNull(getContext()));
+        PlanBottomSheetBinding bottomSheetBinding
+                = DataBindingUtil.inflate(LayoutInflater.from(getContext())
+                , R.layout.plan_bottom_sheet, null, false);
+        bottomSheetDialog.setContentView(bottomSheetBinding.getRoot());
         bottomSheetDialog.show();
+
+        bottomSheetBinding.setEditStayTimeClickListener(view -> {
+            new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
+                long l = plan.getSpotStartTime().getTime() + i1 * 1000 * 60 + i * 1000 * 60 * 60;
+                Time time = new Time(l);
+                plan.setSpotEndTime(time);
+                mViewModel.updatePlan(plan);
+                bottomSheetDialog.dismiss();
+            }, 0, 0, true).show();
+
+        });
+
+        bottomSheetBinding.setDeleteClickListener(view -> {
+                    mViewModel.deletePlan(plan);
+                    bottomSheetDialog.dismiss();
+                }
+        );
     }
 
     @Override
@@ -267,6 +302,10 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 plan.setPlaceId(place.getId());
                 plan.setSpotName(place.getName());
                 plan.setTripId(myTripId);
+                plan.setSpotStartTime(nextSpotTime);
+                long l = nextSpotTime.getTime() + (60 * 60 * 1000);
+                Time time = new Time(l);
+                plan.setSpotEndTime(time);
                 plan.setSpotOrder(999);
                 mViewModel.insetNewSpot(plan);
 

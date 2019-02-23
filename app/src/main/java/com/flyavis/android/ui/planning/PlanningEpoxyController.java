@@ -24,7 +24,7 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
         dateTitleBindingModel
                 //TODO change to real data
                 .title("2019.02.22 星期五")
-                .subTitle("進度報告")
+                .subTitle("")
                 .addTo(this);
 
 //        if (data.size() > 0) {
@@ -58,7 +58,7 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
 
         void onSpotViewClick();
 
-        void onMoreButtonClick(int planId);
+        void onMoreButtonClick(Plan plan);
 
         void onTrafficTimeClick();
     }

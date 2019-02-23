@@ -20,8 +20,14 @@ public abstract class PlanDao {
     @Insert
     public abstract void insetNewSpot(Plan plan);
 
+    @Delete
+    public abstract void deletePlan(Plan plan);
+
     @Update
-    public abstract void updateOrders(List<Plan> plan);
+    public abstract void updatePlan(Plan plan);
+
+    @Update
+    public abstract void updatePlans(List<Plan> plan);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertSpots(List<Plan> plan);

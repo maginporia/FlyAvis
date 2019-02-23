@@ -11,4 +11,5 @@
     <string name="add_a_new_spot">加入一個景點</string>
     <string name="edit">編輯</string>
     <string name="delete">刪除</string>
+    <string name="edit_stay_time">編輯停留時間</string>
 </resources>
