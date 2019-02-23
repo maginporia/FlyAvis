@@ -39,8 +39,8 @@
             android:name="myTripId"
             app:argType="integer" />
         <argument
-            android:name="totalDays"
-            app:argType="integer" />
+            android:name="dateRange"
+            app:argType="string" />
         <action
             android:id="@+id/action_planningFragment_to_spotDetailsFragment"
             app:destination="@id/spotDetailsFragment" />

@@ -133,7 +133,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     }
 
     public interface MyTripsCallbacks {
-        void onMyTripItemClick(int id, String days);
+        void onMyTripItemClick(int id, String dateRange);
 
         void onMyTripItemLongClick(int id, boolean deleteState, int clickedCount);
 

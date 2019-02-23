@@ -17,6 +17,7 @@ import com.flyavis.android.R;
 import com.flyavis.android.data.database.Plan;
 import com.flyavis.android.databinding.PlanBottomSheetBinding;
 import com.flyavis.android.databinding.PlanningFragmentBinding;
+import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.gms.common.api.Status;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -28,8 +29,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.tabs.TabLayout;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -86,8 +90,15 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         //取得上一個畫面傳的參數
         myTripId = PlanningFragmentArgs
                 .fromBundle(Objects.requireNonNull(getArguments())).getMyTripId();
-        int totalDays = PlanningFragmentArgs
-                .fromBundle(Objects.requireNonNull(getArguments())).getTotalDays();
+        String dateRange = PlanningFragmentArgs
+                .fromBundle(Objects.requireNonNull(getArguments())).getDateRange();
+        String[] split = dateRange.split(" ~ ");
+        Date date = FlyAvisUtils
+                .StringToDate(split[0], "yyyy-MM-dd", Locale.US);
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy.MM.dd E", Locale.TAIWAN);
+        sdFormat.format(date);
+
+        int totalDays = FlyAvisUtils.calculateDays(dateRange) + 1;
         //init some values
         day = 1;
         nextSpotTime = Time.valueOf("08:00:00");
@@ -98,8 +109,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         mViewModel.getPlanningData(myTripId, day).observe
                 (getViewLifecycleOwner(), listResource -> {
                     planList = listResource.data;
-                    controller.setData(planList);
-                    if (planList != null) {
+                    controller.setData(planList, sdFormat.format(date));
+                    if (planList != null && planList.size() != 0) {
                         nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
                     }
                     Timber.d("plan observed");
@@ -120,10 +131,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                                              PlanningModelGroup modelBeingMoved, View itemView) {
                         Timber.d("position:" + fromPosition + ">" + toPosition);
                         Timber.d(String.valueOf("plan size:" + planList.size()));
-                        int index = planList.indexOf(modelBeingMoved.plan);
-                        Timber.d("modelIndex:%s", index);
-                        planList.add(index + (toPosition - fromPosition)
-                                , planList.remove(index));
+                        planList.add(fromPosition - 1 + (toPosition - fromPosition)
+                                , planList.remove(fromPosition - 1));
                         for (int i = 0; i < planList.size(); i++) {
                             Plan plan = planList.get(i);
                             plan.setSpotOrder(i);
@@ -137,22 +146,18 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                         backgroundAnimator.addUpdateListener(
                                 animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
                         );
-
                         backgroundAnimator.start();
-
                         itemView
                                 .animate()
                                 .scaleX(1.05f)
                                 .scaleY(1.05f);
                     }
 
-
                     @Override
                     public void onDragReleased(PlanningModelGroup model, View itemView) {
                         if (backgroundAnimator != null) {
                             backgroundAnimator.cancel();
                         }
-
                         backgroundAnimator =
                                 ofObject(new ArgbEvaluator()
                                         , ((ColorDrawable) itemView.getBackground()).getColor(),
@@ -160,9 +165,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                         backgroundAnimator.addUpdateListener(
                                 animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
                         );
-
                         backgroundAnimator.start();
-
                         itemView
                                 .animate()
                                 .scaleX(1f)
@@ -174,7 +177,6 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     public void clearView(PlanningModelGroup model, View itemView) {
                         onDragReleased(model, itemView);
                         mViewModel.updatePlanOrder(planList);
-                        controller.setData(null);
                     }
                 });
 
@@ -191,7 +193,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 mViewModel.getPlanningData(myTripId, day).observe
                         (PlanningFragment.this, listResource -> {
                             planList = listResource.data;
-                            if (planList != null) {
+                            long l = date.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
+                            Date newDate = new Date(l);
+                            controller.setData(planList, sdFormat.format(newDate));
+
+                            if (planList != null && planList.size() > 0) {
                                 nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
                             } else {
                                 nextSpotTime = Time.valueOf("08:00:00");
@@ -317,11 +323,5 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 // The user canceled the operation.
             }
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        controller.setData(null);
     }
 }

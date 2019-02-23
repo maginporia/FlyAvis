@@ -94,7 +94,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
 
     private void showDatePicker(TextInputEditText view) {
         new DatePickerDialog(Objects.requireNonNull(getContext()), (datePicker, i, i1, i2) -> {
-            String dateTime = i + "-" + (i1 + 1) + "-" + i2;
+            String dateTime = String.valueOf(i) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i2);
             view.setText(dateTime);
         }, year, month, day).show();
     }

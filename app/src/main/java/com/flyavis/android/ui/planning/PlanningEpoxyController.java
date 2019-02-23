@@ -1,14 +1,14 @@
 package com.flyavis.android.ui.planning;
 
 import com.airbnb.epoxy.AutoModel;
-import com.airbnb.epoxy.TypedEpoxyController;
+import com.airbnb.epoxy.Typed2EpoxyController;
 import com.flyavis.android.AddViewBindingModel_;
 import com.flyavis.android.DateTitleBindingModel_;
 import com.flyavis.android.data.database.Plan;
 
 import java.util.List;
 
-public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
+public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, String> {
     private final PlanningCallbacks callbacks;
     @AutoModel
     AddViewBindingModel_ addViewBindingModel;
@@ -20,16 +20,14 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
     }
 
     @Override
-    protected void buildModels(List<Plan> data) {
+    protected void buildModels(List<Plan> data, String dateString) {
+
         dateTitleBindingModel
-                //TODO change to real data
-                .title("2019.02.22 星期五")
+                .title(dateString)
                 .subTitle("")
                 .addTo(this);
 
-//        if (data.size() > 0) {
-//            if (data.size() > 1) {
-        if (data != null) {
+        if (data != null && data.size() != 0) {
             for (int i = 0; i < data.size() - 1; i++) {
                 add(new PlanningModelGroup(data.get(i), callbacks, false));
             }
