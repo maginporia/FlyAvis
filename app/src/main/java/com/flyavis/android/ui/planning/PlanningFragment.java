@@ -63,9 +63,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private PlanningViewModel mViewModel;
     private PlanningFragmentBinding binding;
     private PlanningEpoxyController controller;
-    private TabLayout tabLayout;
     private int day;
     private Time nextSpotTime;
+    private Date firstDate;
+    private SimpleDateFormat sdFormat;
+    private int totalDays;
     private int myTripId;
     private List<Plan> planList;
 
@@ -92,24 +94,67 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 .fromBundle(Objects.requireNonNull(getArguments())).getMyTripId();
         String dateRange = PlanningFragmentArgs
                 .fromBundle(Objects.requireNonNull(getArguments())).getDateRange();
+        //date handle
         String[] split = dateRange.split(" ~ ");
-        Date date = FlyAvisUtils
+        firstDate = FlyAvisUtils
                 .StringToDate(split[0], "yyyy-MM-dd", Locale.US);
-        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy.MM.dd E", Locale.TAIWAN);
-        sdFormat.format(date);
-
-        int totalDays = FlyAvisUtils.calculateDays(dateRange) + 1;
+        sdFormat = new SimpleDateFormat("yyyy.MM.dd E", Locale.TAIWAN);
+        sdFormat.format(firstDate);
+        totalDays = FlyAvisUtils.calculateDays(dateRange) + 1;
         //init some values
         day = 1;
         nextSpotTime = Time.valueOf("08:00:00");
 
-        //init recyclerView
+        initEpoxyRecyclerView();
+        initTab();
+    }
+
+    private void initTab() {
+        TabLayout tabLayout = binding.tabLayout;
+        for (int i = 1; i <= totalDays; i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.day) + i));
+        }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                day = tab.getPosition() + 1;
+                mViewModel.getPlanningData(myTripId, day).observe
+                        (PlanningFragment.this, listResource -> {
+                            planList = listResource.data;
+                            long l = firstDate.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
+                            Date newDate = new Date(l);
+                            controller.setData(planList, sdFormat.format(newDate));
+
+                            if (planList != null && planList.size() > 0) {
+                                nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
+                            } else {
+                                nextSpotTime = Time.valueOf("08:00:00");
+                            }
+                            Timber.d("plan observed");
+                        });
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void initEpoxyRecyclerView() {
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
         mViewModel.getPlanningData(myTripId, day).observe
                 (getViewLifecycleOwner(), listResource -> {
                     planList = listResource.data;
-                    controller.setData(planList, sdFormat.format(date));
+                    controller.setData(planList, sdFormat.format(firstDate));
                     if (planList != null && planList.size() != 0) {
                         nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
                     }
@@ -179,45 +224,6 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                         mViewModel.updatePlanOrder(planList);
                     }
                 });
-
-        //init tab
-        tabLayout = binding.tabLayout;
-        for (int i = 1; i <= totalDays; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.day) + i));
-        }
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                day = tab.getPosition() + 1;
-                mViewModel.getPlanningData(myTripId, day).observe
-                        (PlanningFragment.this, listResource -> {
-                            planList = listResource.data;
-                            long l = date.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
-                            Date newDate = new Date(l);
-                            controller.setData(planList, sdFormat.format(newDate));
-
-                            if (planList != null && planList.size() > 0) {
-                                nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
-                            } else {
-                                nextSpotTime = Time.valueOf("08:00:00");
-                            }
-                            Timber.d("plan observed");
-                        });
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
     }
 
     @Override
@@ -277,8 +283,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
 
     }
 
-    private void
-    navigateView(NavDirections action) {
+    private void navigateView(NavDirections action) {
         Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
     }
 
