@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{clickListener}">
+        android:onClick="@{clickListener}"
+        android:background="?attr/selectableItemBackground">
 
         <ImageButton
             android:id="@+id/add_image"
@@ -25,6 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_add_24"
-            android:background="?attr/selectableItemBackground" />
+            android:background="@android:color/transparent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

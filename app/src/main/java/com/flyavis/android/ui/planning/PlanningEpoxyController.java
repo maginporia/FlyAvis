@@ -30,23 +30,10 @@ public class PlanningEpoxyController extends TypedEpoxyController<List<Plan>> {
 //        if (data.size() > 0) {
 //            if (data.size() > 1) {
         if (data != null) {
-            for (int i = 0; i < data.size(); i++) {
-                add(new PlanningModelGroup(data.get(i), callbacks));
+            for (int i = 0; i < data.size() - 1; i++) {
+                add(new PlanningModelGroup(data.get(i), callbacks, false));
             }
-
-//                }
-//            }
-
-//            // Last item without traffic time
-//            Plan lastSpot = data.get(data.size() - 1);
-//            new SpotItemBindingModel_()
-//                    .id(data.size())
-//                    .spotName(lastSpot.getPlaceName())
-//                    .clickListener((model, parentView, clickedView, position) -> {
-//
-//                    })
-//                    .addTo(this);
-
+            add(new PlanningModelGroup(data.get(data.size() - 1), callbacks, true));
         }
         addViewBindingModel
                 .clickListener(view -> callbacks.onAddNewSpotViewClick())
