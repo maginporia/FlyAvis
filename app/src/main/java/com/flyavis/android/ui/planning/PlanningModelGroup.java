@@ -30,7 +30,6 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                         .spotName(plan.getSpotName())
                         .arriveTime(plan.getSpotStartTime().toString())
                         .leaveTime(plan.getSpotEndTime().toString())
-
                         .spotNotice("目前沒有備註")
                         .stayTime(l * 1.0 / (60 * 60 * 1000) + "小時")
                         .clickListener(view -> {
@@ -41,6 +40,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                         })
         );
         if (!last) {
+
             models.add(
                     new TrafficTimeBindingModel_()
                             .id("trafficTime")

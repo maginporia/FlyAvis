@@ -114,47 +114,6 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         initTab();
     }
 
-    private void initTab() {
-        TabLayout tabLayout = binding.tabLayout;
-        for (int i = 1; i <= totalDays; i++) {
-            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.day) + i));
-        }
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                observable.removeObservers(getViewLifecycleOwner());
-                day = tab.getPosition() + 1;
-                observable = mViewModel.getPlanningData(myTripId, day);
-                observable.observe
-                        (getViewLifecycleOwner(), listResource -> {
-                            planList = listResource.data;
-                            long l = firstDate.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
-                            Date newDate = new Date(l);
-                            controller.setData(planList, sdFormat.format(newDate));
-
-                            if (planList != null && planList.size() > 0) {
-                                nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
-                            } else {
-                                nextSpotTime = Time.valueOf("08:00:00");
-                            }
-                            Timber.d("Tab: plan observed");
-                        });
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
-
     private void initEpoxyRecyclerView() {
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
@@ -249,6 +208,47 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                         mViewModel.updatePlans(planList);
                     }
                 });
+    }
+
+    private void initTab() {
+        TabLayout tabLayout = binding.tabLayout;
+        for (int i = 1; i <= totalDays; i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.day) + i));
+        }
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                observable.removeObservers(getViewLifecycleOwner());
+                day = tab.getPosition() + 1;
+                observable = mViewModel.getPlanningData(myTripId, day);
+                observable.observe
+                        (getViewLifecycleOwner(), listResource -> {
+                            planList = listResource.data;
+                            long l = firstDate.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
+                            Date newDate = new Date(l);
+                            controller.setData(planList, sdFormat.format(newDate));
+
+                            if (planList != null && planList.size() > 0) {
+                                nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
+                            } else {
+                                nextSpotTime = Time.valueOf("08:00:00");
+                            }
+                            Timber.d("Tab: plan observed");
+                        });
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
