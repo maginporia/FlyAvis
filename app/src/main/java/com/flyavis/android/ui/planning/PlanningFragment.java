@@ -30,6 +30,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -176,17 +177,34 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                                              PlanningModelGroup modelBeingMoved, View itemView) {
                         Timber.d("position:" + fromPosition + ">" + toPosition);
                         Timber.d(String.valueOf("plan size:" + planList.size()));
+                        //save original time
+                        List<Time> unModStartTime = new ArrayList<>();
+                        List<Time> unModEndTime = new ArrayList<>();
+
+                        for (Plan plan : planList) {
+                            unModStartTime.add(plan.getSpotStartTime());
+                            unModEndTime.add(plan.getSpotEndTime());
+                        }
+
                         planList.add(fromPosition - 1 + (toPosition - fromPosition)
                                 , planList.remove(fromPosition - 1));
+
                         for (int i = 0; i < planList.size(); i++) {
                             Plan plan = planList.get(i);
+                            //set new time
+                            plan.setSpotStartTime(unModStartTime.get(i));
+                            plan.setSpotEndTime(unModEndTime.get(i));
+                            //set new order
                             plan.setSpotOrder(i);
                             planList.set(i, plan);
                         }
+
+
                     }
 
                     @Override
                     public void onDragStarted(PlanningModelGroup model, View itemView, int adapterPosition) {
+                        //anim
                         backgroundAnimator = ofObject(new ArgbEvaluator(), Color.WHITE, selectedBackgroundColor);
                         backgroundAnimator.addUpdateListener(
                                 animator -> itemView.setBackgroundColor((int) animator.getAnimatedValue())
@@ -200,6 +218,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
 
                     @Override
                     public void onDragReleased(PlanningModelGroup model, View itemView) {
+                        //anim
                         if (backgroundAnimator != null) {
                             backgroundAnimator.cancel();
                         }
@@ -221,7 +240,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     @Override
                     public void clearView(PlanningModelGroup model, View itemView) {
                         onDragReleased(model, itemView);
-                        mViewModel.updatePlanOrder(planList);
+                        mViewModel.updatePlans(planList);
                     }
                 });
     }
@@ -262,10 +281,16 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
 
         bottomSheetBinding.setEditStayTimeClickListener(view -> {
             new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
-                long l = plan.getSpotStartTime().getTime() + i1 * 1000 * 60 + i * 1000 * 60 * 60;
-                Time time = new Time(l);
-                plan.setSpotEndTime(time);
-                mViewModel.updatePlan(plan);
+                long pickedTime = i1 * 1000 * 60 + i * 1000 * 60 * 60;
+                for (int j = plan.getSpotOrder(); j < planList.size(); j++) {
+                    Time newStartTime = new
+                            Time(planList.get(j).getSpotStartTime().getTime() + pickedTime);
+                    Time newEndTime = new
+                            Time(planList.get(j).getSpotEndTime().getTime() + pickedTime);
+                    planList.get(j).setSpotStartTime(newStartTime);
+                    planList.get(j).setSpotEndTime(newEndTime);
+                }
+                mViewModel.updatePlans(planList);
                 bottomSheetDialog.dismiss();
             }, 0, 0, true).show();
 

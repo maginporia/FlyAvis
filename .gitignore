@@ -16,3 +16,4 @@ src/release/
 .idea/assetWizardSettings.xml
 .idea/encodings.xml
 .idea/navEditor.xml
+/app/src/release/res/values/google_maps_api.xml
