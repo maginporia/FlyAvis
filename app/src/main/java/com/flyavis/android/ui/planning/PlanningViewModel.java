@@ -9,15 +9,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Completable;
 import io.reactivex.schedulers.Schedulers;
 
 public class PlanningViewModel extends ViewModel {
     private PlanRepository repository;
-    private LiveData<Resource<List<Plan>>> planningData;
-    private MediatorLiveData liveDataMerger = new MediatorLiveData<>();
 
     @Inject
     PlanningViewModel(PlanRepository repository) {
@@ -25,9 +22,7 @@ public class PlanningViewModel extends ViewModel {
     }
 
     LiveData<Resource<List<Plan>>> getPlanningData(int tripId, int day) {
-        planningData = repository.getPlannings(tripId, day);
-        liveDataMerger.addSource(planningData, value -> liveDataMerger.setValue(value));
-        return liveDataMerger;
+        return repository.getPlannings(tripId, day);
     }
 
     void insetNewSpot(Plan plan) {

@@ -32,7 +32,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                         .leaveTime(plan.getSpotEndTime().toString())
 
                         .spotNotice("目前沒有備註")
-                        .stayTime(l / (60 * 60 * 1000) + "小時")
+                        .stayTime(l * 1.0 / (60 * 60 * 1000) + "小時")
                         .clickListener(view -> {
 
                         })

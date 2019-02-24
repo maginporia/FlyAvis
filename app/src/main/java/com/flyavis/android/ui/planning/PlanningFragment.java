@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.airbnb.epoxy.EpoxyTouchHelper;
 import com.flyavis.android.R;
+import com.flyavis.android.data.Resource;
 import com.flyavis.android.data.database.Plan;
 import com.flyavis.android.databinding.PlanBottomSheetBinding;
 import com.flyavis.android.databinding.PlanningFragmentBinding;
@@ -43,6 +44,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavDirections;
@@ -71,6 +73,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private int totalDays;
     private int myTripId;
     private List<Plan> planList;
+    private LiveData<Resource<List<Plan>>> observable;
 
     public static PlanningFragment newInstance() {
         return new PlanningFragment();
@@ -119,9 +122,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                observable.removeObservers(getViewLifecycleOwner());
                 day = tab.getPosition() + 1;
-                mViewModel.getPlanningData(myTripId, day).observe
-                        (PlanningFragment.this, listResource -> {
+                observable = mViewModel.getPlanningData(myTripId, day);
+                observable.observe
+                        (getViewLifecycleOwner(), listResource -> {
                             planList = listResource.data;
                             long l = firstDate.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
                             Date newDate = new Date(l);
@@ -132,7 +137,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                             } else {
                                 nextSpotTime = Time.valueOf("08:00:00");
                             }
-                            Timber.d("plan observed");
+                            Timber.d("Tab: plan observed");
                         });
 
             }
@@ -152,7 +157,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private void initEpoxyRecyclerView() {
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
-        mViewModel.getPlanningData(myTripId, day).observe
+        observable = mViewModel.getPlanningData(myTripId, day);
+        observable.observe
                 (getViewLifecycleOwner(), listResource -> {
                     planList = listResource.data;
                     controller.setData(planList, sdFormat.format(firstDate));
@@ -282,14 +288,20 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         bottomSheetBinding.setEditStayTimeClickListener(view -> {
             new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
                 long pickedTime = i1 * 1000 * 60 + i * 1000 * 60 * 60;
-                for (int j = plan.getSpotOrder(); j < planList.size(); j++) {
-                    Time newStartTime = new
-                            Time(planList.get(j).getSpotStartTime().getTime() + pickedTime);
-                    Time newEndTime = new
-                            Time(planList.get(j).getSpotEndTime().getTime() + pickedTime);
-                    planList.get(j).setSpotStartTime(newStartTime);
-                    planList.get(j).setSpotEndTime(newEndTime);
+                Time modTime = new
+                        Time(plan.getSpotStartTime().getTime() + pickedTime);
+                planList.get(plan.getSpotOrder()).setSpotEndTime(modTime);
+                if (planList.size() > plan.getSpotOrder() + 1) {
+                    for (int j = plan.getSpotOrder() + 1; j < planList.size(); j++) {
+                        Time newStartTime = new
+                                Time(planList.get(j).getSpotStartTime().getTime() + pickedTime);
+                        Time newEndTime = new
+                                Time(planList.get(j).getSpotEndTime().getTime() + pickedTime);
+                        planList.get(j).setSpotStartTime(newStartTime);
+                        planList.get(j).setSpotEndTime(newEndTime);
+                    }
                 }
+
                 mViewModel.updatePlans(planList);
                 bottomSheetDialog.dismiss();
             }, 0, 0, true).show();
@@ -298,6 +310,10 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
 
         bottomSheetBinding.setDeleteClickListener(view -> {
                     mViewModel.deletePlan(plan);
+            //reset start time
+            if (planList.size() == 1) {
+                nextSpotTime = Time.valueOf("08:00:00");
+            }
                     bottomSheetDialog.dismiss();
                 }
         );
@@ -342,7 +358,10 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 long l = nextSpotTime.getTime() + (60 * 60 * 1000);
                 Time time = new Time(l);
                 plan.setSpotEndTime(time);
-                plan.setSpotOrder(999);
+                if (planList != null) {
+                    int size = planList.size();
+                    plan.setSpotOrder(size);
+                }
                 mViewModel.insetNewSpot(plan);
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
