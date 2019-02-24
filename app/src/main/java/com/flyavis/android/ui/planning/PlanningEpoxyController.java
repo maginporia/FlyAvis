@@ -29,9 +29,14 @@ public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, S
 
         if (data != null && data.size() != 0) {
             for (int i = 0; i < data.size() - 1; i++) {
-                add(new PlanningModelGroup(data.get(i), callbacks, false));
+                if (i < data.size() - 1) {
+                    add(new PlanningModelGroup(data.get(i), data.get(i + 1), callbacks, false));
+                } else {
+                    add(new PlanningModelGroup(data.get(i), null, callbacks, false));
+                }
+
             }
-            add(new PlanningModelGroup(data.get(data.size() - 1), callbacks, true));
+            add(new PlanningModelGroup(data.get(data.size() - 1), null, callbacks, true));
         }
         addViewBindingModel
                 .clickListener(view -> callbacks.onAddNewSpotViewClick())
@@ -45,7 +50,7 @@ public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, S
 
         void onMoreButtonClick(Plan plan);
 
-        void onTrafficTimeClick();
+        void onTrafficTimeClick(Plan plan, Plan nextPlan);
     }
 
 }

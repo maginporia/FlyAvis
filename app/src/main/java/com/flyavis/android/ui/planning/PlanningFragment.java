@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -240,7 +241,6 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                                 .animate()
                                 .scaleX(1f)
                                 .scaleY(1f);
-
                     }
 
                     @Override
@@ -319,9 +319,18 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         );
     }
 
+    //start google map navigation
     @Override
-    public void onTrafficTimeClick() {
-
+    public void onTrafficTimeClick(Plan plan, Plan nextPlan) {
+        String url = "https://www.google.com/maps/dir/?api=1"
+                + "&destination=" + nextPlan.getSpotName()
+                + "&destination_place_id=" + nextPlan.getPlaceId()
+                + "&origin=" + plan.getSpotName()
+                + "&origin_place_id=" + plan.getPlaceId()
+                + "&travelmode=driving";
+//                +"&dir_action=navigate";
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 
     private void navigateView(NavDirections action) {

@@ -14,14 +14,14 @@ import java.util.List;
 public class PlanningModelGroup extends EpoxyModelGroup {
     public final Plan plan;
 
-    PlanningModelGroup(Plan plan, PlanningEpoxyController.PlanningCallbacks callbacks, boolean last) {
-        super(R.layout.planning_item, buildModels(plan, callbacks, last));
+    PlanningModelGroup(Plan plan, Plan previousPlan, PlanningEpoxyController.PlanningCallbacks callbacks, boolean last) {
+        super(R.layout.planning_item, buildModels(plan, previousPlan, callbacks, last));
         this.plan = plan;
         id(plan.getPlanId());
     }
 
     private static List<EpoxyModel<?>> buildModels
-            (Plan plan, PlanningEpoxyController.PlanningCallbacks callbacks, boolean last) {
+            (Plan plan, Plan nextPlan, PlanningEpoxyController.PlanningCallbacks callbacks, boolean last) {
         ArrayList<EpoxyModel<?>> models = new ArrayList<>();
         long l = plan.getSpotEndTime().getTime() - plan.getSpotStartTime().getTime();
         models.add(
@@ -46,6 +46,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                             .id("trafficTime")
                             .trafficTime("∞小時")
                             .clickListener(view -> {
+                                callbacks.onTrafficTimeClick(plan, nextPlan);
                             })
             );
         }
