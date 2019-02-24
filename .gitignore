@@ -9,3 +9,10 @@
 /build
 /captures
 .externalNativeBuild
+libs/
+src/main/java/com/flyavis/android/ui/map/
+src/release/
+/app/src/debug/res/values/google_maps_api.xml
+.idea/assetWizardSettings.xml
+.idea/encodings.xml
+.idea/navEditor.xml
