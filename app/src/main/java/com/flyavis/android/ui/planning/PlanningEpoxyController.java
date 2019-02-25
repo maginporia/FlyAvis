@@ -25,6 +25,9 @@ public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, S
         dateTitleBindingModel
                 .title(dateString)
                 .subTitle("")
+                .editButton((model, parentView, clickedView, position) -> {
+                    callbacks.onEditButtonClick();
+                })
                 .addTo(this);
 
         if (data != null && data.size() != 0) {
@@ -44,6 +47,8 @@ public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, S
     }
 
     public interface PlanningCallbacks {
+        void onEditButtonClick();
+
         void onAddNewSpotViewClick();
 
         void onSpotViewClick();

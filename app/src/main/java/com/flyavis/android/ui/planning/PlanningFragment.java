@@ -17,6 +17,7 @@ import com.airbnb.epoxy.EpoxyTouchHelper;
 import com.flyavis.android.R;
 import com.flyavis.android.data.Resource;
 import com.flyavis.android.data.database.Plan;
+import com.flyavis.android.databinding.EditPlanDialogBinding;
 import com.flyavis.android.databinding.PlanBottomSheetBinding;
 import com.flyavis.android.databinding.PlanningFragmentBinding;
 import com.flyavis.android.util.FlyAvisUtils;
@@ -252,6 +253,43 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     }
 
     @Override
+    public void onEditButtonClick() {
+        EditPlanDialogBinding editPlanDialogBinding = DataBindingUtil
+                .inflate(LayoutInflater.from(getContext())
+                        , R.layout.edit_plan_dialog, null, false);
+        final long[] pickedTime = new long[1];
+        editPlanDialogBinding.setOnEditTextClick(view -> {
+            new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
+                pickedTime[0] = (i1 * 1000 * 60) + (i * 1000 * 60 * 60);
+                editPlanDialogBinding.setStartTime(String.format(Locale.US, "%02d:%02d", i, i1));
+            }, 0, 0, true)
+                    .show();
+        });
+        new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
+                .setTitle("編輯")
+                .setView(editPlanDialogBinding.getRoot())
+                .setPositiveButton("確定", (dialog, which) -> {
+
+                    long diff = pickedTime[0] - 1000 * 60 * 60 * 8 // 時差-8
+                            - planList.get(0).getSpotStartTime().getTime();
+                    Timber.d(new Time(planList.get(0).getSpotStartTime().getTime()).toString());
+                    Timber.d(String.valueOf(planList.get(0).getSpotStartTime().getTime()));
+                    Timber.d(new Time(pickedTime[0]).toString());
+                    Timber.d(String.valueOf(pickedTime[0]));
+                    Timber.d(new Time(diff).toString());
+                    Timber.d(String.valueOf(diff));
+                    for (int i = 0; i < planList.size(); i++) {
+                        timeCalculate(i, diff);
+                    }
+
+                    mViewModel.updatePlans(planList);
+
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
+    @Override
     public void onAddNewSpotViewClick() {
         new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                 .setTitle(getString(R.string.add_a_new_spot))
@@ -287,22 +325,18 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
 
         bottomSheetBinding.setEditStayTimeClickListener(view -> {
             new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
-                long pickedTime = i1 * 1000 * 60 + i * 1000 * 60 * 60;
-                Time modTime = new
-                        Time(plan.getSpotStartTime().getTime() + pickedTime);
-                planList.get(plan.getSpotOrder()).setSpotEndTime(modTime);
-                if (planList.size() > plan.getSpotOrder() + 1) {
-                    for (int j = plan.getSpotOrder() + 1; j < planList.size(); j++) {
-                        Time newStartTime = new
-                                Time(planList.get(j).getSpotStartTime().getTime() + pickedTime);
-                        Time newEndTime = new
-                                Time(planList.get(j).getSpotEndTime().getTime() + pickedTime);
-                        planList.get(j).setSpotStartTime(newStartTime);
-                        planList.get(j).setSpotEndTime(newEndTime);
+                long pickedTime = (i1 * 1000 * 60) + (i * 1000 * 60 * 60);
+                Time modTime = new Time(plan.getSpotStartTime().getTime() + pickedTime);
+                long diffBefore = plan.getSpotEndTime().getTime() - plan.getSpotStartTime().getTime();
+                if (pickedTime != diffBefore) {
+                    if (planList.size() > plan.getSpotOrder() + 1) {
+                        for (int j = plan.getSpotOrder() + 1; j < planList.size(); j++) {
+                            timeCalculate(j, pickedTime - diffBefore);
+                        }
                     }
+                    planList.get(plan.getSpotOrder()).setSpotEndTime(modTime);
+                    mViewModel.updatePlans(planList);
                 }
-
-                mViewModel.updatePlans(planList);
                 bottomSheetDialog.dismiss();
             }, 0, 0, true).show();
 
@@ -317,6 +351,15 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     bottomSheetDialog.dismiss();
                 }
         );
+    }
+
+    private void timeCalculate(int planId, long pickedTime) {
+        Time newStartTime = new
+                Time(planList.get(planId).getSpotStartTime().getTime() + pickedTime);
+        Time newEndTime = new
+                Time(planList.get(planId).getSpotEndTime().getTime() + pickedTime);
+        planList.get(planId).setSpotStartTime(newStartTime);
+        planList.get(planId).setSpotEndTime(newEndTime);
     }
 
     //start google map navigation

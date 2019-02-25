@@ -24,14 +24,8 @@ public class FlyAvisUtils {
                 / (24 * 60 * 60 * 1000));
     }
 
-    public static long StringToTimeLong(String string) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.US);
-        long ms = 0;
-        try {
-            ms = sdf.parse(string).getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return ms;
+    public static String longToString(long milliseconds) {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.US);
+        return format.format(milliseconds);
     }
 }
