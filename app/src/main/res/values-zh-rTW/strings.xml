@@ -12,4 +12,5 @@
     <string name="edit">編輯</string>
     <string name="delete">刪除</string>
     <string name="edit_stay_time">編輯停留時間</string>
+    <string name="set_off_time">出發時間</string>
 </resources>

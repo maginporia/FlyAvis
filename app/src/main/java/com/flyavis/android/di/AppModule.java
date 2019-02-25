@@ -11,8 +11,6 @@ import com.flyavis.android.data.database.MyTripDao;
 import com.flyavis.android.data.database.PlanDao;
 import com.flyavis.android.data.network.FlyAvisService;
 
-import java.util.Calendar;
-
 import javax.inject.Singleton;
 
 import androidx.room.Room;
@@ -93,9 +91,4 @@ class AppModule {
         return client.build();
     }
 
-    @Provides
-    @Singleton
-    Calendar provideCalender() {
-        return Calendar.getInstance();
-    }
 }

@@ -257,6 +257,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         EditPlanDialogBinding editPlanDialogBinding = DataBindingUtil
                 .inflate(LayoutInflater.from(getContext())
                         , R.layout.edit_plan_dialog, null, false);
+        editPlanDialogBinding.setStartTime(planList.get(0).getSpotStartTime().toString());
         final long[] pickedTime = new long[1];
         editPlanDialogBinding.setOnEditTextClick(view -> {
             new TimePickerDialog(getContext(), (timePicker, i, i1) -> {

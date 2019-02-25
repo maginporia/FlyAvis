@@ -41,8 +41,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     private ActionMode actionMode;
     private TextInputEditText startDate;
     private TextInputEditText endDate;
-    @Inject
-    Calendar calendar;
+    private Calendar calendar = Calendar.getInstance();
     private int year = calendar.get(Calendar.YEAR);
     private int month = calendar.get(Calendar.MONTH);
     private int day = calendar.get(Calendar.DAY_OF_MONTH);
