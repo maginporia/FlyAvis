@@ -80,10 +80,15 @@ public class MainActivity extends AppCompatActivity {
                     toolbar.getMenu().clear();
                     toolbar.inflateMenu(R.menu.plan_menu);
                     break;
+                case R.id.planHelperFragment:
+                    toolbar.getMenu().clear();
+                    setNavigationVisibility(false);
+                    break;
                 default:
                     toolbar.getMenu().clear();
                     setNavigationVisibility(true);
                     setToolBarVisibility(false);
+                    break;
 
             }
         });

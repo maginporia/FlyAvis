@@ -13,4 +13,9 @@
     <string name="delete">刪除</string>
     <string name="edit_stay_time">編輯停留時間</string>
     <string name="set_off_time">出發時間</string>
+    <string name="ok">確定</string>
+    <string name="cancel">取消</string>
+    <string name="end_date">結束日期</string>
+    <string name="start_date">開始日期</string>
+    <string name="trip_name">旅程名稱</string>
 </resources>

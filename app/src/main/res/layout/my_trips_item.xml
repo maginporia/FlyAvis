@@ -99,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageButton
-                android:id="@+id/editButton"
+                android:id="@+id/planEditButton"
                 style="@android:style/Widget.Material.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 android:onClick="@{addPersonClickListener}"
                 android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editButton"
+                app:layout_constraintTop_toBottomOf="@+id/planEditButton"
                 app:srcCompat="@drawable/baseline_person_add_24" />
 
             <ImageButton

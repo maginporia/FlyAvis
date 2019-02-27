@@ -11,26 +11,54 @@
         <variable
             name="editStayTimeClickListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="helperClickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <LinearLayout
         android:id="@+id/plan_bottom_sheet"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="200dp"
         android:background="#ffffff"
         android:orientation="vertical"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <LinearLayout
+            android:id="@+id/plan_bottom_sheet_helper"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{helperClickListener}"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_assistant_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:text="小幫手" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/plan_bottom_sheet_edit"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{editStayTimeClickListener}"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground">
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -48,13 +76,13 @@
         <LinearLayout
             android:id="@+id/fragment_history_bottom_sheet_delete"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
+            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{deleteClickListener}"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground">
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="wrap_content"

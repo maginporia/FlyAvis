@@ -267,9 +267,9 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     .show();
         });
         new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
-                .setTitle("編輯")
+                .setTitle(getString(R.string.edit))
                 .setView(editPlanDialogBinding.getRoot())
-                .setPositiveButton("確定", (dialog, which) -> {
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
 
                     long diff = pickedTime[0] - 1000 * 60 * 60 * 8 // 時差-8
                             - planList.get(0).getSpotStartTime().getTime();
@@ -286,7 +286,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     mViewModel.updatePlans(planList);
 
                 })
-                .setNegativeButton("取消", null)
+                .setNegativeButton(getString(R.string.cancel), null)
                 .show();
     }
 
@@ -323,6 +323,14 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 , R.layout.plan_bottom_sheet, null, false);
         bottomSheetDialog.setContentView(bottomSheetBinding.getRoot());
         bottomSheetDialog.show();
+
+        bottomSheetBinding.setHelperClickListener(view -> {
+            PlanningFragmentDirections.ActionPlanningFragmentToPlanHelperFragment action
+                    = PlanningFragmentDirections.actionPlanningFragmentToPlanHelperFragment
+                    (plan.getPlanId());
+            Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
+            bottomSheetDialog.dismiss();
+        });
 
         bottomSheetBinding.setEditStayTimeClickListener(view -> {
             new TimePickerDialog(getContext(), (timePicker, i, i1) -> {

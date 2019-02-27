@@ -42,8 +42,8 @@
             android:name="dateRange"
             app:argType="string" />
         <action
-            android:id="@+id/action_planningFragment_to_spotDetailsFragment"
-            app:destination="@id/spotDetailsFragment" />
+            android:id="@+id/action_planningFragment_to_planHelperFragment"
+            app:destination="@id/planHelperFragment" />
     </fragment>
     <fragment
         android:id="@+id/addNewTripFragment"
@@ -54,8 +54,11 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/spotDetailsFragment"
-        android:name="com.flyavis.android.ui.spotdetails.SpotDetailsFragment"
-        android:label="spot_details_fragment"
-        tools:layout="@layout/spot_details_fragment" />
+        android:id="@+id/planHelperFragment"
+        android:name="com.flyavis.android.ui.planhelper.PlanHelperFragment"
+        tools:layout="@layout/plan_helper_fragment">
+        <argument
+            android:name="planId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

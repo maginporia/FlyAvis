@@ -3,6 +3,7 @@ package com.flyavis.android.di;
 import com.flyavis.android.ui.ViewModelFactory;
 import com.flyavis.android.ui.addnewtrip.AddNewTripViewModel;
 import com.flyavis.android.ui.mytrips.MyTripsViewModel;
+import com.flyavis.android.ui.planhelper.PlanHelperViewModel;
 import com.flyavis.android.ui.planning.PlanningViewModel;
 
 import androidx.lifecycle.ViewModel;
@@ -29,6 +30,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PlanningViewModel.class)
     abstract ViewModel bindPlanningViewModel(PlanningViewModel planningTripViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PlanHelperViewModel.class)
+    abstract ViewModel bindPlanHelperViewModel(PlanHelperViewModel planHelperViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);
