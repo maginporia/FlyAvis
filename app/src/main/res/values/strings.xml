@@ -21,4 +21,12 @@
     <string name="end_date">End Date</string>
     <string name="start_date">Start Date</string>
     <string name="trip_name">Trip Name</string>
+    <string name="mountain_climbing">爬山</string>
+    <string name="water_activities">水上活動</string>
+    <string name="literary">文青</string>
+    <string name="shopping">購物</string>
+    <string name="eat">吃貨</string>
+    <string name="history">歷史</string>
+    <string name="monument">古蹟</string>
+    <string name="exciting">刺激</string>
 </resources>

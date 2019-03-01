@@ -3,42 +3,123 @@
 
     <data>
 
+        <variable
+            name="checkedChangeListener"
+            type="android.widget.CompoundButton.OnCheckedChangeListener" />
+
+        <variable
+            name="climbChecked"
+            type="boolean" />
+
+        <variable
+            name="waterChecked"
+            type="boolean" />
+
+        <variable
+            name="literaryChecked"
+            type="boolean" />
+
+        <variable
+            name="shoppingChecked"
+            type="boolean" />
+
+        <variable
+            name="eatChecked"
+            type="boolean" />
+
+        <variable
+            name="historyChecked"
+            type="boolean" />
+
+        <variable
+            name="monumentChecked"
+            type="boolean" />
+
+        <variable
+            name="excitingChecked"
+            type="boolean" />
+
+
     </data>
 
     <com.google.android.material.chip.ChipGroup
+        android:id="@+id/noteChipGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip13"
+            android:id="@+id/climb"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="爬山" />
+            android:checked="@{climbChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/mountain_climbing" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip14"
+            android:id="@+id/water"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="水上活動" />
+            android:checked="@{waterChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/water_activities" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip15"
+            android:id="@+id/literary"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="文青" />
+            android:checked="@{literaryChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/literary" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip16"
+            android:id="@+id/shopping"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="購物" />
+            android:checked="@{shoppingChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/shopping" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip17"
+            android:id="@+id/eat"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="吃貨" />
+            android:checked="@{eatChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/eat" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/history"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{historyChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/history" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/monument"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{monumentChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/monument" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/exciting"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@{excitingChecked}"
+            android:onCheckedChanged="@{checkedChangeListener}"
+            android:text="@string/exciting" />
 
 
     </com.google.android.material.chip.ChipGroup>

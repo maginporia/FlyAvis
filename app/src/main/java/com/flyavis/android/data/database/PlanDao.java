@@ -17,6 +17,9 @@ public abstract class PlanDao {
     @Query("SELECT * FROM `Plan` WHERE tripId IN (:tripId) AND planDay IN(:day) ORDER BY `spotOrder`")
     public abstract Flowable<List<Plan>> getPlannings(int tripId, int day);
 
+    @Query("SELECT * FROM `plan` WHERE planId IN (:planId)")
+    public abstract Flowable<Plan> getPlan(int planId);
+
     @Insert
     public abstract void insetNewSpot(Plan plan);
 
@@ -28,6 +31,9 @@ public abstract class PlanDao {
 
     @Update
     public abstract void updatePlans(List<Plan> plan);
+
+    @Query("UPDATE `plan` SET spotNotice = :notice WHERE planId IN (:planId)")
+    public abstract void updateNotice(int planId, String notice);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertSpots(List<Plan> plan);

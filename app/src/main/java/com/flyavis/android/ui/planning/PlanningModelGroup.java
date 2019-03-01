@@ -24,13 +24,17 @@ public class PlanningModelGroup extends EpoxyModelGroup {
             (Plan plan, Plan nextPlan, PlanningEpoxyController.PlanningCallbacks callbacks, boolean last) {
         ArrayList<EpoxyModel<?>> models = new ArrayList<>();
         long l = plan.getSpotEndTime().getTime() - plan.getSpotStartTime().getTime();
+        String planNotice = "目前沒有標籤";
+        if (plan.getSpotNotice() != null && !plan.getSpotNotice().equals("")) {
+            planNotice = plan.getSpotNotice();
+        }
         models.add(
                 new SpotItemBindingModel_()
                         .id("spotItem")
                         .spotName(plan.getSpotName())
                         .arriveTime(plan.getSpotStartTime().toString())
                         .leaveTime(plan.getSpotEndTime().toString())
-                        .spotNotice("目前沒有備註")
+                        .spotNotice(planNotice)
                         .stayTime(l * 1.0 / (60 * 60 * 1000) + "小時")
                         .clickListener(view -> {
 

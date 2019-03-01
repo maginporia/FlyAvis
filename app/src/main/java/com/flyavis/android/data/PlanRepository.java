@@ -49,6 +49,10 @@ public class PlanRepository {
         }.getAsLiveData();
     }
 
+    public Flowable<Plan> getPlan(int planId) {
+        return planDao.getPlan(planId);
+    }
+
     public void insertSpot(Plan plan) {
         planDao.insetNewSpot(plan);
     }
@@ -57,15 +61,19 @@ public class PlanRepository {
         planDao.updatePlan(plan);
     }
 
+    public void updatePlans(List<Plan> plan) {
+        planDao.updatePlans(plan);
+    }
+
+    public void updateNotice(int planId, String notice) {
+        planDao.updateNotice(planId, notice);
+    }
+
     public void deletePlan(Plan plan) {
         planDao.deletePlan(plan);
     }
 
     public void reInsetSpots(List<Plan> plan) {
         planDao.deleteAndInsert(plan);
-    }
-
-    public void updatePlans(List<Plan> plan) {
-        planDao.updatePlans(plan);
     }
 }
