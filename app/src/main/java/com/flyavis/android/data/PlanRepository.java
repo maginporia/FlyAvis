@@ -65,6 +65,10 @@ public class PlanRepository {
         planDao.updatePlans(plan);
     }
 
+    public void updateBudget(int planId, int cost, int traffic) {
+        planDao.updateBudget(planId, cost, traffic);
+    }
+
     public void updateNotice(int planId, String notice) {
         planDao.updateNotice(planId, notice);
     }

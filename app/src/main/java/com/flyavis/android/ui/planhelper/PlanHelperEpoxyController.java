@@ -5,6 +5,7 @@ import android.widget.CompoundButton;
 
 import com.airbnb.epoxy.AutoModel;
 import com.airbnb.epoxy.TypedEpoxyController;
+import com.flyavis.android.HelperEditBindingModel_;
 import com.flyavis.android.HelperItemBindingModel_;
 import com.flyavis.android.HelperTilteBindingModel_;
 import com.flyavis.android.NoteChipsBindingModel_;
@@ -21,9 +22,11 @@ public class PlanHelperEpoxyController extends TypedEpoxyController<Plan> {
 
     private Context context;
     @AutoModel
-    NoteChipsBindingModel_ noteChipsBindingModel_;
+    NoteChipsBindingModel_ noteChipsBindingModel;
     @AutoModel
-    NoteContentBindingModel_ noteContentBindingModel_;
+    NoteContentBindingModel_ noteContentBindingModel;
+    @AutoModel
+    HelperEditBindingModel_ helperEditBindingModel;
 
     PlanHelperEpoxyController(PlanHelperCallbacks callbacks, Context context) {
         this.callbacks = callbacks;
@@ -36,15 +39,18 @@ public class PlanHelperEpoxyController extends TypedEpoxyController<Plan> {
                 .id("budget")
                 .title("預計花費")
                 .addTo(this);
+        helperEditBindingModel
+                .editClickListener(view -> callbacks.onEditClick())
+                .addTo(this);
         new HelperItemBindingModel_()
                 .id("budgetCost")
                 .title("支出")
-                .amount("5000")
+                .amount(String.valueOf(data.getSpotCost()))
                 .addTo(this);
         new HelperItemBindingModel_()
                 .id("budgetTravelCost")
                 .title("交通支出")
-                .amount("5000")
+                .amount(String.valueOf(data.getSpotTrafficFee()))
                 .addTo(this);
 
         new HelperTilteBindingModel_()
@@ -89,7 +95,7 @@ public class PlanHelperEpoxyController extends TypedEpoxyController<Plan> {
             exciting = list.contains(context.getString(R.string.exciting));
         }
 
-        noteChipsBindingModel_
+        noteChipsBindingModel
                 .climbChecked(climb)
                 .waterChecked(water)
                 .literaryChecked(literary)
@@ -101,12 +107,14 @@ public class PlanHelperEpoxyController extends TypedEpoxyController<Plan> {
                 .checkedChangeListener(callbacks::onCheckedChange)
                 .addTo(this);
 
-//        noteContentBindingModel_
+//        noteContentBindingModel
 //                .addTo(this);
 
     }
 
     public interface PlanHelperCallbacks {
         void onCheckedChange(CompoundButton button, Boolean b);
+
+        void onEditClick();
     }
 }

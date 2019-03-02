@@ -35,6 +35,9 @@ public abstract class PlanDao {
     @Query("UPDATE `plan` SET spotNotice = :notice WHERE planId IN (:planId)")
     public abstract void updateNotice(int planId, String notice);
 
+    @Query("UPDATE `plan` SET spotCost = :cost AND spotTrafficFee = :traffic WHERE planId IN (:planId)")
+    public abstract void updateBudget(int planId, int cost, int traffic);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertSpots(List<Plan> plan);
 

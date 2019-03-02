@@ -12,11 +12,9 @@ import java.util.List;
 
 //把Model做群組
 public class PlanningModelGroup extends EpoxyModelGroup {
-    public final Plan plan;
 
     PlanningModelGroup(Plan plan, Plan previousPlan, PlanningEpoxyController.PlanningCallbacks callbacks, boolean last) {
         super(R.layout.planning_item, buildModels(plan, previousPlan, callbacks, last));
-        this.plan = plan;
         id(plan.getPlanId());
     }
 

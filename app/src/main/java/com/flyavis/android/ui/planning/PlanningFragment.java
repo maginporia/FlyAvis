@@ -423,6 +423,8 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                     int size = planList.size();
                     plan.setSpotOrder(size);
                 }
+                plan.setSpotTrafficFee(0);
+                plan.setSpotCost(0);
                 mViewModel.insetNewSpot(plan);
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {

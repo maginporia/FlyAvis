@@ -27,4 +27,10 @@ public class PlanHelperViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
+
+    void updateBudget(int planId, int cost, int traffic) {
+        Completable.fromAction(() -> repository.updateBudget(planId, cost, traffic))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 }
