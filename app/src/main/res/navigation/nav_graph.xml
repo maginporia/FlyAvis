@@ -28,9 +28,13 @@
         android:name="com.flyavis.android.ui.checklist.ChecklistFragment"
         tools:layout="@layout/checklist_fragment" />
     <fragment
-        android:id="@+id/spiltBillsFragment"
-        android:name="com.flyavis.android.ui.spiltbills.SpiltBillsFragment"
-        tools:layout="@layout/spilt_bills_fragment" />
+        android:id="@+id/billsFragment"
+        android:name="com.flyavis.android.ui.bills.BillsFragment"
+        tools:layout="@layout/bills_fragment">
+        <action
+            android:id="@+id/action_billsFragment_to_billDetailFragment"
+            app:destination="@id/billDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/planningFragment"
         android:name="com.flyavis.android.ui.planning.PlanningFragment"
@@ -59,6 +63,15 @@
         tools:layout="@layout/plan_helper_fragment">
         <argument
             android:name="planId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/billDetailFragment"
+        android:name="com.flyavis.android.ui.billdetail.BillDetailFragment"
+        android:label="bill_detail_fragment"
+        tools:layout="@layout/bill_detail_fragment">
+        <argument
+            android:name="myTyipid"
             app:argType="integer" />
     </fragment>
 </navigation>

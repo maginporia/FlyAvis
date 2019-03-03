@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         Set<Integer> topLevelDestinations = new HashSet<>();
         topLevelDestinations.add(R.layout.checklist_fragment);
         topLevelDestinations.add(R.layout.my_trips_fragment);
-        topLevelDestinations.add(R.layout.spilt_bills_fragment);
+        topLevelDestinations.add(R.layout.bills_fragment);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration
                 .Builder(topLevelDestinations)
                 .build();

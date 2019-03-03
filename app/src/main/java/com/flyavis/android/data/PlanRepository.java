@@ -53,6 +53,10 @@ public class PlanRepository {
         return planDao.getPlan(planId);
     }
 
+    public Flowable<List<Integer>> getPlanId(int tripId) {
+        return planDao.getPlanId(tripId);
+    }
+
     public void insertSpot(Plan plan) {
         planDao.insetNewSpot(plan);
     }

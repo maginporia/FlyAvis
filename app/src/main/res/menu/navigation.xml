@@ -14,6 +14,6 @@
     <item
         android:id="@+id/spiltBillsFragment"
         android:icon="@drawable/baseline_attach_money_24"
-        android:title="@string/title_spilt_bills" />
+        android:title="@string/title_travelling_expenses" />
 
 </menu>

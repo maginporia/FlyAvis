@@ -45,7 +45,7 @@ public class MyTripRepository {
             @NonNull
             @Override
             protected Flowable<List<MyTrip>> loadFromDb() {
-                return myTripDao.getMyTrips();
+                return getMyTrips();
             }
 
             @NonNull
@@ -54,6 +54,10 @@ public class MyTripRepository {
                 return null;
             }
         }.getAsLiveData();
+    }
+
+    public Flowable<List<MyTrip>> getMyTrips() {
+        return myTripDao.getMyTrips();
     }
 
     public Flowable<MyTrip> getSpecificTrip(int myTripId) {
