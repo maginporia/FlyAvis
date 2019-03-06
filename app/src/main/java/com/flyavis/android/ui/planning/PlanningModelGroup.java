@@ -35,7 +35,7 @@ public class PlanningModelGroup extends EpoxyModelGroup {
                         .spotNotice(planNotice)
                         .stayTime(l * 1.0 / (60 * 60 * 1000) + "小時")
                         .clickListener(view -> {
-
+                            callbacks.onSpotViewClick(plan);
                         })
                         .moreButtonClickListener(view -> {
                             callbacks.onMoreButtonClick(plan);

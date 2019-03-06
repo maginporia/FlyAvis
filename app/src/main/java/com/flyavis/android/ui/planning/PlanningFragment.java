@@ -309,8 +309,13 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     }
 
     @Override
-    public void onSpotViewClick() {
+    public void onSpotViewClick(Plan plan) {
+        String url = "https://www.google.com/maps/search/?api=1"
+                + "&query=" + plan.getSpotName()
+                + "&query_place_id=" + plan.getPlaceId();
 
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 
     @Override

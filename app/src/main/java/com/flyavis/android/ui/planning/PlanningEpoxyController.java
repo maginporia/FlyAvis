@@ -51,7 +51,7 @@ public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, S
 
         void onAddNewSpotViewClick();
 
-        void onSpotViewClick();
+        void onSpotViewClick(Plan plan);
 
         void onMoreButtonClick(Plan plan);
 
