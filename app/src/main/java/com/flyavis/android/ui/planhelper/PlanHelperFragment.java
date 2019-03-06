@@ -75,13 +75,18 @@ public class PlanHelperFragment extends DaggerFragment
     @Override
     public void onCheckedChange(CompoundButton button, Boolean b) {
         String spotNotice = observedPlan.getSpotNotice();
+        Timber.d(spotNotice);
         List<String> list = null;
         if (spotNotice != null) {
             list = new ArrayList<>(Arrays.asList(spotNotice.split(", ")));
             if (b) {
-                list.add((String) button.getText());
+                if (!list.contains(button.getText())) {
+                    list.add((String) button.getText());
+                    Timber.d("add");
+                }
             } else {
                 list.remove(button.getText());
+                Timber.d("remove");
             }
         } else {
             list = new ArrayList<>();
@@ -94,7 +99,7 @@ public class PlanHelperFragment extends DaggerFragment
             } else {
                 newString = newString + ", " + s;
             }
-
+            Timber.d(newString);
         }
         mViewModel.updateNotice(planId, newString);
     }
