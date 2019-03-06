@@ -39,7 +39,7 @@ public class BillDetailFragment extends DaggerFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(BillDetailViewModel.class);
+        mViewModel = ViewModelProviders.of(this, factory).get(BillDetailViewModel.class);
         // TODO: Use the ViewModel
     }
 

@@ -2,6 +2,7 @@ package com.flyavis.android.di;
 
 import com.flyavis.android.ui.MainActivity;
 import com.flyavis.android.ui.addnewtrip.AddNewTripFragment;
+import com.flyavis.android.ui.billdetail.BillDetailFragment;
 import com.flyavis.android.ui.bills.BillsFragment;
 import com.flyavis.android.ui.mytrips.MyTripsFragment;
 import com.flyavis.android.ui.planhelper.PlanHelperFragment;
@@ -27,6 +28,9 @@ abstract class ViewBuilder {
 
     @ContributesAndroidInjector
     abstract BillsFragment billsFragment();
+
+    @ContributesAndroidInjector
+    abstract BillDetailFragment billDetailFragment();
 
     @ContributesAndroidInjector
     abstract MainActivity bindMainActivity();

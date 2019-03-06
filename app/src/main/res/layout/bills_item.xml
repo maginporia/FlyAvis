@@ -10,7 +10,7 @@
             type="String" />
 
         <variable
-            name="clickListener"
+            name="itemClickListener"
             type="android.view.View.OnClickListener" />
     </data>
 
@@ -25,7 +25,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:onClick="@{itemClickListener}">
 
             <TextView
                 android:id="@+id/textView2"
@@ -35,7 +36,6 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:text="@{title}"
-                android:onClick="@{clickListener}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

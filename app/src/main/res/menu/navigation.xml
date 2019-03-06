@@ -12,7 +12,7 @@
         android:title="@string/title_my_trips" />
 
     <item
-        android:id="@+id/spiltBillsFragment"
+        android:id="@+id/billsFragment"
         android:icon="@drawable/baseline_attach_money_24"
         android:title="@string/title_travelling_expenses" />
 

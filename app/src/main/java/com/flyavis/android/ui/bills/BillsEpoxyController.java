@@ -28,7 +28,7 @@ public class BillsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
             new BillsItemBindingModel_()
                     .id(myTrip.getMyTripId())
                     .title(myTrip.getTripName())
-                    .clickListener((model, parentView, clickedView, position) -> {
+                    .itemClickListener((model, parentView, clickedView, position) -> {
                         callbacks.onItemClick((int) model.id());
                     })
                     .addTo(this);
