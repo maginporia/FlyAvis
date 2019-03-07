@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey;
 public class Bill {
     @PrimaryKey(autoGenerate = true)
     private Integer costId;
-    private String costTittle;
+    private String costTitle;
     private Integer memberId;
     private Boolean ifTrafficCost;
     private Timestamp costDate;
@@ -23,11 +23,11 @@ public class Bill {
     private Integer singlePayer;
     private Integer singleCost;
 
-    public Bill(Integer costId, String costTittle, Integer memberId, Boolean ifTrafficCost
+    public Bill(Integer costId, String costTitle, Integer memberId, Boolean ifTrafficCost
             , Timestamp costDate, String category, Integer planId, Integer singlePayer
             , Integer singleCost) {
         this.costId = costId;
-        this.costTittle = costTittle;
+        this.costTitle = costTitle;
         this.memberId = memberId;
         this.ifTrafficCost = ifTrafficCost;
         this.costDate = costDate;
@@ -49,12 +49,12 @@ public class Bill {
         this.costId = costId;
     }
 
-    public String getCostTittle() {
-        return costTittle;
+    public String getCostTitle() {
+        return costTitle;
     }
 
-    public void setCostTittle(String costTittle) {
-        this.costTittle = costTittle;
+    public void setCostTitle(String costTitle) {
+        this.costTitle = costTitle;
     }
 
     public Integer getMemberId() {

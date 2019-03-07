@@ -23,6 +23,7 @@ public class BillDetailFragment extends DaggerFragment {
     ViewModelProvider.Factory factory;
     private BillDetailViewModel mViewModel;
     private BillDetailFragmentBinding binding;
+    private BillDetailEpoxyController controller;
 
     public static BillDetailFragment newInstance() {
         return new BillDetailFragment();
@@ -40,6 +41,11 @@ public class BillDetailFragment extends DaggerFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, factory).get(BillDetailViewModel.class);
+
+        controller = new BillDetailEpoxyController();
+        binding.billDetailRecyclerView.setController(controller);
+
+        controller.setData(null);
         // TODO: Use the ViewModel
     }
 
