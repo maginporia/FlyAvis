@@ -57,6 +57,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="328dp"
+        android:layout_marginTop="@dimen/card_spacing"
         android:layout_marginStart="@dimen/card_spacing"
         android:layout_marginEnd="@dimen/card_spacing"
         android:layout_marginBottom="@dimen/card_spacing"
@@ -275,6 +276,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView16"
                 tools:text="$1000" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="顯示全部"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

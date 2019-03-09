@@ -68,7 +68,6 @@
     <fragment
         android:id="@+id/billDetailFragment"
         android:name="com.flyavis.android.ui.billdetail.BillDetailFragment"
-        android:label="bill_detail_fragment"
         tools:layout="@layout/bill_detail_fragment">
         <argument
             android:name="myTyipid"
