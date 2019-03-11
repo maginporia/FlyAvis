@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.Navigation;
 import dagger.android.support.DaggerFragment;
 
 public class BillDetailFragment extends DaggerFragment {
@@ -47,6 +48,9 @@ public class BillDetailFragment extends DaggerFragment {
 
         controller.setData(null);
         // TODO: Use the ViewModel
+
+        binding.floatingActionButton.setOnClickListener(Navigation.createNavigateOnClickListener
+                (R.id.action_billDetailFragment_to_addNewBillFragment, null));
     }
 
 }

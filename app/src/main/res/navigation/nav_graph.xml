@@ -72,5 +72,15 @@
         <argument
             android:name="myTyipid"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_billDetailFragment_to_addNewBillFragment"
+            app:destination="@id/addNewBillFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popExitAnim="@anim/slide_down" />
     </fragment>
+    <fragment
+        android:id="@+id/addNewBillFragment"
+        android:name="com.flyavis.android.ui.addnewbill.AddNewBillFragment"
+        tools:layout="@layout/add_new_bill_fragment" />
 </navigation>

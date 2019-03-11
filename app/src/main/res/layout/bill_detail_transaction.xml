@@ -6,132 +6,39 @@
     <data>
 
         <variable
-            name="costTitleOne"
+            name="costTitle"
             type="String" />
 
         <variable
-            name="costTitleTwo"
+            name="payer"
             type="String" />
 
         <variable
-            name="costTitleThree"
+            name="costDate"
             type="String" />
 
         <variable
-            name="payerOne"
+            name="cost"
             type="String" />
 
-        <variable
-            name="payerTwo"
-            type="String" />
-
-        <variable
-            name="payerThree"
-            type="String" />
-
-        <variable
-            name="costDateOne"
-            type="String" />
-
-        <variable
-            name="costDateTwo"
-            type="String" />
-
-        <variable
-            name="costDateThree"
-            type="String" />
-
-        <variable
-            name="costOne"
-            type="String" />
-
-        <variable
-            name="costTwo"
-            type="String" />
-
-        <variable
-            name="costThree"
-            type="String" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
         android:layout_width="match_parent"
-        android:layout_height="328dp"
-        android:layout_marginTop="@dimen/card_spacing"
+        android:layout_height="100dp"
         android:layout_marginStart="@dimen/card_spacing"
-        android:layout_marginEnd="@dimen/card_spacing"
-        android:layout_marginBottom="@dimen/card_spacing"
-        app:cardCornerRadius="@dimen/radius"
-        app:cardPreventCornerOverlap="true">
+        android:layout_marginEnd="@dimen/card_spacing">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="最新的交易"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="最新的交易" />
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="363dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="100dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <View
-                android:id="@+id/divider4"
-                android:layout_width="363dp"
-                android:layout_height="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="100dp"
-                android:background="?android:attr/listDivider"
-                app:layout_constraintBottom_toTopOf="@+id/divider3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/circleImageView3"
                 android:layout_width="48dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="32dp"
-                android:src="@color/colorPrimary"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/divider4"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView"
-                android:layout_width="48dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="32dp"
-                android:src="@color/colorPrimary"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
-                app:layout_constraintBottom_toTopOf="@+id/divider3"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView2"
-                android:layout_width="48dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="32dp"
                 android:src="@color/colorPrimary"
                 app:civ_border_color="#FF000000"
@@ -144,35 +51,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@{costTitleOne}"
+                android:layout_marginBottom="8dp"
+                android:text="@{costTitle}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/textView5"
                 app:layout_constraintStart_toEndOf="@+id/circleImageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:text="門票" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@{costTitleTwo}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                app:layout_constraintTop_toBottomOf="@+id/divider4"
-                tools:text="門票" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="@{costTitleThree}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                app:layout_constraintTop_toBottomOf="@+id/divider3"
                 tools:text="門票" />
 
             <TextView
@@ -180,65 +63,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@{payerOne}"
+                android:layout_marginBottom="32dp"
+                android:text="@{payer}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/circleImageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView4"
-                tools:text="Felix 支付" />
-
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@{payerTwo}"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
-                tools:text="Felix 支付" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="@{payerThree}"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                app:layout_constraintTop_toBottomOf="@+id/textView14"
                 tools:text="Felix 支付" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{costDateOne}"
+                android:layout_marginEnd="4dp"
+                android:text="@{costDate}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
-                tools:text="2019.03.07 15:01" />
-
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{costDateTwo}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider4"
-                tools:text="2019.03.07 15:01" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{costDateThree}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/divider3"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="2019.03.07 15:01" />
 
             <TextView
@@ -247,46 +85,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="@{costOne}"
+                android:text="@{cost}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView6"
                 tools:text="$1000" />
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{costTwo}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="363dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView12"
-                tools:text="$1000" />
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@{costThree}"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView16"
-                tools:text="$1000" />
-
-            <TextView
-                android:id="@+id/textView18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="顯示全部"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

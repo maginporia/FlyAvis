@@ -89,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
                     setNavigationVisibility(false);
                     setToolBarVisibility(true);
                     break;
+                case R.id.addNewBillFragment:
+                    toolbar.getMenu().clear();
+                    setNavigationVisibility(false);
+                    setToolBarVisibility(false);
+                    break;
                 default:
                     toolbar.getMenu().clear();
                     setNavigationVisibility(true);

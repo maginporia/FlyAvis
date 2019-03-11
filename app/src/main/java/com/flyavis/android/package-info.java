@@ -3,8 +3,8 @@
         , R.layout.spot_item, R.layout.traffic_time, R.layout.add_view, R.layout.helper_tilte
         , R.layout.helper_item, R.layout.note_chips, R.layout.note_content, R.layout.helper_edit
         , R.layout.bills_item, R.layout.bill_detail_fragment, R.layout.bill_detail_transaction
-        , R.layout.bill_detail_checkout_title, R.layout.billl_detail_checkout_item
-        , R.layout.bill_detail_checkout_finish})
+        , R.layout.bill_detail_transaction_end, R.layout.bill_detail_title
+        , R.layout.billl_detail_checkout_item, R.layout.bill_detail_checkout_finish})
 
 package com.flyavis.android;
 

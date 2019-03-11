@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="title"
+            type="String" />
+
+        <variable
+            name="expend"
             type="String" />
     </data>
 
@@ -15,6 +20,7 @@
         android:layout_marginStart="@dimen/card_spacing"
         android:layout_marginEnd="@dimen/card_spacing"
         android:layout_marginBottom="-4dp"
+        android:layout_marginTop="@dimen/card_spacing"
         app:cardCornerRadius="@dimen/radius"
         app:cardPreventCornerOverlap="true">
 
@@ -28,8 +34,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="結算"
+                android:text="@{title}"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="結算" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@{expend}"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
