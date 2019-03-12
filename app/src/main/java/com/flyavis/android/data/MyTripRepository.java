@@ -2,6 +2,7 @@ package com.flyavis.android.data;
 
 import com.flyavis.android.data.database.MyTrip;
 import com.flyavis.android.data.database.MyTripDao;
+import com.flyavis.android.data.database.SimplifyMyTrip;
 import com.flyavis.android.data.network.FlyAvisService;
 
 import java.util.List;
@@ -64,9 +65,12 @@ public class MyTripRepository {
         return myTripDao.getSpecificTrip(myTripId);
     }
 
+    public Flowable<List<SimplifyMyTrip>> getSimplifyMyTrips() {
+        return myTripDao.getSimplifyMyTrip();
+    }
+
     public void insetMyTrip(MyTrip myTrip) {
         myTripDao.insertTrip(myTrip);
-
     }
 
     public void updateMyTrip(MyTrip myTrip) {

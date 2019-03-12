@@ -23,6 +23,9 @@ public abstract class PlanDao {
     @Query("SELECT planId FROM `plan` WHERE tripId IN (:tripId)")
     public abstract Flowable<List<Integer>> getPlanId(int tripId);
 
+    @Query("SELECT planId, planDay, spotName FROM `plan` WHERE tripId IN (:myTripId)")
+    public abstract Flowable<List<SimplifyPlan>> getSimplifyPlan(int myTripId);
+
     @Insert
     public abstract void insetNewSpot(Plan plan);
 

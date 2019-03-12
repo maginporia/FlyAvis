@@ -3,4 +3,12 @@
     <string-array name="add_new_spot">
         <item>Search</item>
     </string-array>
+    <string-array name="category">
+        <item>Food</item>
+        <item>Drink</item>
+        <item>Travel</item>
+        <item>Live</item>
+        <item>Ticket</item>
+        <item>Others</item>
+    </string-array>
 </resources>

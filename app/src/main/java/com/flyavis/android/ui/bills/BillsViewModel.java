@@ -3,6 +3,7 @@ package com.flyavis.android.ui.bills;
 import com.flyavis.android.data.MyTripRepository;
 import com.flyavis.android.data.PlanRepository;
 import com.flyavis.android.data.database.MyTrip;
+import com.flyavis.android.data.database.SimplifyMyTrip;
 
 import java.util.List;
 
@@ -26,8 +27,7 @@ public class BillsViewModel extends ViewModel {
         return LiveDataReactiveStreams.fromPublisher(myTripRepository.getMyTrips());
     }
 
-    LiveData<List<Integer>> getPlanId(int tripId) {
-        return LiveDataReactiveStreams.fromPublisher(planRepository.getPlanId(tripId));
+    LiveData<List<SimplifyMyTrip>> getSimplifyMyTrips() {
+        return LiveDataReactiveStreams.fromPublisher(myTripRepository.getSimplifyMyTrips());
     }
-
 }

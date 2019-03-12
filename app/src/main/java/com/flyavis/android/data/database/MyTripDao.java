@@ -17,6 +17,9 @@ public interface MyTripDao {
     @Query("SELECT * FROM mytrip WHERE myTripId IN (:id)")
     Flowable<MyTrip> getSpecificTrip(int id);
 
+    @Query("SELECT myTripId, tripName FROM mytrip ORDER BY endDate DESC")
+    Flowable<List<SimplifyMyTrip>> getSimplifyMyTrip();
+
     @Insert
     void insertTrip(MyTrip myTrip);
 

@@ -2,6 +2,7 @@ package com.flyavis.android.data;
 
 import com.flyavis.android.data.database.Plan;
 import com.flyavis.android.data.database.PlanDao;
+import com.flyavis.android.data.database.SimplifyPlan;
 import com.flyavis.android.data.network.FlyAvisService;
 
 import java.util.List;
@@ -55,6 +56,10 @@ public class PlanRepository {
 
     public Flowable<List<Integer>> getPlanId(int tripId) {
         return planDao.getPlanId(tripId);
+    }
+
+    public Flowable<List<SimplifyPlan>> getSimplifyPlan(int tripId) {
+        return planDao.getSimplifyPlan(tripId);
     }
 
     public void insertSpot(Plan plan) {

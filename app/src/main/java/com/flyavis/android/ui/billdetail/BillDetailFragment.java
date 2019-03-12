@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import com.flyavis.android.R;
 import com.flyavis.android.databinding.BillDetailFragmentBinding;
 
+import java.util.Objects;
+
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ public class BillDetailFragment extends DaggerFragment {
     private BillDetailViewModel mViewModel;
     private BillDetailFragmentBinding binding;
     private BillDetailEpoxyController controller;
+    int myTyipId;
 
     public static BillDetailFragment newInstance() {
         return new BillDetailFragment();
@@ -42,15 +45,19 @@ public class BillDetailFragment extends DaggerFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, factory).get(BillDetailViewModel.class);
-
+        myTyipId = BillDetailFragmentArgs
+                .fromBundle(Objects.requireNonNull(getArguments())).getMyTyipId();
         controller = new BillDetailEpoxyController();
         binding.billDetailRecyclerView.setController(controller);
 
         controller.setData(null);
         // TODO: Use the ViewModel
 
-        binding.floatingActionButton.setOnClickListener(Navigation.createNavigateOnClickListener
-                (R.id.action_billDetailFragment_to_addNewBillFragment, null));
+        binding.floatingActionButton.setOnClickListener(view -> {
+            BillDetailFragmentDirections.ActionBillDetailFragmentToAddNewBillFragment action
+                    = BillDetailFragmentDirections.actionBillDetailFragmentToAddNewBillFragment(myTyipId);
+            Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
+        });
     }
 
 }

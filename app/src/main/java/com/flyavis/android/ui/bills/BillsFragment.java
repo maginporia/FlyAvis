@@ -48,9 +48,10 @@ public class BillsFragment extends DaggerFragment implements BillsEpoxyControlle
         controller = new BillsEpoxyController(this);
         binding.billsRecyclerView.setController(controller);
 
-        mViewModel.getMyTrips().observe(getViewLifecycleOwner(), myTrips -> {
-            controller.setData(myTrips);
+        mViewModel.getSimplifyMyTrips().observe(getViewLifecycleOwner(), simplifyMyTrips -> {
+            controller.setData(simplifyMyTrips);
         });
+
     }
 
     @Override

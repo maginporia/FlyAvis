@@ -70,7 +70,7 @@
         android:name="com.flyavis.android.ui.billdetail.BillDetailFragment"
         tools:layout="@layout/bill_detail_fragment">
         <argument
-            android:name="myTyipid"
+            android:name="myTyipId"
             app:argType="integer" />
         <action
             android:id="@+id/action_billDetailFragment_to_addNewBillFragment"
@@ -82,5 +82,9 @@
     <fragment
         android:id="@+id/addNewBillFragment"
         android:name="com.flyavis.android.ui.addnewbill.AddNewBillFragment"
-        tools:layout="@layout/add_new_bill_fragment" />
+        tools:layout="@layout/add_new_bill_fragment">
+        <argument
+            android:name="myTripId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

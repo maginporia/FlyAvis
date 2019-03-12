@@ -5,11 +5,11 @@ import com.airbnb.epoxy.TypedEpoxyController;
 import com.flyavis.android.BillsItemBindingModel_;
 import com.flyavis.android.R;
 import com.flyavis.android.TitleItemBindingModel_;
-import com.flyavis.android.data.database.MyTrip;
+import com.flyavis.android.data.database.SimplifyMyTrip;
 
 import java.util.List;
 
-public class BillsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
+public class BillsEpoxyController extends TypedEpoxyController<List<SimplifyMyTrip>> {
 
     private BillsCallbacks callbacks;
     @AutoModel
@@ -20,11 +20,11 @@ public class BillsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
     }
 
     @Override
-    protected void buildModels(List<MyTrip> data) {
+    protected void buildModels(List<SimplifyMyTrip> data) {
         titleItemBindingModel
                 .title(R.string.title_travelling_expenses)
                 .addTo(this);
-        for (MyTrip myTrip : data) {
+        for (SimplifyMyTrip myTrip : data) {
             new BillsItemBindingModel_()
                     .id(myTrip.getMyTripId())
                     .title(myTrip.getTripName())
