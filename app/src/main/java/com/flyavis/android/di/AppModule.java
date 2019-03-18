@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.flyavis.android.Constants;
 import com.flyavis.android.FlyAvisApplication;
+import com.flyavis.android.data.database.BillDao;
 import com.flyavis.android.data.database.FlyAvisDb;
 import com.flyavis.android.data.database.MyTripDao;
 import com.flyavis.android.data.database.PlanDao;
@@ -57,6 +58,12 @@ class AppModule {
     @Singleton
     PlanDao providePlanningDao(FlyAvisDb database) {
         return database.planningDao();
+    }
+
+    @Provides
+    @Singleton
+    BillDao provideBillDao(FlyAvisDb database) {
+        return database.billDao();
     }
 
     @Singleton

@@ -59,7 +59,7 @@
             android:layout_marginEnd="16dp"
             android:hint="景點名稱"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/whichDay"
+            app:layout_constraintStart_toEndOf="@+id/whichTime"
             app:layout_constraintTop_toBottomOf="@+id/costName">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -73,7 +73,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/whichDay"
+            android:id="@+id/whichTime"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="147dp"
             android:layout_height="0dp"
@@ -84,7 +84,7 @@
             app:layout_constraintTop_toBottomOf="@+id/costName">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/day"
+                android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"

@@ -1,7 +1,6 @@
 package com.flyavis.android.ui.addnewbill;
 
 import android.app.Activity;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +18,9 @@ import com.flyavis.android.databinding.AddNewBillFragmentBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -45,6 +46,13 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     private LiveData<List<SimplifyPlan>> simplifyPlanObservable;
     private List<SimplifyPlan> simplifyPlans;
     private Bill bill;
+    private Calendar calendar = Calendar.getInstance();
+    private int year = calendar.get(Calendar.YEAR);
+    private int month = calendar.get(Calendar.MONTH);
+    private int day = calendar.get(Calendar.DAY_OF_MONTH);
+    private int hour = calendar.get(Calendar.HOUR);
+    private int min = calendar.get(Calendar.MINUTE);
+
 
     public static AddNewBillFragment newInstance() {
         return new AddNewBillFragment();
@@ -74,23 +82,29 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
                 , R.drawable.baseline_add_24};
         CategoryAdapter adapter = new CategoryAdapter(getContext(), R.layout.category_spinner
                 , getResources().getStringArray(R.array.category), imageArray);
-
         binding.categorySpinner.setAdapter(adapter);
 
         binding.setSpotNameClickListener(view -> spotSelectDialog());
         binding.setTimeClickListener(view -> timePickerDialog());
 
-        simplifyPlanObservable = mViewModel.getSimPlifyPlan(myTripId);
+        simplifyPlanObservable = mViewModel.getSimplifyPlan(myTripId);
         simplifyPlanObservable.observe(getViewLifecycleOwner(), simplifyPlans -> {
             this.simplifyPlans = simplifyPlans;
         });
+        binding.time.setText(String.format(Locale.US, "%02d:%02d", hour, min));
+        bill.setCostDate(System.currentTimeMillis());
     }
 
     private void timePickerDialog() {
-        new TimePickerDialog(getContext(), (timePicker, i, i1) -> {
-
-        }, 0, 0, true)
-                .show();
+//        new DatePickerDialog(Objects.requireNonNull(getContext()), (datePicker, i, i1, i2) -> {
+//            String dateTime = String.valueOf(i) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i2);
+//            new TimePickerDialog(getContext(), (timePicker, j, j1) -> {
+//                Time.valueOf(j + j1 + "00");
+//                String time = String.format(Locale.US, "%02d:%02d", j, j1);
+//                binding.time.setText(dateTime + " " + time);
+//            }, hour, min, true)
+//                    .show();
+//        }, year, month, day).show();
     }
 
     private void spotSelectDialog() {
@@ -147,7 +161,7 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-
+                mViewModel.insertNewBill(bill);
                 mode.finish();
                 break;
             default:

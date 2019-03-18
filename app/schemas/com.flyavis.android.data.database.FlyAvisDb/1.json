@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "86e8a7832322978cb1dc33dff815b55a",
+    "identityHash": "a19401fd68dd96102253c761c1941e89",
     "entities": [
       {
         "tableName": "MyTrip",
@@ -155,7 +155,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Plan_tripId",
+            "unique": false,
+            "columnNames": [
+              "tripId"
+            ],
+            "createSql": "CREATE  INDEX `index_Plan_tripId` ON `${TABLE_NAME}` (`tripId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "MyTrip",
@@ -169,12 +178,101 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "Bill",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`costId` INTEGER PRIMARY KEY AUTOINCREMENT, `costTitle` TEXT, `memberId` INTEGER, `ifTrafficCost` INTEGER, `costDate` INTEGER, `category` TEXT, `planId` INTEGER, `singlePayer` INTEGER, `singleCost` INTEGER, FOREIGN KEY(`planId`) REFERENCES `Plan`(`planId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "costId",
+            "columnName": "costId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "costTitle",
+            "columnName": "costTitle",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memberId",
+            "columnName": "memberId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ifTrafficCost",
+            "columnName": "ifTrafficCost",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "costDate",
+            "columnName": "costDate",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "planId",
+            "columnName": "planId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "singlePayer",
+            "columnName": "singlePayer",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "singleCost",
+            "columnName": "singleCost",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "costId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Bill_planId",
+            "unique": false,
+            "columnNames": [
+              "planId"
+            ],
+            "createSql": "CREATE  INDEX `index_Bill_planId` ON `${TABLE_NAME}` (`planId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Plan",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planId"
+            ],
+            "referencedColumns": [
+              "planId"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"86e8a7832322978cb1dc33dff815b55a\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a19401fd68dd96102253c761c1941e89\")"
     ]
   }
 }

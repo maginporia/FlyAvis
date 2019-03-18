@@ -1,30 +1,30 @@
 package com.flyavis.android.data.database;
 
-import java.sql.Timestamp;
-
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Plan.class,
         parentColumns = "planId",
         childColumns = "planId",
-        onDelete = ForeignKey.CASCADE))
+        onDelete = ForeignKey.CASCADE),
+        indices = {@Index("planId")})
 public class Bill {
     @PrimaryKey(autoGenerate = true)
     private Integer costId;
     private String costTitle;
     private Integer memberId;
     private Boolean ifTrafficCost;
-    private Timestamp costDate;
+    private Long costDate;
     private String category;
     private Integer planId;
     private Integer singlePayer;
     private Integer singleCost;
 
     public Bill(Integer costId, String costTitle, Integer memberId, Boolean ifTrafficCost
-            , Timestamp costDate, String category, Integer planId, Integer singlePayer
+            , Long costDate, String category, Integer planId, Integer singlePayer
             , Integer singleCost) {
         this.costId = costId;
         this.costTitle = costTitle;
@@ -73,11 +73,11 @@ public class Bill {
         this.ifTrafficCost = ifTrafficCost;
     }
 
-    public Timestamp getCostDate() {
+    public Long getCostDate() {
         return costDate;
     }
 
-    public void setCostDate(Timestamp costDate) {
+    public void setCostDate(Long costDate) {
         this.costDate = costDate;
     }
 

@@ -5,12 +5,14 @@ import java.sql.Time;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = MyTrip.class,
         parentColumns = "myTripId",
         childColumns = "tripId",
-        onDelete = ForeignKey.CASCADE))
+        onDelete = ForeignKey.CASCADE),
+        indices = {@Index("tripId")})
 public class Plan {
 
     @PrimaryKey(autoGenerate = true)
