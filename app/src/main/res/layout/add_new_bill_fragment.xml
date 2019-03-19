@@ -42,6 +42,7 @@
                 android:id="@+id/amountEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:text="0"
                 android:textAlignment="textEnd"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3" />
@@ -67,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
-                android:onClick="@{spotNameClickListener}" />
+                android:onClick="@{spotNameClickListener}"
+                android:textSize="12sp" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -88,7 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
-                android:onClick="@{timeClickListener}" />
+                android:onClick="@{timeClickListener}"
+                android:textSize="12sp" />
 
 
         </com.google.android.material.textfield.TextInputLayout>

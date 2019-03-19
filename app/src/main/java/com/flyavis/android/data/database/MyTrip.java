@@ -25,21 +25,19 @@ public class MyTrip {
 
     private Boolean shared;
 
-    private String whoJoin;
 
     @Ignore
     public MyTrip() {
     }
 
     public MyTrip(int myTripId, String tripName, Date startDate, Date endDate, byte[] coverPhoto
-            , Boolean shared, String whoJoin) {
+            , Boolean shared) {
         this.myTripId = myTripId;
         this.tripName = tripName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.coverPhoto = coverPhoto;
         this.shared = shared;
-        this.whoJoin = whoJoin;
     }
 
     public int getMyTripId() {
@@ -90,11 +88,4 @@ public class MyTrip {
         this.shared = shared;
     }
 
-    public String getWhoJoin() {
-        return whoJoin;
-    }
-
-    public void setWhoJoin(String whoJoin) {
-        this.whoJoin = whoJoin;
-    }
 }

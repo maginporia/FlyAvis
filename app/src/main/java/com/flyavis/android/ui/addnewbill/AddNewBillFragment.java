@@ -1,6 +1,8 @@
 package com.flyavis.android.ui.addnewbill;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,10 +19,13 @@ import com.flyavis.android.data.database.SimplifyPlan;
 import com.flyavis.android.databinding.AddNewBillFragmentBinding;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.ZoneOffset;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -46,12 +51,8 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     private LiveData<List<SimplifyPlan>> simplifyPlanObservable;
     private List<SimplifyPlan> simplifyPlans;
     private Bill bill;
-    private Calendar calendar = Calendar.getInstance();
-    private int year = calendar.get(Calendar.YEAR);
-    private int month = calendar.get(Calendar.MONTH);
-    private int day = calendar.get(Calendar.DAY_OF_MONTH);
-    private int hour = calendar.get(Calendar.HOUR);
-    private int min = calendar.get(Calendar.MINUTE);
+
+    private LocalDateTime now;
 
 
     public static AddNewBillFragment newInstance() {
@@ -91,20 +92,23 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         simplifyPlanObservable.observe(getViewLifecycleOwner(), simplifyPlans -> {
             this.simplifyPlans = simplifyPlans;
         });
-        binding.time.setText(String.format(Locale.US, "%02d:%02d", hour, min));
+
+        //LocalTime backport
+        now = LocalDateTime.now();
+        String timeFormat = now.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
+        binding.time.setText(timeFormat);
+        bill = new Bill();
         bill.setCostDate(System.currentTimeMillis());
     }
 
     private void timePickerDialog() {
-//        new DatePickerDialog(Objects.requireNonNull(getContext()), (datePicker, i, i1, i2) -> {
-//            String dateTime = String.valueOf(i) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i2);
-//            new TimePickerDialog(getContext(), (timePicker, j, j1) -> {
-//                Time.valueOf(j + j1 + "00");
-//                String time = String.format(Locale.US, "%02d:%02d", j, j1);
-//                binding.time.setText(dateTime + " " + time);
-//            }, hour, min, true)
-//                    .show();
-//        }, year, month, day).show();
+        new DatePickerDialog(Objects.requireNonNull(getContext()), (datePicker, i, i1, i2) -> {
+            new TimePickerDialog(getContext(), (timePicker, j, j1) -> {
+                LocalDateTime chooseDateTime = LocalDateTime.of(i, i1, i2, j, j1);
+                bill.setCostDate(chooseDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli());
+            }, now.getHour(), now.getMinute(), true)
+                    .show();
+        }, now.getYear(), now.getMonthValue(), now.getDayOfMonth()).show();
     }
 
     private void spotSelectDialog() {
@@ -161,6 +165,7 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
+                binding.amountEditText.getText();
                 mViewModel.insertNewBill(bill);
                 mode.finish();
                 break;

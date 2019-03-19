@@ -3,12 +3,14 @@ package com.flyavis.android.data.database;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Plan.class,
         parentColumns = "planId",
         childColumns = "planId",
-        onDelete = ForeignKey.CASCADE))
+        onDelete = ForeignKey.CASCADE),
+        indices = {@Index("planId")})
 public class ToDoList {
 
     @PrimaryKey(autoGenerate = true)

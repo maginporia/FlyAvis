@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a19401fd68dd96102253c761c1941e89",
+    "identityHash": "816fec38f63cd9d834c1d0d6c8dd13c4",
     "entities": [
       {
         "tableName": "MyTrip",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`myTripId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `tripName` TEXT, `startDate` INTEGER, `endDate` INTEGER, `coverPhoto` BLOB, `shared` INTEGER, `whoJoin` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`myTripId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `tripName` TEXT, `startDate` INTEGER, `endDate` INTEGER, `coverPhoto` BLOB, `shared` INTEGER)",
         "fields": [
           {
             "fieldPath": "myTripId",
@@ -42,12 +42,6 @@
             "fieldPath": "shared",
             "columnName": "shared",
             "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "whoJoin",
-            "columnName": "whoJoin",
-            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -267,12 +261,136 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "TeamMember",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`memberId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` INTEGER, `memberName` TEXT, `teamName` TEXT, `tripId` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "memberId",
+            "columnName": "memberId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "memberName",
+            "columnName": "memberName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "teamName",
+            "columnName": "teamName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tripId",
+            "columnName": "tripId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "memberId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_TeamMember_tripId",
+            "unique": false,
+            "columnNames": [
+              "tripId"
+            ],
+            "createSql": "CREATE  INDEX `index_TeamMember_tripId` ON `${TABLE_NAME}` (`tripId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "MyTrip",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tripId"
+            ],
+            "referencedColumns": [
+              "myTripId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "ToDoList",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`toDoId` INTEGER PRIMARY KEY AUTOINCREMENT, `toDoItem` TEXT, `done` INTEGER, `planId` INTEGER, FOREIGN KEY(`planId`) REFERENCES `Plan`(`planId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "toDoId",
+            "columnName": "toDoId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "toDoItem",
+            "columnName": "toDoItem",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "done",
+            "columnName": "done",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "planId",
+            "columnName": "planId",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "toDoId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_ToDoList_planId",
+            "unique": false,
+            "columnNames": [
+              "planId"
+            ],
+            "createSql": "CREATE  INDEX `index_ToDoList_planId` ON `${TABLE_NAME}` (`planId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Plan",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "planId"
+            ],
+            "referencedColumns": [
+              "planId"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a19401fd68dd96102253c761c1941e89\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"816fec38f63cd9d834c1d0d6c8dd13c4\")"
     ]
   }
 }

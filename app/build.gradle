@@ -36,33 +36,35 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.1.0-alpha02'
+
+    def lifecycle_version = "2.1.0-alpha03"
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    // optional - ReactiveStreams support for LiveData
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version" // For Kotlin use lifecycle-reactivestreams-ktx
+
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 
-    def nav_version = "1.0.0-rc02"
-    implementation "android.arch.navigation:navigation-fragment:$nav_version"
-    // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui:$nav_version"
-    // use -ktx for Kotlin
+    def nav_version = "2.0.0"
+    implementation "androidx.navigation:navigation-fragment:$nav_version" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-ui:$nav_version" // For Kotlin use navigation-ui-ktx
 
-    def room_version = "2.1.0-alpha04"
+    def room_version = "2.1.0-alpha05"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // use kapt for Kotlin
     implementation "androidx.room:room-rxjava2:$room_version"
-
+    // g map
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.libraries.places:places:1.0.0'
-
-    //    implementation 'com.google.firebase:firebase-core:16.0.6'
+    //firebase ui auth
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    //fb sdk
     implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
-
     // Dagger core
     implementation 'com.google.dagger:dagger:2.21'
     annotationProcessor "com.google.dagger:dagger-compiler:2.21"
@@ -73,7 +75,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.0'
     //Epoxy
     implementation 'com.airbnb.android:epoxy:3.3.1'
@@ -82,10 +83,12 @@ dependencies {
     //RxJava2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
-
+    //anim
     implementation 'com.airbnb.android:lottie:3.0.0-beta4'
-
+    //replace Log.d
     implementation 'com.jakewharton.timber:timber:4.7.1'
+    //LocalTime backport
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
