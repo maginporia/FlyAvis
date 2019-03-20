@@ -105,6 +105,9 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         new DatePickerDialog(Objects.requireNonNull(getContext()), (datePicker, i, i1, i2) -> {
             new TimePickerDialog(getContext(), (timePicker, j, j1) -> {
                 LocalDateTime chooseDateTime = LocalDateTime.of(i, i1, i2, j, j1);
+                String timeFormat = chooseDateTime
+                        .format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));
+                binding.time.setText(timeFormat);
                 bill.setCostDate(chooseDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli());
             }, now.getHour(), now.getMinute(), true)
                     .show();

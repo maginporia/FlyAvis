@@ -1,6 +1,7 @@
 package com.flyavis.android.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.firebase.ui.auth.AuthUI;
@@ -10,6 +11,7 @@ import com.flyavis.android.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,20 @@ public class StartActivity extends AppCompatActivity {
         //For login check & onboarding experience
         super.onCreate(savedInstanceState);
         checkLoginStatus();
+        checkDynamicLinks();
+    }
+
+    private void checkDynamicLinks() {
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, pendingDynamicLinkData -> {
+                    Uri deepLink = null;
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.getLink();
+                    }
+
+                });
+
     }
 
     private void checkLoginStatus() {

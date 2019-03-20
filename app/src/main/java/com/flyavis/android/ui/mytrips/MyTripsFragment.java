@@ -109,6 +109,47 @@ public class MyTripsFragment extends DaggerFragment
         navigateView(action);
     }
 
+    @Override
+    public void onAddPersonClick(int id) {
+//        DynamicLink link = FirebaseDynamicLinks.getInstance()
+//                .createDynamicLink()
+//                .setLink(Uri.parse("https://www.example.com/"))
+//                .setDomainUriPrefix("https://example.page.link")
+//                .setIosParameters(new DynamicLink.IosParameters.Builder("com.your.bundleid").build())
+//                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder("com.flyavis.android").build())
+//                .buildDynamicLink();
+//        Intent intent = new Intent(Intent.ACTION_SEND);
+//        intent.setType("text/plain");
+//        intent.putExtra(Intent.EXTRA_TEXT, link.getUri().toString());
+//        Timber.d("share success");
+//        startActivity(Intent.createChooser(intent, "Share Link"));
+
+//        Timber.d("share start");
+//        Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
+//                .setLink(Uri.parse("https://www.example.com/"))
+//                .setDomainUriPrefix("https://example.page.link")
+//                .setIosParameters(new DynamicLink.IosParameters.Builder("com.your.bundleid").build())
+//                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder("com.flyavis.android").build())
+//                .buildShortDynamicLink()
+//                .addOnCompleteListener(getActivity(), task -> {
+//                    if (task.isSuccessful()) {
+//                        // Short link created
+//                        Uri shortLink = task.getResult().getShortLink();
+//                        Intent intent = new Intent(Intent.ACTION_SEND);
+//                        intent.setType("text/plain");
+//                        intent.putExtra(Intent.EXTRA_TEXT, shortLink.toString());
+//                        Timber.d("share success");
+//                        startActivity(Intent.createChooser(intent, "Share Link"));
+//                    } else {
+//                        Timber.d("share failed");
+//                        // Error
+//                        // ...
+//                    }
+//
+//                });
+
+    }
+
     private void
     navigateView(NavDirections action) {
         Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);

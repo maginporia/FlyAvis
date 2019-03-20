@@ -73,6 +73,9 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         .editClickListener((model, parentView, clickedView, position) -> {
                             callbacks.onEditTripClick((int) model.id());
                         })
+                        .addPersonClickListener((model, parentView, clickedView, position) -> {
+                            callbacks.onAddPersonClick((int) model.id());
+                        })
                         .addTo(this);
             }
         }
@@ -137,7 +140,8 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
 
         void onMyTripItemLongClick(int id, boolean deleteState, int clickedCount);
 
-        void
-        onEditTripClick(int id);
+        void onEditTripClick(int id);
+
+        void onAddPersonClick(int id);
     }
 }

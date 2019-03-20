@@ -10,6 +10,8 @@ import com.flyavis.android.data.database.BillDao;
 import com.flyavis.android.data.database.FlyAvisDb;
 import com.flyavis.android.data.database.MyTripDao;
 import com.flyavis.android.data.database.PlanDao;
+import com.flyavis.android.data.database.TeamMemberDao;
+import com.flyavis.android.data.database.ToDoListDao;
 import com.flyavis.android.data.network.FlyAvisService;
 
 import javax.inject.Singleton;
@@ -64,6 +66,18 @@ class AppModule {
     @Singleton
     BillDao provideBillDao(FlyAvisDb database) {
         return database.billDao();
+    }
+
+    @Provides
+    @Singleton
+    TeamMemberDao provideTeamMember(FlyAvisDb database) {
+        return database.teamMemberDao();
+    }
+
+    @Provides
+    @Singleton
+    ToDoListDao provideToDoList(FlyAvisDb database) {
+        return database.toDoListDao();
     }
 
     @Singleton
