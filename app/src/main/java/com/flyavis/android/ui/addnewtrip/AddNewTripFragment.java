@@ -81,6 +81,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
                 endDate.setText(String.valueOf(myTrip.getEndDate()));
             });
         } else {
+            binding.tripName.setText("美好的旅行");
             //自動帶入今天日期
             String dateTime
                     = String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf(day);

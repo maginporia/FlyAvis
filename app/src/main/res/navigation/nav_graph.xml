@@ -22,6 +22,13 @@
             app:enterAnim="@anim/slide_up"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popExitAnim="@anim/slide_down" />
+        <action
+            android:id="@+id/action_myTripsFragment_to_memberFragment"
+            app:destination="@id/memberFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/checklistFragment"
@@ -85,6 +92,14 @@
         tools:layout="@layout/add_new_bill_fragment">
         <argument
             android:name="myTripId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/memberFragment"
+        android:name="com.flyavis.android.ui.member.MemberFragment"
+        tools:layout="@layout/member_fragment">
+        <argument
+            android:name="tripId"
             app:argType="integer" />
     </fragment>
 </navigation>

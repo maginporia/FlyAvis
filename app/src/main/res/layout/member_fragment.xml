@@ -10,17 +10,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.checklist.ChecklistFragment">
+        tools:context=".ui.member.MemberFragment">
 
         <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/checkListRecyclerView"
+            android:id="@+id/membersRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem=""></com.airbnb.epoxy.EpoxyRecyclerView>
+            tools:listitem="">
+
+        </com.airbnb.epoxy.EpoxyRecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

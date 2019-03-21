@@ -73,8 +73,8 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         .editClickListener((model, parentView, clickedView, position) -> {
                             callbacks.onEditTripClick((int) model.id());
                         })
-                        .addPersonClickListener((model, parentView, clickedView, position) -> {
-                            callbacks.onAddPersonClick((int) model.id());
+                        .memberClickListener((model, parentView, clickedView, position) -> {
+                            callbacks.onMemberClick((int) model.id());
                         })
                         .addTo(this);
             }
@@ -142,6 +142,6 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
 
         void onEditTripClick(int id);
 
-        void onAddPersonClick(int id);
+        void onMemberClick(int id);
     }
 }

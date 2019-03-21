@@ -5,6 +5,8 @@ import com.flyavis.android.ui.addnewbill.AddNewBillFragment;
 import com.flyavis.android.ui.addnewtrip.AddNewTripFragment;
 import com.flyavis.android.ui.billdetail.BillDetailFragment;
 import com.flyavis.android.ui.bills.BillsFragment;
+import com.flyavis.android.ui.checklist.ChecklistFragment;
+import com.flyavis.android.ui.member.MemberFragment;
 import com.flyavis.android.ui.mytrips.MyTripsFragment;
 import com.flyavis.android.ui.planhelper.PlanHelperFragment;
 import com.flyavis.android.ui.planning.PlanningFragment;
@@ -35,6 +37,12 @@ abstract class ViewBuilder {
 
     @ContributesAndroidInjector
     abstract AddNewBillFragment addNewBillFragment();
+
+    @ContributesAndroidInjector
+    abstract MemberFragment memberFragment();
+
+    @ContributesAndroidInjector
+    abstract ChecklistFragment checklistFragment();
 
     @ContributesAndroidInjector
     abstract MainActivity bindMainActivity();

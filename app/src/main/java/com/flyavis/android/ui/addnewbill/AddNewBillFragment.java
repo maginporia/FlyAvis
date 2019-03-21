@@ -77,7 +77,7 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
             actionMode = ((AppCompatActivity) Objects.requireNonNull(getActivity()))
                     .startSupportActionMode(this);
         }
-
+        //init category spinner
         Integer[] imageArray = {R.drawable.baseline_add_24, R.drawable.baseline_add_24,
                 R.drawable.baseline_add_24, R.drawable.baseline_add_24, R.drawable.baseline_add_24
                 , R.drawable.baseline_add_24};
@@ -87,6 +87,8 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
 
         binding.setSpotNameClickListener(view -> spotSelectDialog());
         binding.setTimeClickListener(view -> timePickerDialog());
+        binding.setWhoJoinClickListener(view -> memberPickerDialog());
+        binding.setPayerClickListener(view -> memberPickerDialog());
 
         simplifyPlanObservable = mViewModel.getSimplifyPlan(myTripId);
         simplifyPlanObservable.observe(getViewLifecycleOwner(), simplifyPlans -> {
@@ -99,6 +101,10 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         binding.time.setText(timeFormat);
         bill = new Bill();
         bill.setCostDate(System.currentTimeMillis());
+    }
+
+    private void memberPickerDialog() {
+
     }
 
     private void timePickerDialog() {
@@ -146,7 +152,6 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
                                 binding.spotNameEditText.setText(spotNamesArray[i1]);
                                 bill.setPlanId(planIdList.get(i1));
                             })
-
                             .show();
                 })
                 .show();

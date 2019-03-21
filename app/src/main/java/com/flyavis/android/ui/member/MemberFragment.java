@@ -1,4 +1,4 @@
-package com.flyavis.android.ui.checklist;
+package com.flyavis.android.ui.member;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,45 +6,47 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.flyavis.android.R;
-import com.flyavis.android.databinding.ChecklistFragmentBinding;
+import com.flyavis.android.databinding.MemberFragmentBinding;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import dagger.android.support.DaggerFragment;
 
-public class ChecklistFragment extends Fragment {
+public class MemberFragment extends DaggerFragment {
 
     @Inject
     ViewModelProvider.Factory factory;
-    private ChecklistViewModel mViewModel;
-    private ChecklistFragmentBinding binding;
-    private CheckListEpoxyController controller;
+    private MemberViewModel mViewModel;
+    private MemberFragmentBinding binding;
+    private MemberEpoxyController controller;
 
-    public static ChecklistFragment newInstance() {
-        return new ChecklistFragment();
+    public static MemberFragment newInstance() {
+        return new MemberFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil
-                .inflate(inflater, R.layout.checklist_fragment, container, false);
+                .inflate(inflater, R.layout.member_fragment, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this, factory).get(ChecklistViewModel.class);
-        controller = new CheckListEpoxyController();
-        binding.checkListRecyclerView.setController(controller);
+        mViewModel = ViewModelProviders.of(this, factory).get(MemberViewModel.class);
+
+        controller = new MemberEpoxyController();
+        binding.membersRecyclerView.setController(controller);
         // TODO: Use the ViewModel
         controller.setData(null);
+
     }
 
 }

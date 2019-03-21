@@ -26,7 +26,7 @@
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="addPersonClickListener"
+            name="memberClickListener"
             type="android.view.View.OnClickListener" />
 
         <variable
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:scaleType="centerCrop"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            tools:srcCompat="@color/browser_actions_title_color" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -77,13 +77,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="16dp"
                 android:text="@{date}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:layout_constraintVertical_bias="0.296"
                 tools:text="2017年10月21日-26日" />
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -104,25 +101,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:onClick="@{editClickListener}"
+                android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{editClickListener}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_edit_24" />
 
             <ImageButton
-                android:id="@+id/addPersonButton"
+                android:id="@+id/memberButton"
                 style="@android:style/Widget.Material.ImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
-                android:layout_marginEnd="8dp"
-                android:onClick="@{addPersonClickListener}"
+                android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
+                android:onClick="@{memberClickListener}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/planEditButton"
-                app:srcCompat="@drawable/baseline_person_add_24" />
+                app:srcCompat="@drawable/ic_people_black_24dp" />
 
             <ImageButton
                 android:id="@+id/shareButton"
@@ -130,11 +127,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="8dp"
-                android:onClick="@{shareClickListener}"
+                android:layout_marginEnd="16dp"
                 android:background="@android:color/transparent"
+                android:onClick="@{shareClickListener}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addPersonButton"
+                app:layout_constraintTop_toBottomOf="@+id/memberButton"
                 app:srcCompat="@drawable/baseline_share_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

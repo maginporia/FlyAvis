@@ -5,6 +5,8 @@ import com.flyavis.android.ui.addnewbill.AddNewBillViewModel;
 import com.flyavis.android.ui.addnewtrip.AddNewTripViewModel;
 import com.flyavis.android.ui.billdetail.BillDetailViewModel;
 import com.flyavis.android.ui.bills.BillsViewModel;
+import com.flyavis.android.ui.checklist.ChecklistViewModel;
+import com.flyavis.android.ui.member.MemberViewModel;
 import com.flyavis.android.ui.mytrips.MyTripsViewModel;
 import com.flyavis.android.ui.planhelper.PlanHelperViewModel;
 import com.flyavis.android.ui.planning.PlanningViewModel;
@@ -53,6 +55,16 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AddNewBillViewModel.class)
     abstract ViewModel bindAddNewBillViewModel(AddNewBillViewModel addNewBillViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MemberViewModel.class)
+    abstract ViewModel bindAMemberViewModel(MemberViewModel memberViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChecklistViewModel.class)
+    abstract ViewModel bindCheckListModel(ChecklistViewModel checklistViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ViewModelFactory factory);

@@ -110,7 +110,12 @@ public class MyTripsFragment extends DaggerFragment
     }
 
     @Override
-    public void onAddPersonClick(int id) {
+    public void onMemberClick(int id) {
+
+        MyTripsFragmentDirections.ActionMyTripsFragmentToMemberFragment action
+                = MyTripsFragmentDirections.actionMyTripsFragmentToMemberFragment(id);
+        navigateView(action);
+
 //        DynamicLink link = FirebaseDynamicLinks.getInstance()
 //                .createDynamicLink()
 //                .setLink(Uri.parse("https://www.example.com/"))
