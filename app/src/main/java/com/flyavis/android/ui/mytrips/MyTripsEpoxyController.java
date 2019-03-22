@@ -48,10 +48,10 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
             for (MyTrip myTrip : list) {
                 new MyTripsItemBindingModel_()
                         //All models must set a unique id.
-
                         .id(myTrip.getMyTripId())
                         .title(myTrip.getTripName())
                         .date(String.valueOf(myTrip.getStartDate()) + " ~ " + myTrip.getEndDate())
+                        .imageBytes(myTrip.getCoverPhoto())
                         .clickListener((model, parentView, clickedView, position) -> {
                             if (!deleteState) {
                                 //set args in nav_graph.xml first

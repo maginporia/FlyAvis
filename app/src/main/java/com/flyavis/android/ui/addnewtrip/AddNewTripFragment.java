@@ -3,6 +3,9 @@ package com.flyavis.android.ui.addnewtrip;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,11 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.bumptech.glide.Glide;
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.MyTrip;
 import com.flyavis.android.databinding.AddNewTripFragmentBinding;
 import com.google.android.material.textfield.TextInputEditText;
+import com.kc.splashpicker.SplashPicker;
+import com.kc.unsplash.models.Photo;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Objects;
@@ -46,6 +53,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     private int month = calendar.get(Calendar.MONTH);
     private int day = calendar.get(Calendar.DAY_OF_MONTH);
     private int myTripId = 0;
+    private Photo photo;
 
     public static AddNewTripFragment newInstance() {
         return new AddNewTripFragment();
@@ -75,10 +83,19 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
             myTripId = AddNewTripFragmentArgs
                     .fromBundle(getArguments()).getMyTripId();
             binding.titleTextView.setText(getString(R.string.edit));
-            mViewModel.getSpecificTrip(myTripId).observe(this, myTrip -> {
+            mViewModel.getSpecificTrip(myTripId).observe(getViewLifecycleOwner(), myTrip -> {
                 binding.tripName.setText(myTrip.getTripName());
                 startDate.setText(String.valueOf(myTrip.getStartDate()));
                 endDate.setText(String.valueOf(myTrip.getEndDate()));
+
+                if (photo == null) {
+                    Glide
+                            .with(this)
+                            .load(myTrip.getCoverPhoto())
+                            .centerCrop()
+                            .into(binding.selectedImageView);
+                }
+                mViewModel.getSpecificTrip(myTripId).removeObservers(getViewLifecycleOwner());
             });
         } else {
             binding.tripName.setText("美好的旅行");
@@ -88,9 +105,28 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
             startDate.setText(dateTime);
             endDate.setText(dateTime);
         }
+        binding.imagePicker.setOnClickListener(view -> {
+            SplashPicker.open(this, getActivity()
+                    , getString(R.string.unsplash_access_key), "選擇封面圖");
+        });
 
         startDate.setOnClickListener(view -> showDatePicker(startDate));
         endDate.setOnClickListener(view -> showDatePicker(endDate));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SplashPicker.PICK_IMAGE_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                photo = data.getParcelableExtra(SplashPicker.KEY_IMAGE);
+                Glide
+                        .with(this)
+                        .load(photo.getUrls().getRegular())
+                        .centerCrop()
+                        .into(binding.selectedImageView);
+            }
+        }
     }
 
     private void showDatePicker(TextInputEditText view) {
@@ -121,6 +157,16 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         myTrip.setTripName(String.valueOf(binding.tripName.getText()));
         myTrip.setStartDate(Date.valueOf(String.valueOf(startDate.getText())));
         myTrip.setEndDate(Date.valueOf(String.valueOf(endDate.getText())));
+
+        if (binding.selectedImageView.getDrawable() != null) {
+            Bitmap bitmap = ((BitmapDrawable) binding.selectedImageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] imageInByte = baos.toByteArray();
+            myTrip.setCoverPhoto(imageInByte);
+        }
+
+
         switch (item.getItemId()) {
             case R.id.save:
                 if (myTripId != 0) {

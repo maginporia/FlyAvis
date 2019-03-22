@@ -16,7 +16,6 @@ public class FlyAvisApplication extends DaggerApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-
         if (BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }

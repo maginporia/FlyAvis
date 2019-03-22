@@ -14,6 +14,10 @@
             type="String" />
 
         <variable
+            name="imageBytes"
+            type="byte[]" />
+
+        <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
 
@@ -46,11 +50,12 @@
         app:cardPreventCornerOverlap="true">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/coverPhoto"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:background="@color/gray"
             android:scaleType="centerCrop"
-            tools:srcCompat="@color/browser_actions_title_color" />
+            app:setImageByteArray="@{imageBytes}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -62,11 +67,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:shadowColor="@color/quantum_grey700"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="3"
                 android:text="@{title}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:textColor="@android:color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="宿霧之旅" />
@@ -78,7 +85,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:text="@{date}"
+                android:shadowColor="@color/quantum_grey700"
+                android:shadowDx="5"
+                android:shadowDy="5"
+                android:shadowRadius="3"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
                 tools:text="2017年10月21日-26日" />
@@ -104,6 +116,7 @@
                 android:layout_marginEnd="16dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{editClickListener}"
+                android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/baseline_edit_24" />
@@ -115,8 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="52dp"
                 android:layout_marginEnd="16dp"
-                android:background="@android:color/transparent"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{memberClickListener}"
+                android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/planEditButton"
                 app:srcCompat="@drawable/ic_people_black_24dp" />
@@ -128,8 +142,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
-                android:background="@android:color/transparent"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{shareClickListener}"
+                android:tint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/memberButton"
                 app:srcCompat="@drawable/baseline_share_24" />
