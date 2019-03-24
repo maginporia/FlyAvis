@@ -1,0 +1,45 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="trafficTime"
+            type="String" />
+
+        <variable
+            name="onEditTextClick"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/editPlanDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_margin="16dp">
+
+        </Spinner>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/TextInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:hint="@string/traffic_time">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/trafficTimeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="false"
+                android:onClick="@{onEditTextClick}"
+                android:text="@{trafficTime}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+</layout>

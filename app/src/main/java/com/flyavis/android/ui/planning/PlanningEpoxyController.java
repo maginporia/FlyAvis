@@ -56,6 +56,8 @@ public class PlanningEpoxyController extends Typed2EpoxyController<List<Plan>, S
         void onMoreButtonClick(Plan plan);
 
         void onTrafficTimeClick(Plan plan, Plan nextPlan);
+
+        void onTrafficEditButtonClick(Plan plan);
     }
 
 }

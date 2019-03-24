@@ -24,10 +24,6 @@ public class Plan {
 
     private int spotOrder;
 
-    private Double longitude;
-
-    private Double latitude;
-
     private String placeId;
 
     private String spotName;
@@ -35,6 +31,10 @@ public class Plan {
     private Time spotStartTime;
 
     private Time spotEndTime;
+
+    private int trafficTimeDuration;
+
+    private String travelMode;
 
     private Integer spotCost;
 
@@ -48,19 +48,19 @@ public class Plan {
     public Plan() {
     }
 
-    public Plan(int planId, int tripId, int planDay, int spotOrder, Double longitude
-            , Double latitude, String placeId, String spotName, Time spotStartTime, Time spotEndTime
+    public Plan(int planId, int tripId, int planDay, int spotOrder, String placeId, String spotName
+            , Time spotStartTime, Time spotEndTime, int trafficTimeDuration, String travelMode
             , Integer spotCost, String spotNotice, Integer spotTrafficFee, Boolean planB) {
         this.planId = planId;
         this.tripId = tripId;
         this.planDay = planDay;
         this.spotOrder = spotOrder;
-        this.longitude = longitude;
-        this.latitude = latitude;
         this.placeId = placeId;
         this.spotName = spotName;
         this.spotStartTime = spotStartTime;
         this.spotEndTime = spotEndTime;
+        this.trafficTimeDuration = trafficTimeDuration;
+        this.travelMode = travelMode;
         this.spotCost = spotCost;
         this.spotNotice = spotNotice;
         this.spotTrafficFee = spotTrafficFee;
@@ -99,22 +99,6 @@ public class Plan {
         this.spotOrder = spotOrder;
     }
 
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
     public String getPlaceId() {
         return placeId;
     }
@@ -145,6 +129,22 @@ public class Plan {
 
     public void setSpotEndTime(Time spotEndTime) {
         this.spotEndTime = spotEndTime;
+    }
+
+    public int getTrafficTimeDuration() {
+        return trafficTimeDuration;
+    }
+
+    public void setTrafficTimeDuration(int trafficTimeDuration) {
+        this.trafficTimeDuration = trafficTimeDuration;
+    }
+
+    public String getTravelMode() {
+        return travelMode;
+    }
+
+    public void setTravelMode(String travelMode) {
+        this.travelMode = travelMode;
     }
 
     public Integer getSpotCost() {

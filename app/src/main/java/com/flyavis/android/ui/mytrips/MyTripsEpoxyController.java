@@ -10,10 +10,12 @@ import com.flyavis.android.MyTripsItemBindingModel_;
 import com.flyavis.android.R;
 import com.flyavis.android.TitleItemBindingModel_;
 import com.flyavis.android.data.database.MyTrip;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -44,6 +46,8 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                 .title(R.string.title_my_trips)
                 .addTo(this);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
         if (list != null) {
             for (MyTrip myTrip : list) {
                 new MyTripsItemBindingModel_()
@@ -52,6 +56,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         .title(myTrip.getTripName())
                         .date(String.valueOf(myTrip.getStartDate()) + " ~ " + myTrip.getEndDate())
                         .imageBytes(myTrip.getCoverPhoto())
+                        .userImage(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl())
                         .clickListener((model, parentView, clickedView, position) -> {
                             if (!deleteState) {
                                 //set args in nav_graph.xml first

@@ -2,7 +2,6 @@ package com.flyavis.android.ui.addnewtrip;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,12 +12,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.bumptech.glide.Glide;
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.MyTrip;
 import com.flyavis.android.databinding.AddNewTripFragmentBinding;
+import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.kc.splashpicker.SplashPicker;
 import com.kc.unsplash.models.Photo;
@@ -158,6 +157,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         myTrip.setStartDate(Date.valueOf(String.valueOf(startDate.getText())));
         myTrip.setEndDate(Date.valueOf(String.valueOf(endDate.getText())));
 
+        //轉存byte[]
         if (binding.selectedImageView.getDrawable() != null) {
             Bitmap bitmap = ((BitmapDrawable) binding.selectedImageView.getDrawable()).getBitmap();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -165,7 +165,6 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
             byte[] imageInByte = baos.toByteArray();
             myTrip.setCoverPhoto(imageInByte);
         }
-
 
         switch (item.getItemId()) {
             case R.id.save:
@@ -186,18 +185,8 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     @Override
     public void onDestroyActionMode(ActionMode mode) {
         actionMode = null;
-        hideSoftKeyboard(Objects.requireNonNull(getActivity()));
+        FlyAvisUtils.hideSoftKeyboard(Objects.requireNonNull(getActivity()));
         Objects.requireNonNull(getFragmentManager()).popBackStack();
 
-    }
-
-    private void hideSoftKeyboard(Activity activity) {
-        if (activity.getCurrentFocus() == null) {
-            return;
-        }
-        InputMethodManager inputMethodManager
-                = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        Objects.requireNonNull(inputMethodManager)
-                .hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 }

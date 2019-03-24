@@ -18,6 +18,14 @@
             type="String" />
 
         <variable
+            name="payerImage"
+            type="android.net.Uri" />
+
+        <variable
+            name="receiverImage"
+            type="android.net.Uri" />
+
+        <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
 
@@ -39,9 +47,8 @@
                 android:layout_width="48dp"
                 android:layout_height="46dp"
                 android:layout_marginStart="16dp"
-                android:src="@color/colorPrimary"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
+                android:src="@color/colorAccent"
+                app:setImageUrl="@{payerImage}"
                 app:layout_constraintBottom_toTopOf="@+id/divider5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,9 +58,8 @@
                 android:layout_width="48dp"
                 android:layout_height="46dp"
                 android:layout_marginEnd="16dp"
-                android:src="@color/colorPrimary"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
+                android:src="@color/colorAccent"
+                app:setImageUrl="@{receiverImage}"
                 app:layout_constraintBottom_toTopOf="@+id/divider5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

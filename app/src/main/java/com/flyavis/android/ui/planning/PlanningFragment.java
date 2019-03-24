@@ -393,6 +393,11 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         startActivity(intent);
     }
 
+    @Override
+    public void onTrafficEditButtonClick(Plan plan) {
+
+    }
+
     private void navigateView(NavDirections action) {
         Navigation.findNavController(Objects.requireNonNull(this.getView())).navigate(action);
     }
@@ -423,14 +428,26 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
                 plan.setPlaceId(place.getId());
                 plan.setSpotName(place.getName());
                 plan.setTripId(myTripId);
-                plan.setSpotStartTime(nextSpotTime);
-                long l = nextSpotTime.getTime() + (60 * 60 * 1000);
-                Time time = new Time(l);
-                plan.setSpotEndTime(time);
+
+                if (planList.size() == 0) {
+                    plan.setSpotStartTime(nextSpotTime);
+                    long l = nextSpotTime.getTime() + (60 * 60 * 1000);
+                    Time time = new Time(l);
+                    plan.setSpotEndTime(time);
+                } else {
+                    long l1 = nextSpotTime.getTime() + (60 * 60 * 1000);
+                    Time startTime = new Time(l1);
+                    plan.setSpotStartTime(startTime);
+                    long l2 = nextSpotTime.getTime() + (60 * 60 * 1000) + (60 * 60 * 1000);
+                    Time endTime = new Time(l2);
+                    plan.setSpotEndTime(endTime);
+                }
+
                 if (planList != null) {
                     int size = planList.size();
                     plan.setSpotOrder(size);
                 }
+                plan.setTrafficTimeDuration(60);
                 plan.setSpotTrafficFee(0);
                 plan.setSpotCost(0);
                 mViewModel.insetNewSpot(plan);

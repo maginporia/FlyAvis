@@ -18,6 +18,10 @@
             type="byte[]" />
 
         <variable
+            name="userImage"
+            type="android.net.Uri" />
+
+        <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
 
@@ -84,11 +88,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:text="@{date}"
                 android:shadowColor="@color/quantum_grey700"
                 android:shadowDx="5"
                 android:shadowDy="5"
                 android:shadowRadius="3"
+                android:text="@{date}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,13 +103,12 @@
                 android:id="@+id/imageView3"
                 android:layout_width="48dp"
                 android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="4dp"
                 android:src="@color/colorPrimary"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:setImageUrl="@{userImage}" />
 
             <ImageButton
                 android:id="@+id/planEditButton"

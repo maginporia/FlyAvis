@@ -1,5 +1,6 @@
 package com.flyavis.android.data.database;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -15,8 +16,11 @@ public class TeamMember {
 
     @PrimaryKey(autoGenerate = true)
     private Integer memberId;
-    private Integer userId;
-    private String memberName;
+    private String userId;
+    private String userName;
+    private String userEmail;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] userPhoto;
     private String teamName;
     private Integer tripId;
 
@@ -24,10 +28,13 @@ public class TeamMember {
     public TeamMember() {
     }
 
-    public TeamMember(Integer memberId, Integer userId, String memberName, String teamName, Integer tripId) {
+    public TeamMember(Integer memberId, String userId, String userName, String userEmail
+            , byte[] userPhoto, String teamName, Integer tripId) {
         this.memberId = memberId;
         this.userId = userId;
-        this.memberName = memberName;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.userPhoto = userPhoto;
         this.teamName = teamName;
         this.tripId = tripId;
     }
@@ -40,20 +47,36 @@ public class TeamMember {
         this.memberId = memberId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public byte[] getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(byte[] userPhoto) {
+        this.userPhoto = userPhoto;
     }
 
     public String getTeamName() {

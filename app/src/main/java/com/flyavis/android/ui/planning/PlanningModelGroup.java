@@ -46,15 +46,13 @@ public class PlanningModelGroup extends EpoxyModelGroup {
             models.add(
                     new TrafficTimeBindingModel_()
                             .id("trafficTime")
-                            .trafficTime("∞小時")
+                            .trafficTime(plan.getTrafficTimeDuration() + "分鐘")
                             .clickListener(view -> {
                                 callbacks.onTrafficTimeClick(plan, nextPlan);
                             })
+                            .editClickListener(view -> callbacks.onTrafficEditButtonClick(plan))
             );
         }
-
         return models;
     }
-
-
 }

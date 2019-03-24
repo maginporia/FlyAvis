@@ -21,6 +21,10 @@
             name="cost"
             type="String" />
 
+        <variable
+            name="image"
+            type="android.net.Uri" />
+
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -38,13 +42,12 @@
                 android:id="@+id/circleImageView3"
                 android:layout_width="48dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="24dp"
                 android:src="@color/colorPrimary"
-                app:civ_border_color="#FF000000"
-                app:civ_border_width="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:setImageUrl="@{image}" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -63,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="24dp"
                 android:text="@{payer}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/circleImageView3"
@@ -73,6 +76,7 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="4dp"
                 android:text="@{costDate}"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +87,6 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@{cost}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"

@@ -30,7 +30,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/amount"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="309dp"
+            android:layout_width="288dp"
             android:layout_height="101dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
@@ -111,7 +111,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="12sp" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -130,7 +131,7 @@
         <Spinner
             android:id="@+id/categorySpinner"
             android:layout_width="113dp"
-            android:layout_height="60dp"
+            android:layout_height="53dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +144,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toTopOf="@+id/textView25"
+            app:layout_constraintBottom_toTopOf="@+id/whoJoin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spotName" />
@@ -155,38 +156,36 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toTopOf="@+id/textView24"
+            app:layout_constraintBottom_toTopOf="@+id/payer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView25" />
+            app:layout_constraintTop_toBottomOf="@+id/whoJoin" />
 
         <TextView
-            android:id="@+id/textView25"
-            android:layout_width="391dp"
+            android:id="@+id/whoJoin"
+            android:layout_width="0dp"
             android:layout_height="37dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="誰參與"
-            android:paddingLeft="100dp"
+            android:onClick="@{whoJoinClickListener}"
             android:text=""
             android:textSize="24sp"
-            android:onClick="@{whoJoinClickListener}"
             app:layout_constraintBottom_toBottomOf="@+id/divider8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider7" />
 
         <TextView
-            android:id="@+id/textView24"
-            android:layout_width="391dp"
+            android:id="@+id/payer"
+            android:layout_width="0dp"
             android:layout_height="37dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:hint="支付人"
-            android:paddingLeft="100dp"
+            android:onClick="@{payerClickListener}"
             android:text=""
             android:textSize="24sp"
-            android:onClick="@{payerClickListener}"
             app:layout_constraintBottom_toTopOf="@+id/divider9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -199,16 +198,18 @@
             android:layout_height="1dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+            app:layout_constraintTop_toBottomOf="@+id/payer" />
 
         <Spinner
             android:id="@+id/currencySpinner"
-            android:layout_width="86dp"
+            android:layout_width="71dp"
             android:layout_height="60dp"
             android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/amount"
             app:layout_constraintTop_toBottomOf="@+id/divider9" />

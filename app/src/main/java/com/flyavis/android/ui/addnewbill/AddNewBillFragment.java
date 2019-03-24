@@ -1,9 +1,7 @@
 package com.flyavis.android.ui.addnewbill;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,12 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.Bill;
 import com.flyavis.android.data.database.SimplifyPlan;
 import com.flyavis.android.databinding.AddNewBillFragmentBinding;
+import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.threeten.bp.LocalDateTime;
@@ -101,10 +99,32 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         binding.time.setText(timeFormat);
         bill = new Bill();
         bill.setCostDate(System.currentTimeMillis());
+
+        //fake data
+        binding.amountEditText.setText("1000");
+        binding.spotNameEditText.setText("台北車站");
+        binding.whoJoin.setText("誰參與:" + "Felix Wang MaginPoria");
+        binding.payer.setText("支付人:" + "Felix Wang");
+        binding.name.setText("午餐");
+        bill.setSingleCost(1000);
+        bill.setSinglePayer(500);
+        bill.setCostTitle("午餐");
+        bill.setCostId(0);
+        mViewModel.deleteBill(bill);
     }
 
     private void memberPickerDialog() {
+        new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
+                .setTitle("選擇成員")
+//                .setMultiChoiceItems(spotNamesArray, (dialogInterface1, i1) -> {
+//                    binding.spotNameEditText.setText(spotNamesArray[i1]);
+//                    bill.setPlanId(planIdList.get(i1));
+//                })
+                .setNegativeButton(getString(R.string.ok), (dialogInterface, i) -> {
 
+                })
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show();
     }
 
     private void timePickerDialog() {
@@ -174,6 +194,7 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         switch (item.getItemId()) {
             case R.id.save:
                 binding.amountEditText.getText();
+
                 mViewModel.insertNewBill(bill);
                 mode.finish();
                 break;
@@ -186,18 +207,8 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     @Override
     public void onDestroyActionMode(ActionMode mode) {
         actionMode = null;
-        hideSoftKeyboard(Objects.requireNonNull(getActivity()));
+        FlyAvisUtils.hideSoftKeyboard(Objects.requireNonNull(getActivity()));
         Objects.requireNonNull(getFragmentManager()).popBackStack();
-    }
-
-    private void hideSoftKeyboard(Activity activity) {
-        if (activity.getCurrentFocus() == null) {
-            return;
-        }
-        InputMethodManager inputMethodManager
-                = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        Objects.requireNonNull(inputMethodManager)
-                .hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     @Override

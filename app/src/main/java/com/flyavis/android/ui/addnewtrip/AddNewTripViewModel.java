@@ -14,35 +14,35 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class AddNewTripViewModel extends ViewModel {
-    private MyTripRepository repository;
+    private MyTripRepository myTripRepository;
 
     @Inject
-    AddNewTripViewModel(MyTripRepository repository) {
-        this.repository = repository;
+    AddNewTripViewModel(MyTripRepository myTripRepository) {
+        this.myTripRepository = myTripRepository;
     }
 
-    void insertTrip(final MyTrip myTrip) {
+    void insertTrip(MyTrip myTrip) {
         //RxJava2
-        Completable.fromAction(() -> repository.insetMyTrip(myTrip))
+        Completable.fromAction(() -> myTripRepository.insetMyTrip(myTrip))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
-    void updateTrip(final MyTrip myTrip) {
+    void updateTrip(MyTrip myTrip) {
         //RxJava2
-        Completable.fromAction(() -> repository.updateMyTrip(myTrip))
+        Completable.fromAction(() -> myTripRepository.updateMyTrip(myTrip))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 
     LiveData<MyTrip> getSpecificTrip(int myTripId) {
-        Flowable<MyTrip> flowable = repository.getSpecificTrip(myTripId)
+        Flowable<MyTrip> flowable = myTripRepository.getSpecificTrip(myTripId)
                 .observeOn(AndroidSchedulers.mainThread());
         return LiveDataReactiveStreams.fromPublisher(flowable);
     }
 
     void insetMyTripRemote(MyTrip myTrip) {
-//        Completable.fromAction(() -> repository.insetMyTripRemote(myTrip))
+//        Completable.fromAction(() -> myTripRepository.insetMyTripRemote(myTrip))
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe(new DisposableCompletableObserver() {
@@ -56,6 +56,7 @@ public class AddNewTripViewModel extends ViewModel {
 //                                   Timber.d("error");
 //                               }
 //                           });
-        repository.insetMyTripRemote(myTrip);
+        myTripRepository.insetMyTripRemote(myTrip);
     }
+
 }

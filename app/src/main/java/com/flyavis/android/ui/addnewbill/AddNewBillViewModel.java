@@ -38,4 +38,10 @@ public class AddNewBillViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
+
+    public void deleteBill(Bill bill) {
+        Completable.fromAction(() -> billRepository.deleteBill(bill))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 }

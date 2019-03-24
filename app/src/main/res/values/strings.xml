@@ -30,4 +30,5 @@
     <string name="monument">古蹟</string>
     <string name="exciting">刺激</string>
     <string name="save">Save</string>
+    <string name="traffic_time">交通時間</string>
 </resources>

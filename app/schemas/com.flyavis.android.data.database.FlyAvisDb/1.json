@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "816fec38f63cd9d834c1d0d6c8dd13c4",
+    "identityHash": "ff9659b23ade756dfa9747baf2064b5c",
     "entities": [
       {
         "tableName": "MyTrip",
@@ -56,7 +56,7 @@
       },
       {
         "tableName": "Plan",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`planId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `tripId` INTEGER NOT NULL, `planDay` INTEGER NOT NULL, `spotOrder` INTEGER NOT NULL, `longitude` REAL, `latitude` REAL, `placeId` TEXT, `spotName` TEXT, `spotStartTime` INTEGER, `spotEndTime` INTEGER, `spotCost` INTEGER, `spotNotice` TEXT, `spotTrafficFee` INTEGER, `planB` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`planId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `tripId` INTEGER NOT NULL, `planDay` INTEGER NOT NULL, `spotOrder` INTEGER NOT NULL, `placeId` TEXT, `spotName` TEXT, `spotStartTime` INTEGER, `spotEndTime` INTEGER, `trafficTimeDuration` INTEGER NOT NULL, `travelMode` TEXT, `spotCost` INTEGER, `spotNotice` TEXT, `spotTrafficFee` INTEGER, `planB` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "planId",
@@ -83,18 +83,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "longitude",
-            "columnName": "longitude",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "latitude",
-            "columnName": "latitude",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
             "fieldPath": "placeId",
             "columnName": "placeId",
             "affinity": "TEXT",
@@ -116,6 +104,18 @@
             "fieldPath": "spotEndTime",
             "columnName": "spotEndTime",
             "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "trafficTimeDuration",
+            "columnName": "trafficTimeDuration",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "travelMode",
+            "columnName": "travelMode",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -264,7 +264,7 @@
       },
       {
         "tableName": "TeamMember",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`memberId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` INTEGER, `memberName` TEXT, `teamName` TEXT, `tripId` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`memberId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT, `userName` TEXT, `userEmail` TEXT, `userPhoto` BLOB, `teamName` TEXT, `tripId` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "memberId",
@@ -275,13 +275,25 @@
           {
             "fieldPath": "userId",
             "columnName": "userId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "memberName",
-            "columnName": "memberName",
+            "fieldPath": "userName",
+            "columnName": "userName",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userEmail",
+            "columnName": "userEmail",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "userPhoto",
+            "columnName": "userPhoto",
+            "affinity": "BLOB",
             "notNull": false
           },
           {
@@ -390,7 +402,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"816fec38f63cd9d834c1d0d6c8dd13c4\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ff9659b23ade756dfa9747baf2064b5c\")"
     ]
   }
 }

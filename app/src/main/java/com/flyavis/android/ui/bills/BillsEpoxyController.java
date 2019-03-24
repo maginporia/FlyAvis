@@ -28,6 +28,7 @@ public class BillsEpoxyController extends TypedEpoxyController<List<SimplifyMyTr
             new BillsItemBindingModel_()
                     .id(myTrip.getMyTripId())
                     .title(myTrip.getTripName())
+                    .amount(50 + "$")
                     .itemClickListener((model, parentView, clickedView, position) -> {
                         callbacks.onItemClick((int) model.id());
                     })

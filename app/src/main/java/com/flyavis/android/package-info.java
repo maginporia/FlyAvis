@@ -4,7 +4,7 @@
         , R.layout.helper_item, R.layout.note_chips, R.layout.note_content, R.layout.helper_edit
         , R.layout.bills_item, R.layout.bill_detail_fragment, R.layout.bill_detail_transaction
         , R.layout.bill_detail_transaction_end, R.layout.bill_detail_title
-        , R.layout.billl_detail_checkout_item, R.layout.bill_detail_checkout_finish
+        , R.layout.bill_detail_checkout_item, R.layout.bill_detail_checkout_finish
         , R.layout.member_item, R.layout.member_item_add})
 
 package com.flyavis.android;
