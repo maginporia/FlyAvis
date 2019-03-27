@@ -32,7 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="@dimen/card_spacing"
-        android:layout_marginEnd="@dimen/card_spacing">
+        android:layout_marginEnd="@dimen/card_spacing"
+        app:cardCornerRadius="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

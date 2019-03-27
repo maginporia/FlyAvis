@@ -12,10 +12,13 @@ import android.view.ViewGroup;
 
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.Bill;
+import com.flyavis.android.data.database.BillDetail;
 import com.flyavis.android.data.database.SimplifyPlan;
+import com.flyavis.android.data.database.TeamMember;
 import com.flyavis.android.databinding.AddNewBillFragmentBinding;
 import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneOffset;
@@ -37,8 +40,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
+import timber.log.Timber;
 
-public class AddNewBillFragment extends DaggerFragment implements ActionMode.Callback {
+public class AddNewBillFragment extends DaggerFragment implements ActionMode.Callback
+        , AddNewBillEpoxyController.AddNewBillEpoxyControllerCallbacks {
 
     @Inject
     ViewModelProvider.Factory factory;
@@ -48,10 +53,14 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     private int myTripId;
     private LiveData<List<SimplifyPlan>> simplifyPlanObservable;
     private List<SimplifyPlan> simplifyPlans;
+    private LiveData<List<TeamMember>> teamMemberObservable;
+    private List<TeamMember> teamMembers;
     private Bill bill;
-
+    private List<Integer> selectedWhoJoin;
     private LocalDateTime now;
-
+    private AddNewBillEpoxyController controller;
+    private List<Integer> amounts = new ArrayList<>();
+    private List<String> userId;
 
     public static AddNewBillFragment newInstance() {
         return new AddNewBillFragment();
@@ -86,11 +95,20 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         binding.setSpotNameClickListener(view -> spotSelectDialog());
         binding.setTimeClickListener(view -> timePickerDialog());
         binding.setWhoJoinClickListener(view -> memberPickerDialog());
-        binding.setPayerClickListener(view -> memberPickerDialog());
 
-        simplifyPlanObservable = mViewModel.getSimplifyPlan(myTripId);
+        controller = new AddNewBillEpoxyController(this);
+        binding.payerEditEpoxyRecyclerView.setController(controller);
+
+        mViewModel.setTripId(myTripId);
+        simplifyPlanObservable = mViewModel.getSimplifyPlan();
         simplifyPlanObservable.observe(getViewLifecycleOwner(), simplifyPlans -> {
             this.simplifyPlans = simplifyPlans;
+        });
+
+        teamMemberObservable = mViewModel.getTeamMembers();
+        teamMemberObservable.observe(getViewLifecycleOwner(), teamMembers -> {
+            this.teamMembers = teamMembers;
+            controller.setData(this.teamMembers);
         });
 
         //LocalTime backport
@@ -100,28 +118,56 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         bill = new Bill();
         bill.setCostDate(System.currentTimeMillis());
 
-        //fake data
-        binding.amountEditText.setText("1000");
-        binding.spotNameEditText.setText("台北車站");
-        binding.whoJoin.setText("誰參與:" + "Felix Wang MaginPoria");
-        binding.payer.setText("支付人:" + "Felix Wang");
-        binding.name.setText("午餐");
-        bill.setSingleCost(1000);
-        bill.setSinglePayer(500);
-        bill.setCostTitle("午餐");
-        bill.setCostId(0);
-        mViewModel.deleteBill(bill);
+        amounts.add(0);
+
     }
 
     private void memberPickerDialog() {
+        List<String> userName = new ArrayList<>();
+        userId = new ArrayList<>();
+        List<Boolean> selectedBoolean = new ArrayList<>();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        userName.add(auth.getCurrentUser().getDisplayName());
+        userId.add(auth.getCurrentUser().getUid());
+        selectedBoolean.add(false);
+
+        if (teamMembers != null && teamMembers.size() > 0) {
+            for (TeamMember teamMember : teamMembers) {
+                userName.add(teamMember.getUserName());
+                userId.add(teamMember.getUserId());
+                selectedBoolean.add(false);
+                amounts.add(0);
+            }
+        }
+        String[] membersArray = new String[userName.size()];
+        userName.toArray(membersArray);
+        boolean[] selectedArray = null;
+
+        if (selectedWhoJoin == null) {
+            selectedWhoJoin = new ArrayList<>();
+        } else if (selectedWhoJoin.size() > 0) {
+            for (Integer integer : selectedWhoJoin) {
+                selectedBoolean.set(integer, true);
+            }
+            selectedArray = FlyAvisUtils.toPrimitiveArray(selectedBoolean);
+        }
+
         new MaterialAlertDialogBuilder(Objects.requireNonNull(getActivity()))
                 .setTitle("選擇成員")
-//                .setMultiChoiceItems(spotNamesArray, (dialogInterface1, i1) -> {
-//                    binding.spotNameEditText.setText(spotNamesArray[i1]);
-//                    bill.setPlanId(planIdList.get(i1));
-//                })
-                .setNegativeButton(getString(R.string.ok), (dialogInterface, i) -> {
-
+                .setMultiChoiceItems(membersArray, selectedArray, (dialogInterface, i, b) -> {
+                    if (b) {
+                        selectedWhoJoin.add(i);
+                    } else if (selectedWhoJoin.contains(i)) {
+                        selectedWhoJoin.remove(Integer.valueOf(i));
+                    }
+                })
+                .setPositiveButton(getString(R.string.ok), (dialogInterface, i) -> {
+                    String viewContext = "";
+                    for (Integer integer : selectedWhoJoin) {
+                        viewContext = viewContext.concat(userName.get(integer) + " ");
+                    }
+                    binding.whoJoin.setText(viewContext);
                 })
                 .setNegativeButton(getString(R.string.cancel), null)
                 .show();
@@ -193,9 +239,10 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                binding.amountEditText.getText();
-
+                bill.setCostTitle(String.valueOf(binding.name.getText()));
+                bill.setTripId(myTripId);
                 mViewModel.insertNewBill(bill);
+                onBillInsertSuccess();
                 mode.finish();
                 break;
             default:
@@ -215,5 +262,27 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     public void onStop() {
         super.onStop();
         simplifyPlanObservable.removeObservers(getViewLifecycleOwner());
+        teamMemberObservable.removeObservers(getViewLifecycleOwner());
+    }
+
+    @Override
+    public void onAmountTextChanged(int i, String string) {
+        Timber.d(string);
+        if (string == "") {
+            amounts.remove(i);
+        } else {
+            amounts.set(i, Integer.valueOf(string));
+        }
+    }
+
+    public void onBillInsertSuccess() {
+        for (int join : selectedWhoJoin) {
+            mViewModel.insertNewBillDetail(new BillDetail(userId.get(join), 0));
+        }
+        int i = 0;
+        for (int j : amounts) {
+            mViewModel.insertNewBillDetail(new BillDetail(userId.get(i), j));
+            i++;
+        }
     }
 }

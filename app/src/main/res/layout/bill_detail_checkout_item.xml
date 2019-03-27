@@ -36,6 +36,7 @@
         android:layout_height="78dp"
         android:layout_marginStart="@dimen/card_spacing"
         android:layout_marginEnd="@dimen/card_spacing"
+        app:cardCornerRadius="0dp"
         android:onClick="@{clickListener}">
 
         <androidx.constraintlayout.widget.ConstraintLayout

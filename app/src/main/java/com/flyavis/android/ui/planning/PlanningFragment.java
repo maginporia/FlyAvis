@@ -71,6 +71,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private int day;
     private Time nextSpotTime;
     private Date firstDate;
+    private Date newDate;
     private SimpleDateFormat sdFormat;
     private int totalDays;
     private int myTripId;
@@ -110,7 +111,7 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
         //init some values
         day = 1;
         nextSpotTime = Time.valueOf("08:00:00");
-
+        mViewModel.setQueryParameter(myTripId, day);
         initEpoxyRecyclerView();
         initTab();
     }
@@ -118,11 +119,12 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
     private void initEpoxyRecyclerView() {
         controller = new PlanningEpoxyController(this);
         binding.planningRecyclerView.setController(controller);
-        observable = mViewModel.getPlanningData(myTripId, day);
+        observable = mViewModel.getPlanningData();
+        newDate = firstDate;
         observable.observe
                 (getViewLifecycleOwner(), listResource -> {
                     planList = listResource.data;
-                    controller.setData(planList, sdFormat.format(firstDate));
+                    controller.setData(planList, sdFormat.format(newDate));
                     if (planList != null && planList.size() != 0) {
                         nextSpotTime = planList.get(planList.size() - 1).getSpotEndTime();
                     }
@@ -222,12 +224,14 @@ public class PlanningFragment extends DaggerFragment implements PlanningEpoxyCon
             public void onTabSelected(TabLayout.Tab tab) {
                 observable.removeObservers(getViewLifecycleOwner());
                 day = tab.getPosition() + 1;
-                observable = mViewModel.getPlanningData(myTripId, day);
+                mViewModel.setQueryParameter(myTripId, day);
+                observable = mViewModel.getPlanningData();
                 observable.observe
                         (getViewLifecycleOwner(), listResource -> {
                             planList = listResource.data;
+                            mViewModel.setQueryParameter(myTripId, day);
                             long l = firstDate.getTime() + (day - 1) * 24 * 60 * 60 * 1000;
-                            Date newDate = new Date(l);
+                            newDate = new Date(l);
                             controller.setData(planList, sdFormat.format(newDate));
 
                             if (planList != null && planList.size() > 0) {

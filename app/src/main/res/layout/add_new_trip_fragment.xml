@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.flyavis.android.ui.addnewtrip.AddNewTripViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +43,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tripName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.tripName}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +67,8 @@
                 android:id="@+id/startDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="false" />
+                android:focusableInTouchMode="false"
+                android:text="@={viewModel.startDate}" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -84,7 +89,8 @@
                 android:id="@+id/endDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusableInTouchMode="false" />
+                android:focusableInTouchMode="false"
+                android:text="@={viewModel.endDate}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

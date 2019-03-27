@@ -15,14 +15,14 @@ import io.reactivex.schedulers.Schedulers;
 
 public class PlanningViewModel extends ViewModel {
     private PlanRepository repository;
-
+    private LiveData<Resource<List<Plan>>> liveData;
     @Inject
     PlanningViewModel(PlanRepository repository) {
         this.repository = repository;
     }
 
-    LiveData<Resource<List<Plan>>> getPlanningData(int tripId, int day) {
-        return repository.getPlannings(tripId, day);
+    LiveData<Resource<List<Plan>>> getPlanningData() {
+        return liveData;
     }
 
     void insetNewSpot(Plan plan) {
@@ -56,4 +56,7 @@ public class PlanningViewModel extends ViewModel {
                 .subscribe();
     }
 
+    void setQueryParameter(int tripId, int day) {
+        liveData = repository.getPlannings(tripId, day);
+    }
 }

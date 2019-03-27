@@ -7,18 +7,25 @@ import javax.inject.Inject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 public class AddNewTripViewModel extends ViewModel {
-    private MyTripRepository myTripRepository;
+    private final MyTripRepository myTripRepository;
+    private LiveData<MyTrip> listLiveData;
+    public MutableLiveData<String> tripName = new MutableLiveData<>();
+    public MutableLiveData<String> startDate = new MutableLiveData<>();
+    public MutableLiveData<String> endDate = new MutableLiveData<>();
 
     @Inject
     AddNewTripViewModel(MyTripRepository myTripRepository) {
         this.myTripRepository = myTripRepository;
+
     }
 
     void insertTrip(MyTrip myTrip) {
@@ -35,10 +42,8 @@ public class AddNewTripViewModel extends ViewModel {
                 .subscribe();
     }
 
-    LiveData<MyTrip> getSpecificTrip(int myTripId) {
-        Flowable<MyTrip> flowable = myTripRepository.getSpecificTrip(myTripId)
-                .observeOn(AndroidSchedulers.mainThread());
-        return LiveDataReactiveStreams.fromPublisher(flowable);
+    LiveData<MyTrip> getSpecificTrip() {
+        return listLiveData;
     }
 
     void insetMyTripRemote(MyTrip myTrip) {
@@ -59,4 +64,15 @@ public class AddNewTripViewModel extends ViewModel {
         myTripRepository.insetMyTripRemote(myTrip);
     }
 
+    void setTripId(int tripId) {
+        Flowable<MyTrip> flowable = myTripRepository.getSpecificTrip(tripId)
+                .observeOn(AndroidSchedulers.mainThread());
+        listLiveData = LiveDataReactiveStreams.fromPublisher(flowable);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Timber.d("clear!");
+    }
 }

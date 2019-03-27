@@ -13,40 +13,39 @@ import androidx.room.PrimaryKey;
         indices = {@Index("planId")})
 public class Bill {
     @PrimaryKey(autoGenerate = true)
-    private Integer costId;
+    private Integer billId;
     private String costTitle;
-    private Integer memberId;
-    private Boolean ifTrafficCost;
+    private int amount;
+    private String currencyCode;
+    private Boolean trafficCost;
     private Long costDate;
     private String category;
     private Integer planId;
-    private Integer singlePayer;
-    private Integer singleCost;
-
-    public Bill(Integer costId, String costTitle, Integer memberId, Boolean ifTrafficCost
-            , Long costDate, String category, Integer planId, Integer singlePayer
-            , Integer singleCost) {
-        this.costId = costId;
-        this.costTitle = costTitle;
-        this.memberId = memberId;
-        this.ifTrafficCost = ifTrafficCost;
-        this.costDate = costDate;
-        this.category = category;
-        this.planId = planId;
-        this.singlePayer = singlePayer;
-        this.singleCost = singleCost;
-    }
+    private Integer tripId;
 
     @Ignore
     public Bill() {
     }
 
-    public Integer getCostId() {
-        return costId;
+    public Bill(Integer billId, String costTitle, int amount, String currencyCode
+            , Boolean trafficCost, Long costDate, String category, Integer planId, Integer tripId) {
+        this.billId = billId;
+        this.costTitle = costTitle;
+        this.amount = amount;
+        this.currencyCode = currencyCode;
+        this.trafficCost = trafficCost;
+        this.costDate = costDate;
+        this.category = category;
+        this.planId = planId;
+        this.tripId = tripId;
     }
 
-    public void setCostId(Integer costId) {
-        this.costId = costId;
+    public Integer getBillId() {
+        return billId;
+    }
+
+    public void setBillId(Integer billId) {
+        this.billId = billId;
     }
 
     public String getCostTitle() {
@@ -57,20 +56,28 @@ public class Bill {
         this.costTitle = costTitle;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public Boolean getIfTrafficCost() {
-        return ifTrafficCost;
+    public String getCurrencyCode() {
+        return currencyCode;
     }
 
-    public void setIfTrafficCost(Boolean ifTrafficCost) {
-        this.ifTrafficCost = ifTrafficCost;
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    public Boolean getTrafficCost() {
+        return trafficCost;
+    }
+
+    public void setTrafficCost(Boolean trafficCost) {
+        this.trafficCost = trafficCost;
     }
 
     public Long getCostDate() {
@@ -97,19 +104,11 @@ public class Bill {
         this.planId = planId;
     }
 
-    public Integer getSinglePayer() {
-        return singlePayer;
+    public Integer getTripId() {
+        return tripId;
     }
 
-    public void setSinglePayer(Integer singlePayer) {
-        this.singlePayer = singlePayer;
-    }
-
-    public Integer getSingleCost() {
-        return singleCost;
-    }
-
-    public void setSingleCost(Integer singleCost) {
-        this.singleCost = singleCost;
+    public void setTripId(Integer tripId) {
+        this.tripId = tripId;
     }
 }

@@ -7,17 +7,16 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 
 @Dao
-public interface BillDao {
+public interface BillDetailDao {
 
     @Insert
-    Single<Long> insertNewBill(Bill bill);
+    void insertNewBillDetail(BillDetail billDetail);
 
-    @Query("SELECT * FROM Bill")
-    Flowable<List<Bill>> getBills();
+    @Query("SELECT * FROM BillDetail")
+    Flowable<List<BillDetail>> getBillDetails();
 
     @Delete
-    void deleteBill(Bill bill);
+    void deleteBillDetal(Bill billDetail);
 }

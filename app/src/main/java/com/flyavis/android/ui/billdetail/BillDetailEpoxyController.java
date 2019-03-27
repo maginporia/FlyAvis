@@ -3,9 +3,9 @@ package com.flyavis.android.ui.billdetail;
 import com.airbnb.epoxy.AutoModel;
 import com.airbnb.epoxy.TypedEpoxyController;
 import com.flyavis.android.BillDetailCheckoutFinishBindingModel_;
-import com.flyavis.android.BillDetailCheckoutItemBindingModel_;
 import com.flyavis.android.BillDetailTitleBindingModel_;
 import com.flyavis.android.BillDetailTransactionBindingModel_;
+import com.flyavis.android.CardBottomBindingModel_;
 import com.flyavis.android.data.database.Bill;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,28 +37,31 @@ public class BillDetailEpoxyController extends TypedEpoxyController<List<Bill>> 
                 .addTo(this);
 
         for (Bill bill : data) {
-            new BillDetailTransactionBindingModel_()
-                    .id("transaction", bill.getCostId())
-                    .image(auth.getCurrentUser().getPhotoUrl())
-                    .cost(bill.getSingleCost() + "$")
-                    .costDate("2019.03.24 22:26")
-                    .costTitle(bill.getCostTitle())
-                    .payer("Felix Wang 支付")
-                    .addTo(this);
+//            new BillDetailTransactionBindingModel_()
+//                    .id("transaction", bill.getCostId())
+//                    .image(auth.getCurrentUser().getPhotoUrl())
+//                    .cost(bill.getSingleCost() + "$")
+//                    .costDate("2019.03.24 22:26")
+//                    .costTitle(bill.getCostTitle())
+//                    .payer("Felix Wang 支付")
+//                    .addTo(this);
         }
+        new CardBottomBindingModel_()
+                .id("bottom")
+                .addTo(this);
         //結算
         new BillDetailTitleBindingModel_()
                 .id("conclusion")
                 .title("結算")
                 .addTo(this);
         for (Bill bill : data) {
-            new BillDetailCheckoutItemBindingModel_()
-                    .id("item")
-                    .amount(bill.getSinglePayer() + "$")
-                    .payerName("MaginPoria")
-                    .receiverImage(auth.getCurrentUser().getPhotoUrl())
-                    .receiverName(auth.getCurrentUser().getDisplayName())
-                    .addTo(this);
+//            new BillDetailCheckoutItemBindingModel_()
+//                    .id("item")
+//                    .amount(bill.getSinglePayer() + "$")
+//                    .payerName("MaginPoria")
+//                    .receiverImage(auth.getCurrentUser().getPhotoUrl())
+//                    .receiverName(auth.getCurrentUser().getDisplayName())
+//                    .addTo(this);
         }
         billDetailCheckoutFinishBindingModel
                 .addTo(this);

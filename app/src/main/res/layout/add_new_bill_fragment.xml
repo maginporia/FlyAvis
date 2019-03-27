@@ -17,38 +17,12 @@
             name="whoJoinClickListener"
             type="android.view.View.OnClickListener" />
 
-        <variable
-            name="payerClickListener"
-            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.addnewbill.AddNewBillFragment">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/amount"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:layout_width="288dp"
-            android:layout_height="101dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/currencySpinner"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider9">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/amountEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:text="0"
-                android:textAlignment="textEnd"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3" />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/spotName"
@@ -112,7 +86,9 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp" />
+                android:importantForAutofill="no"
+                android:textSize="12sp"
+                tools:targetApi="o" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -142,9 +118,7 @@
             android:layout_width="395dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toTopOf="@+id/whoJoin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spotName" />
@@ -154,9 +128,7 @@
             android:layout_width="395dp"
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toTopOf="@+id/payer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/whoJoin" />
@@ -164,56 +136,49 @@
         <TextView
             android:id="@+id/whoJoin"
             android:layout_width="0dp"
-            android:layout_height="37dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:hint="誰參與"
+            android:hint="選擇參與者"
             android:onClick="@{whoJoinClickListener}"
             android:text=""
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/divider8"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="參與者"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider7" />
 
         <TextView
-            android:id="@+id/payer"
-            android:layout_width="0dp"
-            android:layout_height="37dp"
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="支付人"
-            android:onClick="@{payerClickListener}"
-            android:text=""
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/divider9"
+            android:layout_marginTop="8dp"
+            android:text="支付者"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider8" />
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/payerEditEpoxyRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider8"
-            app:layout_constraintVertical_bias="0.631" />
+            app:layout_constraintTop_toBottomOf="@+id/textView16">
 
-        <View
-            android:id="@+id/divider9"
-            android:layout_width="395dp"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/payer" />
-
-        <Spinner
-            android:id="@+id/currencySpinner"
-            android:layout_width="71dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/amount"
-            app:layout_constraintTop_toBottomOf="@+id/divider9" />
-
+        </com.airbnb.epoxy.EpoxyRecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.Bill;
+import com.flyavis.android.data.database.BillDetail;
+import com.flyavis.android.data.database.TeamMember;
 import com.flyavis.android.databinding.BillDetailFragmentBinding;
 
 import java.util.List;
@@ -31,7 +33,9 @@ public class BillDetailFragment extends DaggerFragment {
     private BillDetailFragmentBinding binding;
     private BillDetailEpoxyController controller;
     private int myTripId;
-    private LiveData<List<Bill>> observable;
+    private LiveData<List<Bill>> billObservable;
+    private LiveData<List<BillDetail>> billDetailObservable;
+    private LiveData<List<TeamMember>> teamMemberObservable;
 
     public static BillDetailFragment newInstance() {
         return new BillDetailFragment();
@@ -54,10 +58,11 @@ public class BillDetailFragment extends DaggerFragment {
         controller = new BillDetailEpoxyController();
         binding.billDetailRecyclerView.setController(controller);
 
-        observable = mViewModel.getBills(0);
-        observable.observe(getViewLifecycleOwner(), bills -> {
+        billObservable = mViewModel.getBills(0);
+        billObservable.observe(getViewLifecycleOwner(), bills -> {
             controller.setData(bills);
         });
+
 
         binding.floatingActionButton.setOnClickListener(view -> {
             BillDetailFragmentDirections.ActionBillDetailFragmentToAddNewBillFragment action

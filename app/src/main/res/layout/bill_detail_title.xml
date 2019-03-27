@@ -16,7 +16,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="32dp"
         android:layout_marginStart="@dimen/card_spacing"
         android:layout_marginEnd="@dimen/card_spacing"
         android:layout_marginBottom="-4dp"

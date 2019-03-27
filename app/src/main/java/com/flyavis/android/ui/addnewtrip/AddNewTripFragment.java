@@ -37,6 +37,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerFragment;
+import timber.log.Timber;
 
 public class AddNewTripFragment extends DaggerFragment implements ActionMode.Callback {
 
@@ -70,6 +71,9 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this, factory).get(AddNewTripViewModel.class);
+        binding.setViewModel(mViewModel);
+        binding.setLifecycleOwner(this);
+
         startDate = binding.startDate;
         endDate = binding.endDate;
         //啟動toolbar框架
@@ -82,10 +86,12 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
             myTripId = AddNewTripFragmentArgs
                     .fromBundle(getArguments()).getMyTripId();
             binding.titleTextView.setText(getString(R.string.edit));
-            mViewModel.getSpecificTrip(myTripId).observe(getViewLifecycleOwner(), myTrip -> {
-                binding.tripName.setText(myTrip.getTripName());
-                startDate.setText(String.valueOf(myTrip.getStartDate()));
-                endDate.setText(String.valueOf(myTrip.getEndDate()));
+            mViewModel.setTripId(myTripId);
+            mViewModel.getSpecificTrip().observe(getViewLifecycleOwner(), myTrip -> {
+                Timber.d("observed");
+                mViewModel.tripName.setValue(myTrip.getTripName());
+                mViewModel.startDate.setValue(String.valueOf(myTrip.getStartDate()));
+                mViewModel.endDate.setValue(String.valueOf(myTrip.getEndDate()));
 
                 if (photo == null) {
                     Glide
@@ -94,23 +100,23 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
                             .centerCrop()
                             .into(binding.selectedImageView);
                 }
-                mViewModel.getSpecificTrip(myTripId).removeObservers(getViewLifecycleOwner());
             });
+
         } else {
-            binding.tripName.setText("美好的旅行");
+            mViewModel.tripName.setValue("美好的旅行");
             //自動帶入今天日期
             String dateTime
                     = String.valueOf(year) + "-" + String.valueOf(month + 1) + "-" + String.valueOf(day);
-            startDate.setText(dateTime);
-            endDate.setText(dateTime);
+            mViewModel.startDate.setValue(dateTime);
+            mViewModel.endDate.setValue(dateTime);
         }
         binding.imagePicker.setOnClickListener(view -> {
             SplashPicker.open(this, getActivity()
                     , getString(R.string.unsplash_access_key), "選擇封面圖");
         });
 
-        startDate.setOnClickListener(view -> showDatePicker(startDate));
-        endDate.setOnClickListener(view -> showDatePicker(endDate));
+        startDate.setOnClickListener(this::showDatePicker);
+        endDate.setOnClickListener(this::showDatePicker);
     }
 
     @Override
@@ -118,7 +124,7 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SplashPicker.PICK_IMAGE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                photo = data.getParcelableExtra(SplashPicker.KEY_IMAGE);
+                photo = Objects.requireNonNull(data).getParcelableExtra(SplashPicker.KEY_IMAGE);
                 Glide
                         .with(this)
                         .load(photo.getUrls().getRegular())
@@ -128,10 +134,15 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         }
     }
 
-    private void showDatePicker(TextInputEditText view) {
+    private void showDatePicker(View view) {
         new DatePickerDialog(Objects.requireNonNull(getContext()), (datePicker, i, i1, i2) -> {
             String dateTime = String.valueOf(i) + "-" + String.valueOf(i1 + 1) + "-" + String.valueOf(i2);
-            view.setText(dateTime);
+            if (view.getId() == R.id.startDate) {
+                mViewModel.startDate.setValue(dateTime);
+            } else {
+                mViewModel.endDate.setValue(dateTime);
+            }
+
         }, year, month, day).show();
     }
 
@@ -153,9 +164,9 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         if (myTripId != 0) {
             myTrip.setMyTripId(myTripId);
         }
-        myTrip.setTripName(String.valueOf(binding.tripName.getText()));
-        myTrip.setStartDate(Date.valueOf(String.valueOf(startDate.getText())));
-        myTrip.setEndDate(Date.valueOf(String.valueOf(endDate.getText())));
+        myTrip.setTripName(mViewModel.tripName.getValue());
+        myTrip.setStartDate(Date.valueOf(mViewModel.startDate.getValue()));
+        myTrip.setEndDate(Date.valueOf(mViewModel.endDate.getValue()));
 
         //轉存byte[]
         if (binding.selectedImageView.getDrawable() != null) {
@@ -187,6 +198,5 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
         actionMode = null;
         FlyAvisUtils.hideSoftKeyboard(Objects.requireNonNull(getActivity()));
         Objects.requireNonNull(getFragmentManager()).popBackStack();
-
     }
 }

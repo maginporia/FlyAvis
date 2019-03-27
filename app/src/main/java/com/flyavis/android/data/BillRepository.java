@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public class BillRepository {
     private final BillDao billDao;
@@ -17,8 +18,8 @@ public class BillRepository {
         this.billDao = billDao;
     }
 
-    public void insertNewBill(Bill bill) {
-        billDao.insertNewBill(bill);
+    public Single<Long> insertNewBill(Bill bill) {
+        return billDao.insertNewBill(bill);
     }
 
     public void deleteBill(Bill bill) {
@@ -28,4 +29,5 @@ public class BillRepository {
     public Flowable<List<Bill>> getBills(int tripId) {
         return billDao.getBills();
     }
+
 }

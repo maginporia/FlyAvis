@@ -1,6 +1,7 @@
 package com.flyavis.android.data.database;
 
-import androidx.room.ColumnInfo;
+import android.net.Uri;
+
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
@@ -19,8 +20,7 @@ public class TeamMember {
     private String userId;
     private String userName;
     private String userEmail;
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] userPhoto;
+    private Uri userPhoto;
     private String teamName;
     private Integer tripId;
 
@@ -29,7 +29,7 @@ public class TeamMember {
     }
 
     public TeamMember(Integer memberId, String userId, String userName, String userEmail
-            , byte[] userPhoto, String teamName, Integer tripId) {
+            , Uri userPhoto, String teamName, Integer tripId) {
         this.memberId = memberId;
         this.userId = userId;
         this.userName = userName;
@@ -71,11 +71,11 @@ public class TeamMember {
         this.userEmail = userEmail;
     }
 
-    public byte[] getUserPhoto() {
+    public Uri getUserPhoto() {
         return userPhoto;
     }
 
-    public void setUserPhoto(byte[] userPhoto) {
+    public void setUserPhoto(Uri userPhoto) {
         this.userPhoto = userPhoto;
     }
 
