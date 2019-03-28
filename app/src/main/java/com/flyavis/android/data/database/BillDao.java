@@ -15,7 +15,7 @@ public interface BillDao {
     @Insert
     Single<Long> insertNewBill(Bill bill);
 
-    @Query("SELECT * FROM Bill")
+    @Query("SELECT * FROM Bill ORDER BY costDate DESC")
     Flowable<List<Bill>> getBills();
 
     @Delete

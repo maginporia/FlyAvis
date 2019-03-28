@@ -5,10 +5,8 @@ import com.airbnb.epoxy.TypedEpoxyController;
 import com.flyavis.android.MemberItemAddBindingModel_;
 import com.flyavis.android.MemberItemBindingModel_;
 import com.flyavis.android.data.database.TeamMember;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
-import java.util.Objects;
 
 public class MemberEpoxyController extends TypedEpoxyController<List<TeamMember>> {
 
@@ -23,18 +21,13 @@ public class MemberEpoxyController extends TypedEpoxyController<List<TeamMember>
 
     @Override
     protected void buildModels(List<TeamMember> data) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        new MemberItemBindingModel_()
-                .id(0)
-                .name(Objects.requireNonNull(auth.getCurrentUser()).getDisplayName())
-                .email(auth.getCurrentUser().getEmail())
-                .image(auth.getCurrentUser().getPhotoUrl())
-                .addTo(this);
+
         for (TeamMember teamMember : data) {
             new MemberItemBindingModel_()
                     .id(teamMember.getMemberId())
                     .name(teamMember.getUserName())
                     .email(teamMember.getUserEmail())
+                    .image(teamMember.getUserPhoto())
                     .addTo(this);
         }
         memberItemAddBindingModel

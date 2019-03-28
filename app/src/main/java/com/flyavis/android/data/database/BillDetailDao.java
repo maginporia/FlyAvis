@@ -14,9 +14,14 @@ public interface BillDetailDao {
     @Insert
     void insertNewBillDetail(BillDetail billDetail);
 
-    @Query("SELECT * FROM BillDetail")
-    Flowable<List<BillDetail>> getBillDetails();
+    @Query("SELECT * FROM BillDetail bd INNER JOIN Bill b ON bd.billId = b.billId WHERE b.tripId =(:tripId) " +
+            "ORDER BY b.costDate DESC")
+    Flowable<List<BillDetail>> getBillDetails(int tripId);
+
+    @Query("SELECT * FROM BillDetail bd INNER JOIN Bill b ON bd.billId = b.billId WHERE b.tripId =(:tripId) " +
+            "ORDER BY b.costDate DESC LIMIT 3")
+    Flowable<List<BillDetail>> getBillDetailsLimit(int tripId);
 
     @Delete
-    void deleteBillDetal(Bill billDetail);
+    void deleteBillDetail(Bill billDetail);
 }

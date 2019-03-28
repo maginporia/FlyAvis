@@ -6,16 +6,16 @@ import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(foreignKeys = @ForeignKey(entity = Plan.class,
-        parentColumns = "planId",
-        childColumns = "planId",
+@Entity(foreignKeys = @ForeignKey(entity = MyTrip.class,
+        parentColumns = "myTripId",
+        childColumns = "tripId",
         onDelete = ForeignKey.CASCADE),
-        indices = {@Index("planId")})
+        indices = {@Index("tripId")})
 public class Bill {
     @PrimaryKey(autoGenerate = true)
     private Integer billId;
     private String costTitle;
-    private int amount;
+    private int totalAmount;
     private String currencyCode;
     private Boolean trafficCost;
     private Long costDate;
@@ -27,11 +27,11 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(Integer billId, String costTitle, int amount, String currencyCode
+    public Bill(Integer billId, String costTitle, int totalAmount, String currencyCode
             , Boolean trafficCost, Long costDate, String category, Integer planId, Integer tripId) {
         this.billId = billId;
         this.costTitle = costTitle;
-        this.amount = amount;
+        this.totalAmount = totalAmount;
         this.currencyCode = currencyCode;
         this.trafficCost = trafficCost;
         this.costDate = costDate;
@@ -56,12 +56,12 @@ public class Bill {
         this.costTitle = costTitle;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public String getCurrencyCode() {

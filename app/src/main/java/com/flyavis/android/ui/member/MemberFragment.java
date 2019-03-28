@@ -62,6 +62,7 @@ public class MemberFragment extends DaggerFragment implements MemberEpoxyControl
     public void onAddMemberClick(int id) {
         TeamMember teamMember = new TeamMember();
         teamMember.setUserName("MaginPoria");
+        teamMember.setUserId("gsdgsdgsfgsfg");
         teamMember.setTripId(tripId);
         teamMember.setUserEmail("maginporia@gmail.com");
         mViewModel.InsertNewMember(teamMember);

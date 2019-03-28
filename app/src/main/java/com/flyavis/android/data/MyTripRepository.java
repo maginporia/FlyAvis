@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -69,8 +70,8 @@ public class MyTripRepository {
         return myTripDao.getSimplifyMyTrip();
     }
 
-    public void insetMyTrip(MyTrip myTrip) {
-        myTripDao.insertTrip(myTrip);
+    public Single<Long> insetMyTrip(MyTrip myTrip) {
+        return myTripDao.insertTrip(myTrip);
     }
 
     public void updateMyTrip(MyTrip myTrip) {

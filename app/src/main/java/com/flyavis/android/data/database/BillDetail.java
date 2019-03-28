@@ -16,6 +16,7 @@ public class BillDetail {
     private int billDetailId;
     private String userId;
     private int amount;
+    private Boolean join;
     private int weight;
     private int billId;
 
@@ -29,10 +30,18 @@ public class BillDetail {
         this.amount = amount;
     }
 
-    public BillDetail(int billDetailId, String userId, int amount, int weight, int billId) {
+    @Ignore
+    public BillDetail(String userId, int amount, Boolean join) {
+        this.userId = userId;
+        this.amount = amount;
+        this.join = join;
+    }
+
+    public BillDetail(int billDetailId, String userId, int amount, Boolean join, int weight, int billId) {
         this.billDetailId = billDetailId;
         this.userId = userId;
         this.amount = amount;
+        this.join = join;
         this.weight = weight;
         this.billId = billId;
     }
@@ -59,6 +68,14 @@ public class BillDetail {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public Boolean getJoin() {
+        return join;
+    }
+
+    public void setJoin(Boolean join) {
+        this.join = join;
     }
 
     public int getWeight() {

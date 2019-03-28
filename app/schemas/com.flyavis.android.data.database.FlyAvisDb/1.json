@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ff9659b23ade756dfa9747baf2064b5c",
+    "identityHash": "9d55521b52fa182732ef19a4cfcab4c2",
     "entities": [
       {
         "tableName": "MyTrip",
@@ -175,11 +175,11 @@
       },
       {
         "tableName": "Bill",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`costId` INTEGER PRIMARY KEY AUTOINCREMENT, `costTitle` TEXT, `memberId` INTEGER, `ifTrafficCost` INTEGER, `costDate` INTEGER, `category` TEXT, `planId` INTEGER, `singlePayer` INTEGER, `singleCost` INTEGER, FOREIGN KEY(`planId`) REFERENCES `Plan`(`planId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`billId` INTEGER PRIMARY KEY AUTOINCREMENT, `costTitle` TEXT, `totalAmount` INTEGER NOT NULL, `currencyCode` TEXT, `trafficCost` INTEGER, `costDate` INTEGER, `category` TEXT, `planId` INTEGER, `tripId` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
-            "fieldPath": "costId",
-            "columnName": "costId",
+            "fieldPath": "billId",
+            "columnName": "billId",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -190,14 +190,20 @@
             "notNull": false
           },
           {
-            "fieldPath": "memberId",
-            "columnName": "memberId",
+            "fieldPath": "totalAmount",
+            "columnName": "totalAmount",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currencyCode",
+            "columnName": "currencyCode",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "ifTrafficCost",
-            "columnName": "ifTrafficCost",
+            "fieldPath": "trafficCost",
+            "columnName": "trafficCost",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -220,51 +226,116 @@
             "notNull": false
           },
           {
-            "fieldPath": "singlePayer",
-            "columnName": "singlePayer",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "singleCost",
-            "columnName": "singleCost",
+            "fieldPath": "tripId",
+            "columnName": "tripId",
             "affinity": "INTEGER",
             "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "costId"
+            "billId"
           ],
           "autoGenerate": true
         },
         "indices": [
           {
-            "name": "index_Bill_planId",
+            "name": "index_Bill_tripId",
             "unique": false,
             "columnNames": [
-              "planId"
+              "tripId"
             ],
-            "createSql": "CREATE  INDEX `index_Bill_planId` ON `${TABLE_NAME}` (`planId`)"
+            "createSql": "CREATE  INDEX `index_Bill_tripId` ON `${TABLE_NAME}` (`tripId`)"
           }
         ],
         "foreignKeys": [
           {
-            "table": "Plan",
+            "table": "MyTrip",
             "onDelete": "CASCADE",
             "onUpdate": "NO ACTION",
             "columns": [
-              "planId"
+              "tripId"
             ],
             "referencedColumns": [
-              "planId"
+              "myTripId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "BillDetail",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`billDetailId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `userId` TEXT, `amount` INTEGER NOT NULL, `join` INTEGER, `weight` INTEGER NOT NULL, `billId` INTEGER NOT NULL, FOREIGN KEY(`billId`) REFERENCES `Bill`(`billId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "billDetailId",
+            "columnName": "billDetailId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "join",
+            "columnName": "join",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "billId",
+            "columnName": "billId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "billDetailId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_BillDetail_billDetailId",
+            "unique": false,
+            "columnNames": [
+              "billDetailId"
+            ],
+            "createSql": "CREATE  INDEX `index_BillDetail_billDetailId` ON `${TABLE_NAME}` (`billDetailId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "Bill",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "billId"
+            ],
+            "referencedColumns": [
+              "billId"
             ]
           }
         ]
       },
       {
         "tableName": "TeamMember",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`memberId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT, `userName` TEXT, `userEmail` TEXT, `userPhoto` BLOB, `teamName` TEXT, `tripId` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`memberId` INTEGER PRIMARY KEY AUTOINCREMENT, `userId` TEXT, `userName` TEXT, `userEmail` TEXT, `userPhoto` TEXT, `teamName` TEXT, `tripId` INTEGER, FOREIGN KEY(`tripId`) REFERENCES `MyTrip`(`myTripId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "memberId",
@@ -293,7 +364,7 @@
           {
             "fieldPath": "userPhoto",
             "columnName": "userPhoto",
-            "affinity": "BLOB",
+            "affinity": "TEXT",
             "notNull": false
           },
           {
@@ -402,7 +473,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ff9659b23ade756dfa9747baf2064b5c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9d55521b52fa182732ef19a4cfcab4c2\")"
     ]
   }
 }

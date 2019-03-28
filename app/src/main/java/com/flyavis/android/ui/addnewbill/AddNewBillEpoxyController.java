@@ -17,14 +17,7 @@ public class AddNewBillEpoxyController extends TypedEpoxyController<List<TeamMem
 
     @Override
     protected void buildModels(List<TeamMember> data) {
-        new PayerItemBindingModel_()
-                .id(auth.getCurrentUser().getUid())
-                .name(auth.getCurrentUser().getDisplayName())
-                .image(auth.getCurrentUser().getPhotoUrl())
-                .onTextChanged((s, start, before, count) ->
-                        callbacks.onAmountTextChanged(0, String.valueOf(s)))
-                .addTo(this);
-        int i = 1;
+        int i = 0;
         for (TeamMember teamMember : data) {
             int finalI = i;
             new PayerItemBindingModel_()

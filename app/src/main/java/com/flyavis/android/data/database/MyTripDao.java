@@ -8,6 +8,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface MyTripDao {
@@ -21,7 +22,7 @@ public interface MyTripDao {
     Flowable<List<SimplifyMyTrip>> getSimplifyMyTrip();
 
     @Insert
-    void insertTrip(MyTrip myTrip);
+    Single<Long> insertTrip(MyTrip myTrip);
 
     @Update
     void updateTrip(MyTrip myTrip);

@@ -58,11 +58,19 @@ public class BillDetailFragment extends DaggerFragment {
         controller = new BillDetailEpoxyController();
         binding.billDetailRecyclerView.setController(controller);
 
-        billObservable = mViewModel.getBills(0);
+        billObservable = mViewModel.getBills(myTripId);
         billObservable.observe(getViewLifecycleOwner(), bills -> {
-            controller.setData(bills);
+            billDetailObservable = mViewModel.getBillDetails(myTripId);
+            billDetailObservable.observe(getViewLifecycleOwner(), billDetails -> {
+                teamMemberObservable = mViewModel.getTeamMembers(myTripId);
+                teamMemberObservable.observe(getViewLifecycleOwner(), teamMembers -> {
+                    controller.setData(bills, billDetails, teamMembers);
+                    billObservable.removeObservers(getViewLifecycleOwner());
+                    billDetailObservable.removeObservers(getViewLifecycleOwner());
+                    teamMemberObservable.removeObservers(getViewLifecycleOwner());
+                });
+            });
         });
-
 
         binding.floatingActionButton.setOnClickListener(view -> {
             BillDetailFragmentDirections.ActionBillDetailFragmentToAddNewBillFragment action

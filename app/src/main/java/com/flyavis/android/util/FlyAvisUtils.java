@@ -31,7 +31,7 @@ public class FlyAvisUtils {
     }
 
     public static String longToString(long milliseconds) {
-        SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("YYYY.MM.dd HH:mm", Locale.US);
         return format.format(milliseconds);
     }
 

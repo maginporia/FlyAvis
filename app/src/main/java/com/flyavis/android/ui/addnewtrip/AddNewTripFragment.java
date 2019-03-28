@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.flyavis.android.R;
 import com.flyavis.android.data.database.MyTrip;
+import com.flyavis.android.data.database.TeamMember;
 import com.flyavis.android.databinding.AddNewTripFragmentBinding;
 import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.kc.splashpicker.SplashPicker;
 import com.kc.unsplash.models.Photo;
 
@@ -176,6 +178,12 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
             byte[] imageInByte = baos.toByteArray();
             myTrip.setCoverPhoto(imageInByte);
         }
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        TeamMember teamMember = new TeamMember();
+        teamMember.setUserId(auth.getCurrentUser().getUid());
+        teamMember.setUserEmail(auth.getCurrentUser().getEmail());
+        teamMember.setUserName(auth.getCurrentUser().getDisplayName());
+        teamMember.setUserPhoto(auth.getCurrentUser().getPhotoUrl());
 
         switch (item.getItemId()) {
             case R.id.save:
@@ -183,7 +191,8 @@ public class AddNewTripFragment extends DaggerFragment implements ActionMode.Cal
                     mViewModel.updateTrip(myTrip);
                 } else {
                     mViewModel.insertTrip(myTrip);
-                    mViewModel.insetMyTripRemote(myTrip);
+                    mViewModel.insertMyself(teamMember);
+//                    mViewModel.insetMyTripRemote(myTrip);
                 }
                 mode.finish();
                 break;

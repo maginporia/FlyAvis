@@ -45,7 +45,7 @@
                 android:layout_height="46dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="24dp"
-                android:src="@color/colorPrimary"
+                android:src="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:setImageUrl="@{image}" />

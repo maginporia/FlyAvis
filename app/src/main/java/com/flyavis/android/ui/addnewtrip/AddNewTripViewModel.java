@@ -1,7 +1,9 @@
 package com.flyavis.android.ui.addnewtrip;
 
 import com.flyavis.android.data.MyTripRepository;
+import com.flyavis.android.data.TeamMemberRepository;
 import com.flyavis.android.data.database.MyTrip;
+import com.flyavis.android.data.database.TeamMember;
 
 import javax.inject.Inject;
 
@@ -17,22 +19,23 @@ import timber.log.Timber;
 
 public class AddNewTripViewModel extends ViewModel {
     private final MyTripRepository myTripRepository;
+    private final TeamMemberRepository teamMemberRepository;
     private LiveData<MyTrip> listLiveData;
     public MutableLiveData<String> tripName = new MutableLiveData<>();
     public MutableLiveData<String> startDate = new MutableLiveData<>();
     public MutableLiveData<String> endDate = new MutableLiveData<>();
+    private MutableLiveData<Long> tripId = new MutableLiveData<>();
 
     @Inject
-    AddNewTripViewModel(MyTripRepository myTripRepository) {
+    AddNewTripViewModel(MyTripRepository myTripRepository, TeamMemberRepository teamMemberRepository) {
         this.myTripRepository = myTripRepository;
-
+        this.teamMemberRepository = teamMemberRepository;
     }
 
     void insertTrip(MyTrip myTrip) {
         //RxJava2
-        Completable.fromAction(() -> myTripRepository.insetMyTrip(myTrip))
-                .subscribeOn(Schedulers.io())
-                .subscribe();
+        tripId.setValue(myTripRepository.insetMyTrip(myTrip).subscribeOn(Schedulers.io()).blockingGet());
+
     }
 
     void updateTrip(MyTrip myTrip) {
@@ -68,6 +71,14 @@ public class AddNewTripViewModel extends ViewModel {
         Flowable<MyTrip> flowable = myTripRepository.getSpecificTrip(tripId)
                 .observeOn(AndroidSchedulers.mainThread());
         listLiveData = LiveDataReactiveStreams.fromPublisher(flowable);
+    }
+
+    void insertMyself(TeamMember teamMember) {
+        //RxJava2
+        teamMember.setTripId(tripId.getValue().intValue());
+        Completable.fromAction(() -> teamMemberRepository.insertTeamMember(teamMember))
+                .subscribeOn(Schedulers.io())
+                .subscribe();
     }
 
     @Override

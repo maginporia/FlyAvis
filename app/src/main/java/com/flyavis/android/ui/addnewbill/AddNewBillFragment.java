@@ -2,6 +2,7 @@ package com.flyavis.android.ui.addnewbill;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +19,6 @@ import com.flyavis.android.data.database.TeamMember;
 import com.flyavis.android.databinding.AddNewBillFragmentBinding;
 import com.flyavis.android.util.FlyAvisUtils;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.threeten.bp.LocalDateTime;
 import org.threeten.bp.ZoneOffset;
@@ -61,6 +61,8 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     private AddNewBillEpoxyController controller;
     private List<Integer> amounts = new ArrayList<>();
     private List<String> userId;
+    private List<String> userName;
+    private List<Boolean> selectedBoolean;
 
     public static AddNewBillFragment newInstance() {
         return new AddNewBillFragment();
@@ -109,6 +111,7 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         teamMemberObservable.observe(getViewLifecycleOwner(), teamMembers -> {
             this.teamMembers = teamMembers;
             controller.setData(this.teamMembers);
+            initMembers();
         });
 
         //LocalTime backport
@@ -118,31 +121,17 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
         bill = new Bill();
         bill.setCostDate(System.currentTimeMillis());
 
-        amounts.add(0);
-
     }
 
     private void memberPickerDialog() {
-        List<String> userName = new ArrayList<>();
-        userId = new ArrayList<>();
-        List<Boolean> selectedBoolean = new ArrayList<>();
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        userName.add(auth.getCurrentUser().getDisplayName());
-        userId.add(auth.getCurrentUser().getUid());
-        selectedBoolean.add(false);
-
-        if (teamMembers != null && teamMembers.size() > 0) {
-            for (TeamMember teamMember : teamMembers) {
-                userName.add(teamMember.getUserName());
-                userId.add(teamMember.getUserId());
-                selectedBoolean.add(false);
-                amounts.add(0);
-            }
-        }
         String[] membersArray = new String[userName.size()];
         userName.toArray(membersArray);
         boolean[] selectedArray = null;
+//        List<Boolean> initArray = new ArrayList<>();
+//        for (int i = 0; i < userName.size();i++) {
+//            initArray.add(true);
+//        }
 
         if (selectedWhoJoin == null) {
             selectedWhoJoin = new ArrayList<>();
@@ -171,6 +160,21 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
                 })
                 .setNegativeButton(getString(R.string.cancel), null)
                 .show();
+    }
+
+    private void initMembers() {
+        userName = new ArrayList<>();
+        userId = new ArrayList<>();
+        selectedBoolean = new ArrayList<>();
+
+        if (teamMembers != null && teamMembers.size() > 0) {
+            for (TeamMember teamMember : teamMembers) {
+                userName.add(teamMember.getUserName());
+                userId.add(teamMember.getUserId());
+                selectedBoolean.add(false);
+                amounts.add(0);
+            }
+        }
     }
 
     private void timePickerDialog() {
@@ -239,11 +243,16 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save:
-                bill.setCostTitle(String.valueOf(binding.name.getText()));
-                bill.setTripId(myTripId);
-                mViewModel.insertNewBill(bill);
-                onBillInsertSuccess();
-                mode.finish();
+                if (binding.whoJoin.getText().equals("")) {
+                    binding.whoJoin.setHintTextColor(Color.RED);
+                } else {
+                    bill.setCostTitle(String.valueOf(binding.name.getText()));
+                    bill.setTripId(myTripId);
+                    mViewModel.insertNewBill(bill);
+                    onBillInsertSuccess();
+                    mode.finish();
+                }
+
                 break;
             default:
                 return false;
@@ -268,8 +277,8 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
     @Override
     public void onAmountTextChanged(int i, String string) {
         Timber.d(string);
-        if (string == "") {
-            amounts.remove(i);
+        if (string.equals("")) {
+            amounts.set(i, 0);
         } else {
             amounts.set(i, Integer.valueOf(string));
         }
@@ -277,11 +286,11 @@ public class AddNewBillFragment extends DaggerFragment implements ActionMode.Cal
 
     public void onBillInsertSuccess() {
         for (int join : selectedWhoJoin) {
-            mViewModel.insertNewBillDetail(new BillDetail(userId.get(join), 0));
+            mViewModel.insertNewBillDetail(new BillDetail(userId.get(join), 0, true));
         }
         int i = 0;
         for (int j : amounts) {
-            mViewModel.insertNewBillDetail(new BillDetail(userId.get(i), j));
+            mViewModel.insertNewBillDetail(new BillDetail(userId.get(i), j, false));
             i++;
         }
     }
