@@ -11,6 +11,9 @@
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog</item>
     </style>
 
+    <style name="FirebaseTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+    </style>
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/splash_screen</item>
 

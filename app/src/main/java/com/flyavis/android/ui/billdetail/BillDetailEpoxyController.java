@@ -168,7 +168,7 @@ public class BillDetailEpoxyController extends
                             .amount(map.get(s) + "$")
                             .payerName(payerName)
                             .payerImage(payerImage)
-                            .receiverImage(receiverImage)
+//                            .receiverImage(receiverImage)
                             .receiverName(receiverName)
                             .addTo(this);
                 }

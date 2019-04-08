@@ -38,7 +38,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'com.google.android.material:material:1.1.0-alpha04'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     def lifecycle_version = "2.1.0-alpha03"
@@ -65,7 +65,7 @@ dependencies {
 
     // g map
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
-    implementation 'com.google.android.libraries.places:places:1.0.0'
+    implementation 'com.google.android.libraries.places:places:1.1.0'
 
     //firebase
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
@@ -75,12 +75,12 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
 
     // Dagger core
-    implementation 'com.google.dagger:dagger:2.21'
-    annotationProcessor "com.google.dagger:dagger-compiler:2.21"
+    implementation 'com.google.dagger:dagger:2.22.1'
+    annotationProcessor "com.google.dagger:dagger-compiler:2.22.1"
 
     // Dagger android
-    implementation 'com.google.dagger:dagger-android-support:2.21'
-    annotationProcessor "com.google.dagger:dagger-android-processor:2.21"
+    implementation 'com.google.dagger:dagger-android-support:2.22.1'
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.22.1"
 
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -95,7 +95,7 @@ dependencies {
 
     //RxJava2
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.7'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
 
     //anim
     implementation 'com.airbnb.android:lottie:3.0.0'

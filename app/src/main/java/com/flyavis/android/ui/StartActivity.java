@@ -61,9 +61,10 @@ public class StartActivity extends AppCompatActivity {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
+                            .setLogo(R.drawable.ic_flyavis512)
                             .setAvailableProviders(providers)
                             .setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */)
-                            .setTheme(R.style.AppTheme)
+                            .setTheme(R.style.FirebaseTheme)
                             .build(),
                     RC_SIGN_IN);
         }

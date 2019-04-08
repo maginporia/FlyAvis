@@ -48,7 +48,7 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        if (list != null) {
+        if (list.size() > 0) {
             for (MyTrip myTrip : list) {
                 new MyTripsItemBindingModel_()
                         //All models must set a unique id.
@@ -83,6 +83,13 @@ public class MyTripsEpoxyController extends TypedEpoxyController<List<MyTrip>> {
                         })
                         .addTo(this);
             }
+        } else {
+            new MyTripsItemBindingModel_()
+                    //All models must set a unique id.
+                    .id("demo")
+                    .title("你還沒有行程")
+                    .date("新增一個旅行吧")
+                    .addTo(this);
         }
     }
 
